@@ -6,7 +6,7 @@
   "scripts": {
     "eslint": "eslint '**/*.{js,ts,tsx}' --fix",
     "dev:server": "ts-node-dev --inspect --respawn --transpileOnly -- app.ts",
-    "build:server": "tsc",
+    "build:server": "yarn && tsc",
     "build:client": "cd client && yarn && yarn run build",
     "dev": "concurrently \"yarn run dev:server\" \"cd client && yarn start\"",
     "build": "yarn run build:server && yarn run build:client",
