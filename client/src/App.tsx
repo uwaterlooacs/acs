@@ -1,32 +1,18 @@
-import React, { useEffect, useState } from 'react';
-import { getAllUsers } from 'utils/data/user';
-import { User } from 'types/user';
-import Login from 'components/forms/Login';
-import SignUp from 'components/forms/SignUp';
-import UserList from 'components/lists/Users';
+import React from 'react';
+import ThemeContextProvider from 'context/theme/provider';
+import ThemeProvider from 'theme/themeProvider';
+import Page from 'components/Page';
+import ThemeToggle from 'components/buttons/ThemeToggle';
 
 function App() {
-  const [users, setUsers] = useState<User[]>([]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await getAllUsers();
-        setUsers(data);
-      } catch (error) {
-        console.error(error);
-      }
-    }
-
-    fetchData();
-  }, [setUsers]);
-
   return (
-    <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-around' }}>
-      <Login />
-      <SignUp />
-      <UserList users={users} />
-    </div>
+    <ThemeContextProvider>
+      <ThemeProvider>
+        <Page>
+          <ThemeToggle />
+        </Page>
+      </ThemeProvider>
+    </ThemeContextProvider>
   );
 }
 
