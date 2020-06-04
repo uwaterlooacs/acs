@@ -40,7 +40,7 @@ function ThemeToggleButton({ classes }: WithStyles<typeof styles>) {
   const { theme, setTheme } = useContext(ThemeContext);
 
   const toggleTheme = () => {
-    setTheme(theme.name === 'light' ? DarkTheme : LightTheme);
+    setTheme(theme.name === LightTheme.name ? DarkTheme : LightTheme);
   }
 
   return (
