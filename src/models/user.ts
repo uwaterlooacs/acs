@@ -22,10 +22,10 @@ const UserSchema = new mongoose.Schema({
   picture: {
     type: String
   },
-  tokens: [{
+  tokens: [ {
     type: String,
     required: true
-  }]
+  } ]
 }, {
   timestamps: true
 });

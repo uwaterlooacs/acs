@@ -9,7 +9,7 @@ interface Props {
 }
 
 const Provider = ({ children }: Props) => {
-  const [state, dispatch] = useReducer(Reducer, initialState);
+  const [ state, dispatch ] = useReducer(Reducer, initialState);
 
   const setTheme = (theme: NamedTheme) => {
     localStorage.setItem('theme', theme.name);
