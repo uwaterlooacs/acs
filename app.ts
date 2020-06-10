@@ -1,5 +1,4 @@
 import express, { Request, Response } from 'express';
-import cors from 'cors';
 import path from 'path';
 import UserRouter from './src/routers/user';
 import 'dotenv/config';
@@ -11,12 +10,17 @@ const app = express();
 let CLIENT_DIR = 'client/build';
 
 if (path.basename(__dirname) === 'build') {
-  CLIENT_DIR = '../' + CLIENT_DIR;
+  CLIENT_DIR = path.join('..', CLIENT_DIR);
 }
 
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, CLIENT_DIR)));
-app.use(cors());
+
+if(process.env.NODE_ENV !== 'production') {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  app.use(require('cors'));
+}
+
 app.use(express.json());
 
 app.use(UserRouter);
