@@ -5,7 +5,7 @@ export type Credentials = {
   secret: string;
 }
 
-export type UserData = Credentials & {
+export type UserData = Omit<Credentials, 'secret'> & {
   name: string;
   picture?: string;
   secret?: string;
