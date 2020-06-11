@@ -23,6 +23,12 @@
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/no-empty-function": "off",
     "@typescript-eslint/no-use-before-define": "warn",
+    "@typescript-eslint/indent": [ 2, 2 ],
+    "object-curly-spacing": [ 1, "always" ],
+    "array-bracket-spacing": [ 1, "always" ],
+    "space-in-parens": [ 1, "never" ],
+    "eol-last": [ 2, "always" ],
+    "no-trailing-spaces": 2,
     "max-len": [
       2,
       {
@@ -30,15 +36,6 @@
         "tabWidth": 2,
         "ignoreStrings": true
       }
-    ],
-    "no-trailing-spaces": 2,
-    "@typescript-eslint/indent": [
-      2,
-      2
-    ],
-    "eol-last": [
-      2,
-      "always"
     ]
   }
 }

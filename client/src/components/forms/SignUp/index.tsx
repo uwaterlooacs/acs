@@ -3,13 +3,13 @@ import { signup } from 'utils/data/user';
 import * as M from 'utils/network/errorMessages';
 
 function SignUp() {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [ name, setName ] = useState('');
+  const [ email, setEmail ] = useState('');
+  const [ password, setPassword ] = useState('');
 
   const submit = async () => {
     try {
-      const { user, token } = await signup({email, secret: password, name});
+      const { user, token } = await signup({ email, secret: password, name });
       console.log('Sign up successful', user, token);
     }catch(error) {
       console.log(M.SIGN_UP, error);
