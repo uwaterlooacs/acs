@@ -1,5 +1,5 @@
 import React from 'react';
-import /*type*/ { WithStyles, Theme } from '@material-ui/core/styles';
+import { /*type*/ WithStyles, Theme } from '@material-ui/core/styles';
 import { withStyles, createStyles } from '@material-ui/core/styles';
 import { Typography, Button } from '@material-ui/core';
 import FacebookIcon from '@material-ui/icons/Facebook';
@@ -8,29 +8,30 @@ import InstagramIcon from '@material-ui/icons/Instagram';
 
 const ICON_SIZE = 40;
 
-const styles = (theme: Theme) => createStyles({
-  container: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: '100%'
-  },
-  textContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    marginBottom: theme.spacing(1)
-  },
-  iconsContainer: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    width: '100%'
-  },
-  icon: {
-    width: ICON_SIZE,
-    height: ICON_SIZE
-  }
-});
+const styles = (theme: Theme) =>
+  createStyles({
+    container: {
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center',
+      width: '100%',
+    },
+    textContainer: {
+      display: 'flex',
+      flexDirection: 'column',
+      marginBottom: theme.spacing(1),
+    },
+    iconsContainer: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      width: '100%',
+    },
+    icon: {
+      width: ICON_SIZE,
+      height: ICON_SIZE,
+    },
+  });
 
 function Social({ classes }: WithStyles<typeof styles>) {
   return (

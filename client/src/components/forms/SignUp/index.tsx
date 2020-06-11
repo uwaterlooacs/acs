@@ -3,18 +3,18 @@ import { signup } from 'utils/data/user';
 import * as M from 'utils/network/errorMessages';
 
 function SignUp() {
-  const [ name, setName ] = useState('');
-  const [ email, setEmail ] = useState('');
-  const [ password, setPassword ] = useState('');
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   const submit = async () => {
     try {
       const { user, token } = await signup({ email, secret: password, name });
       console.log('Sign up successful', user, token);
-    }catch(error) {
+    } catch (error) {
       console.log(M.SIGN_UP, error);
     }
-  }
+  };
 
   return (
     <div>
@@ -22,19 +22,19 @@ function SignUp() {
       <p>Name</p>
       <input
         value={name}
-        onChange={e => setName(e.target.value)}
+        onChange={(e) => setName(e.target.value)}
         type="text"
       />
       <p>Email</p>
       <input
         value={email}
-        onChange={e => setEmail(e.target.value)}
+        onChange={(e) => setEmail(e.target.value)}
         type="email"
       />
       <p>Password</p>
       <input
         value={password}
-        onChange={e => setPassword(e.target.value)}
+        onChange={(e) => setPassword(e.target.value)}
         type="password"
       />
       <div style={{ marginTop: 10 }}>

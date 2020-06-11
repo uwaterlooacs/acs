@@ -6,24 +6,24 @@ export default (state = initialState, action: Action) => {
     case ActionTypes.SET_USER:
       return {
         ...state,
-        user: action.payload
+        user: action.payload,
       };
     case ActionTypes.UNSET_USER:
       return {
         ...state,
-        user: initialState.user
+        user: initialState.user,
       };
     case ActionTypes.SET_TOKEN:
       return {
         ...state,
-        token: action.payload
+        token: action.payload,
       };
     case ActionTypes.UNSET_TOKEN:
       return {
         ...state,
-        token: initialState.token
+        token: initialState.token,
       };
     default:
       return state;
   }
-}
+};

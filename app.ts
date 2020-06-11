@@ -16,7 +16,7 @@ if (path.basename(__dirname) === 'build') {
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, CLIENT_DIR)));
 
-if(process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV !== 'production') {
   // eslint-disable-next-line @typescript-eslint/no-var-requires
   app.use(require('cors'));
 }

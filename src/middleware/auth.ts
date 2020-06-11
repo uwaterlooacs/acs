@@ -5,7 +5,7 @@ import UserModel from '../models/user';
 
 type TokenVerification = {
   id: string;
-}
+};
 
 const auth = async (req: UserRequest, res: Response, next: NextFunction) => {
   try {
@@ -17,7 +17,7 @@ const auth = async (req: UserRequest, res: Response, next: NextFunction) => {
     const token = authHeader.replace('Bearer ', '');
     const verification = jwt.verify(token, APP_SECRET) as TokenVerification;
     const id = verification.id;
-    const user = await UserModel.findOne({ _id: id, 'tokens': token });
+    const user = await UserModel.findOne({ _id: id, tokens: token });
     if (!user) {
       throw new Error();
     }

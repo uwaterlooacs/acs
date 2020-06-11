@@ -7,9 +7,9 @@ export default (state = initialState, action: Action) => {
     case ActionTypes.SET_THEME:
       return {
         ...state,
-        theme: action.payload
+        theme: action.payload,
       };
     default:
       return state;
   }
-}
+};

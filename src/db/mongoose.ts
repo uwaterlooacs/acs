@@ -7,5 +7,5 @@ mongoose.set('useUnifiedTopology', true);
 
 mongoose.connect(mongoUrl, {
   useNewUrlParser: true,
-  useCreateIndex: true
+  useCreateIndex: true,
 });

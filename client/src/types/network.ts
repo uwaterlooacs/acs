@@ -4,7 +4,7 @@ export enum Method {
   GET,
   POST,
   PATCH,
-  DELETE
+  DELETE,
 }
 
 export type AuthMode = 'login' | 'signup';

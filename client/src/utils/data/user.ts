@@ -10,27 +10,27 @@ export const login = async (data: Credentials) => {
     Method.POST,
     APIRoutes.USER,
     M.LOG_IN,
-    data
+    data,
   );
-}
+};
 
 export const signup = async (data: UserData) => {
   return await makeRequest<AuthResponse, UserData>(
     Method.POST,
     APIRoutes.USER + '/signup',
     M.SIGN_UP,
-    data
+    data,
   );
-}
+};
 
 export const thirdPartyAuth = async (data: UserData) => {
   return await makeRequest<AuthResponse, UserData>(
     Method.POST,
     APIRoutes.USER + '/thirdPartyAuth',
     M.THIRD_PARTY_AUTH,
-    data
+    data,
   );
-}
+};
 
 export const logout = async (token: string) => {
   return await makeRequest(
@@ -38,9 +38,9 @@ export const logout = async (token: string) => {
     APIRoutes.USER + '/logout',
     M.LOGOUT,
     undefined,
-    token
+    token,
   );
-}
+};
 
 export const getUser = async (token: string) => {
   return await makeRequest<User>(
@@ -48,14 +48,14 @@ export const getUser = async (token: string) => {
     APIRoutes.USER + '/me',
     M.FETCH_USER,
     undefined,
-    token
+    token,
   );
-}
+};
 
 export const getAllUsers = async () => {
   return await makeRequest<User[]>(
     Method.GET,
     APIRoutes.USER + '/all',
-    M.FETCH_USERS
+    M.FETCH_USERS,
   );
-}
+};
