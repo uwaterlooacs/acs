@@ -3,12 +3,12 @@ import { login } from 'utils/data/user';
 import * as M from 'utils/network/errorMessages';
 
 function Login() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [ email, setEmail ] = useState('');
+  const [ password, setPassword ] = useState('');
 
   const submit = async () => {
     try {
-      const { user, token } = await login({email, secret: password});
+      const { user, token } = await login({ email, secret: password });
       console.log('Login successful', user, token);
     } catch(error) {
       console.log(M.LOG_IN, error);
