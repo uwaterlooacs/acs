@@ -15,9 +15,6 @@ const styles = (theme: Theme) =>
       flexDirection: 'column',
       marginBottom: theme.spacing(2),
     },
-    text: {
-      color: theme.palette.text.primary,
-    },
     textField: {
       width: '90%',
       height: 64,
@@ -33,10 +30,10 @@ function Email({ classes, email, setEmail }: Props) {
   return (
     <div className={classes.container}>
       <div className={classes.textContainer}>
-        <Typography variant="h4" className={classes.text}>
+        <Typography variant="h4" color="textPrimary">
           Join our mailing list!
         </Typography>
-        <Typography variant="body1" className={classes.text}>
+        <Typography variant="body1" color="textPrimary">
           Get the latest and greatest updates from ACS
         </Typography>
       </div>

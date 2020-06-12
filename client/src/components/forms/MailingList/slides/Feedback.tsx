@@ -1,5 +1,6 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import { /*type*/ WithStyles, Theme } from '@material-ui/core/styles';
+import { /*type*/ Event } from 'components/forms/MailingList/events';
 import { withStyles, createStyles } from '@material-ui/core/styles';
 import {
   Typography,
@@ -8,7 +9,7 @@ import {
   Checkbox,
   TextField,
 } from '@material-ui/core';
-import { EVENT } from '../types';
+import EVENTS from 'components/forms/MailingList/events';
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -21,11 +22,12 @@ const styles = (theme: Theme) =>
       flexDirection: 'column',
       marginBottom: theme.spacing(2),
     },
-    text: {
-      color: theme.palette.text.primary,
-    },
     eventsContainer: {
+      marginLeft: theme.spacing(1),
       marginBottom: theme.spacing(3),
+    },
+    eventContainer: {
+      marginBottom: theme.spacing(1),
     },
     feedback: {
       width: '90%',
@@ -33,8 +35,8 @@ const styles = (theme: Theme) =>
   });
 
 interface Props extends WithStyles<typeof styles> {
-  events: EVENT[];
-  setEvents: Dispatch<SetStateAction<EVENT[]>>;
+  events: Event[];
+  setEvents: Dispatch<SetStateAction<Event[]>>;
   feedback: string;
   setFeedback: Dispatch<SetStateAction<string>>;
 }
@@ -46,29 +48,28 @@ function Feedback({
   feedback,
   setFeedback,
 }: Props) {
-  const toggleEvent = (event: EVENT) => {
+  const toggleEvent = (event: Event) => {
     const index = events.indexOf(event);
     if (index > -1) {
-      events.splice(index, 1);
+      setEvents(events.filter((e) => e.title !== event.title));
     } else {
-      events.push(event);
+      setEvents([...events, event]);
     }
-    setEvents(events);
   };
 
   return (
     <div className={classes.container}>
       <div className={classes.textContainer}>
-        <Typography variant="h4" className={classes.text}>
+        <Typography variant="h4" color="textPrimary">
           What events are you interested in?
         </Typography>
-        <Typography variant="body1" className={classes.text}>
+        <Typography variant="body1" color="textPrimary">
           {"Are there any ACS events that you're looking forward to this term?"}
         </Typography>
       </div>
       <div className={classes.eventsContainer}>
-        {Object.values(EVENT).map((event) => (
-          <FormGroup key={event}>
+        {EVENTS.map((event) => (
+          <FormGroup key={event.title}>
             <FormControlLabel
               control={
                 <Checkbox
@@ -78,9 +79,14 @@ function Feedback({
                 />
               }
               label={
-                <Typography color="textPrimary" variant="body1">
-                  {event}
-                </Typography>
+                <div className={classes.eventContainer}>
+                  <Typography color="textPrimary" variant="body1">
+                    {event.title}
+                  </Typography>
+                  <Typography color="textPrimary" variant="body2">
+                    {event.description}
+                  </Typography>
+                </div>
               }
             />
           </FormGroup>
@@ -88,7 +94,7 @@ function Feedback({
       </div>
       <div>
         <div className={classes.textContainer}>
-          <Typography variant="h5" className={classes.text}>
+          <Typography variant="h5" color="textPrimary">
             Are there any other events that you would like to happen this term?
           </Typography>
         </div>

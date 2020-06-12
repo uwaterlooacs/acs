@@ -1,5 +1,6 @@
 import React from 'react';
 import { /*type*/ WithStyles, Theme } from '@material-ui/core/styles';
+import { /*type*/ Event } from 'components/forms/MailingList/events';
 import { withStyles, createStyles } from '@material-ui/core/styles';
 import { Button } from '@material-ui/core';
 import { useState } from 'react';
@@ -8,7 +9,6 @@ import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
 import EmailSlide from './slides/Email';
 import FeedbackSlide from './slides/Feedback';
 import SocialSlide from './slides/Social';
-import { EVENT } from './types';
 
 const LOGO_SIZE = 200;
 const TRANSITION_TIME = '0.3s';
@@ -66,7 +66,7 @@ const isLastSlide = (translateValue: number) =>
 
 function MailingListForm({ classes }: WithStyles<typeof styles>) {
   const [email, setEmail] = useState('');
-  const [events, setEvents] = useState<EVENT[]>([]);
+  const [events, setEvents] = useState<Event[]>([]);
   const [feedback, setFeedback] = useState('');
   const [translateValue, setTranslateValue] = useState(0);
 
