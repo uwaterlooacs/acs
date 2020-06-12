@@ -4,7 +4,8 @@
   "main": "app.js",
   "license": "MIT",
   "scripts": {
-    "eslint": "eslint '**/*.{js,ts,tsx}' --fix",
+    "eslint": "eslint '**/*.{js,ts,tsx}'",
+    "format": "prettier --write **/*.{js,ts,tsx}",
     "dev:server": "ts-node-dev --inspect --respawn --transpileOnly -- app.ts",
     "build:server": "yarn && tsc",
     "build:client": "cd client && yarn && yarn build",
@@ -35,8 +36,11 @@
     "concurrently": "^5.1.0",
     "cors": "^2.8.5",
     "eslint": "^6.6.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-prettier": "^3.1.3",
     "eslint-plugin-react": "^7.20.0",
     "eslint-plugin-react-hooks": "^4.0.4",
+    "prettier": "^2.0.5",
     "ts-node-dev": "^1.0.0-pre.44"
   }
 }

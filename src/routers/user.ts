@@ -1,5 +1,5 @@
 import express, { Request, Response } from 'express';
-import UserModel, { UserDoc } from "../models/user";
+import UserModel, { UserDoc } from '../models/user';
 import { UserRequest } from '../types/network';
 import auth from '../middleware/auth';
 import * as M from '../utils/errorMessages';
@@ -53,36 +53,44 @@ router.post('/api/user/thirdPartyAuth', async (req: Request, res: Response) => {
 });
 
 // logout
-router.post('/api/user/logout', auth, async (req: UserRequest, res: Response) => {
-  try {
-    if (req.user == null) {
-      throw new Error();
+router.post(
+  '/api/user/logout',
+  auth,
+  async (req: UserRequest, res: Response) => {
+    try {
+      if (req.user == null) {
+        throw new Error();
+      }
+      req.user.tokens = req.user.tokens.filter((token) => {
+        return token !== req.token;
+      });
+      await req.user.save();
+      res.send();
+    } catch (err) {
+      console.log(err);
+      res.status(500).send();
     }
-    req.user.tokens = req.user.tokens.filter(token => {
-      return token !== req.token;
-    });
-    await req.user.save();
-    res.send();
-  } catch (err) {
-    console.log(err);
-    res.status(500).send();
-  }
-});
+  },
+);
 
 // logout all
-router.post('/api/user/logoutAll', auth, async (req: UserRequest, res: Response) => {
-  try {
-    if (req.user == null) {
-      throw new Error();
+router.post(
+  '/api/user/logoutAll',
+  auth,
+  async (req: UserRequest, res: Response) => {
+    try {
+      if (req.user == null) {
+        throw new Error();
+      }
+      req.user.tokens = [];
+      await req.user.save();
+      res.send();
+    } catch (err) {
+      console.log(err);
+      res.status(500).send();
     }
-    req.user.tokens = [];
-    await req.user.save();
-    res.send();
-  } catch (err) {
-    console.log(err);
-    res.status(500).send();
-  }
-});
+  },
+);
 
 // get me
 router.get('/api/user/me', auth, async (req: UserRequest, res: Response) => {
@@ -123,7 +131,7 @@ router.get('/api/user/:id/picture', async (req: Request, res: Response) => {
   try {
     const user = await UserModel.findById(req.params.id);
     if (!user || !user.picture) {
-      throw new Error;
+      throw new Error();
     }
     res.set('Content-Type', 'image/png');
     res.send(user.picture);

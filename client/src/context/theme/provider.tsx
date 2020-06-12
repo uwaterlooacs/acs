@@ -9,21 +9,23 @@ interface Props {
 }
 
 const Provider = ({ children }: Props) => {
-  const [ state, dispatch ] = useReducer(Reducer, initialState);
+  const [state, dispatch] = useReducer(Reducer, initialState);
 
   const setTheme = (theme: NamedTheme) => {
     localStorage.setItem('theme', theme.name);
     dispatch({ type: ActionTypes.SET_THEME, payload: theme });
-  }
+  };
 
   return (
-    <ThemeContext.Provider value={{
-      ...state,
-      setTheme,
-    }}>
+    <ThemeContext.Provider
+      value={{
+        ...state,
+        setTheme,
+      }}
+    >
       {children}
     </ThemeContext.Provider>
   );
-}
+};
 
 export default Provider;

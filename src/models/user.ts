@@ -2,38 +2,43 @@ import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
-const UserSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
-    trim: true
+const UserSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    email: {
+      unique: true,
+      type: String,
+      required: true,
+      trim: true,
+      lowercase: true,
+    },
+    secret: {
+      type: String,
+      required: true,
+    },
+    picture: {
+      type: String,
+    },
+    tokens: [
+      {
+        type: String,
+        required: true,
+      },
+    ],
   },
-  email: {
-    unique: true,
-    type: String,
-    required: true,
-    trim: true,
-    lowercase: true
+  {
+    timestamps: true,
   },
-  secret: {
-    type: String,
-    required: true
-  },
-  picture: {
-    type: String
-  },
-  tokens: [ {
-    type: String,
-    required: true
-  } ]
-}, {
-  timestamps: true
-});
+);
 
 UserSchema.virtual('event', {
   ref: 'Event',
   localField: '_id',
-  foreignField: 'owner'
+  foreignField: 'owner',
 });
 
 UserSchema.methods.toJSON = function () {
@@ -43,14 +48,14 @@ UserSchema.methods.toJSON = function () {
   delete userObject.tokens;
 
   return userObject;
-}
+};
 
 UserSchema.methods.generateAuthToken = async function () {
   const token = jwt.sign({ id: this.id.toString() }, process.env.APP_SECRET);
   this.tokens = this.tokens.concat(token);
   await this.save();
   return token;
-}
+};
 
 UserSchema.statics.validateSecret = async (user: UserDoc, secret: string) => {
   const isMatch = await bcrypt.compare(secret, user.secret);
@@ -58,9 +63,12 @@ UserSchema.statics.validateSecret = async (user: UserDoc, secret: string) => {
     throw new Error('Unable to login');
   }
   return user;
-}
+};
 
-UserSchema.statics.findByCredentials = async (email: string, secret: string) => {
+UserSchema.statics.findByCredentials = async (
+  email: string,
+  secret: string,
+) => {
   const user = await UserModel.findOne({ email });
   if (!user) {
     throw new Error('Unable to login');

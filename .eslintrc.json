@@ -3,39 +3,26 @@
   "parserOptions": {
     "ecmaVersion": 2020
   },
-  "plugins": [
-    "@typescript-eslint",
-    "react",
-    "react-hooks"
-  ],
   "env": {
     "browser": true,
     "node": true
   },
   "extends": [
     "eslint:recommended",
-    "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended",
-    "plugin:react/recommended"
+    "plugin:react/recommended",
+    "plugin:prettier/recommended",
+    "prettier/@typescript-eslint",
+    "prettier/react"
   ],
   "rules": {
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/no-empty-function": "off",
     "@typescript-eslint/no-use-before-define": "warn",
-    "@typescript-eslint/indent": [ 2, 2 ],
-    "object-curly-spacing": [ 1, "always" ],
-    "array-bracket-spacing": [ 1, "always" ],
-    "space-in-parens": [ 1, "never" ],
-    "eol-last": [ 2, "always" ],
-    "no-trailing-spaces": 2,
-    "max-len": [
-      2,
-      {
-        "code": 95,
-        "tabWidth": 2,
-        "ignoreStrings": true
-      }
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      { "argsIgnorePattern": "^_" }
     ]
   }
 }

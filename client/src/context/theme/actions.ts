@@ -1,13 +1,13 @@
-import { NamedTheme } from "types/theme";
+import { NamedTheme } from 'types/theme';
 
 enum ActionTypes {
-  SET_THEME = 'Set theme'
+  SET_THEME = 'Set theme',
 }
 
 type SetTheme = {
   type: ActionTypes.SET_THEME;
   payload: NamedTheme;
-}
+};
 
 export type Action = SetTheme;
 

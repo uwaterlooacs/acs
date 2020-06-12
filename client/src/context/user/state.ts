@@ -7,15 +7,15 @@ export const initialState = {
     createdAt: new Date(),
     updatedAt: new Date(),
     name: 'Anonymous',
-    email: 'a@b.com'
+    email: 'a@b.com',
   },
   token: localStorage.getItem('token') || '',
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  setUser: (user: User) => { },
-  unsetUser: () => { },
+  setUser: (user: User) => {},
+  unsetUser: () => {},
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  setToken: (token: string) => { },
-  unsetToken: () => { },
+  setToken: (token: string) => {},
+  unsetToken: () => {},
 };
 
 export const UserContext = createContext(initialState);
