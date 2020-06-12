@@ -1,5 +1,7 @@
-import React, { Dispatch, SetStateAction } from 'react';
+import { /*type*/ Dispatch, SetStateAction, Ref } from 'react';
 import { /*type*/ WithStyles, Theme } from '@material-ui/core/styles';
+
+import React, { forwardRef } from 'react';
 import { withStyles, createStyles } from '@material-ui/core/styles';
 import { TextField, Typography } from '@material-ui/core';
 
@@ -26,9 +28,9 @@ interface Props extends WithStyles<typeof styles> {
   setEmail: Dispatch<SetStateAction<string>>;
 }
 
-function Email({ classes, email, setEmail }: Props) {
+function Email({ classes, email, setEmail }: Props, ref: Ref<HTMLDivElement>) {
   return (
-    <div className={classes.container}>
+    <div className={classes.container} ref={ref}>
       <div className={classes.textContainer}>
         <Typography variant="h4" color="textPrimary">
           Join our mailing list!
@@ -49,4 +51,4 @@ function Email({ classes, email, setEmail }: Props) {
   );
 }
 
-export default withStyles(styles)(Email);
+export default withStyles(styles)(forwardRef(Email));

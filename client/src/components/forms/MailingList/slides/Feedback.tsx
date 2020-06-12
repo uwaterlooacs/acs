@@ -1,6 +1,8 @@
-import React, { Dispatch, SetStateAction } from 'react';
+import { /*type*/ Dispatch, SetStateAction, Ref } from 'react';
 import { /*type*/ WithStyles, Theme } from '@material-ui/core/styles';
 import { /*type*/ Event } from 'components/forms/MailingList/events';
+
+import React, { forwardRef } from 'react';
 import { withStyles, createStyles } from '@material-ui/core/styles';
 import {
   Typography,
@@ -16,6 +18,7 @@ const styles = (theme: Theme) =>
     container: {
       display: 'flex',
       flexDirection: 'column',
+      maxWidth: '90%',
     },
     textContainer: {
       display: 'flex',
@@ -30,24 +33,22 @@ const styles = (theme: Theme) =>
       marginBottom: theme.spacing(1),
     },
     feedback: {
-      width: '90%',
+      width: '100%',
     },
   });
 
 interface Props extends WithStyles<typeof styles> {
+  theme: Theme;
   events: Event[];
   setEvents: Dispatch<SetStateAction<Event[]>>;
   feedback: string;
   setFeedback: Dispatch<SetStateAction<string>>;
 }
 
-function Feedback({
-  classes,
-  events,
-  setEvents,
-  feedback,
-  setFeedback,
-}: Props) {
+function Feedback(
+  { classes, theme, events, setEvents, feedback, setFeedback }: Props,
+  ref: Ref<HTMLDivElement>,
+) {
   const toggleEvent = (event: Event) => {
     const index = events.indexOf(event);
     if (index > -1) {
@@ -58,7 +59,7 @@ function Feedback({
   };
 
   return (
-    <div className={classes.container}>
+    <div className={classes.container} ref={ref}>
       <div className={classes.textContainer}>
         <Typography variant="h4" color="textPrimary">
           What events are you interested in?
@@ -76,6 +77,7 @@ function Feedback({
                   size="small"
                   checked={events.indexOf(event) > -1}
                   onChange={() => toggleEvent(event)}
+                  style={{ color: theme.palette.success.main }}
                 />
               }
               label={
@@ -112,4 +114,4 @@ function Feedback({
   );
 }
 
-export default withStyles(styles)(Feedback);
+export default withStyles(styles, { withTheme: true })(forwardRef(Feedback));

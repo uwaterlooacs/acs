@@ -1,5 +1,7 @@
-import React from 'react';
+import { /*type*/ Ref } from 'react';
 import { /*type*/ WithStyles, Theme } from '@material-ui/core/styles';
+
+import React, { forwardRef } from 'react';
 import { withStyles, createStyles } from '@material-ui/core/styles';
 import { Typography, Button } from '@material-ui/core';
 import FacebookIcon from '@material-ui/icons/Facebook';
@@ -15,16 +17,16 @@ const styles = (theme: Theme) =>
       flexDirection: 'column',
       justifyContent: 'center',
       alignItems: 'center',
-      width: '100%',
+      width: '90%',
     },
     textContainer: {
       display: 'flex',
       flexDirection: 'column',
-      marginBottom: theme.spacing(1),
+      marginBottom: theme.spacing(6),
     },
     iconsContainer: {
       display: 'flex',
-      justifyContent: 'space-between',
+      justifyContent: 'space-around',
       width: '100%',
     },
     icon: {
@@ -33,9 +35,12 @@ const styles = (theme: Theme) =>
     },
   });
 
-function Social({ classes }: WithStyles<typeof styles>) {
+function Social(
+  { classes }: WithStyles<typeof styles>,
+  ref: Ref<HTMLDivElement>,
+) {
   return (
-    <div className={classes.container}>
+    <div className={classes.container} ref={ref}>
       <div className={classes.textContainer}>
         <Typography color="textPrimary" variant="h4">
           Thanks for your feedback!
@@ -48,13 +53,25 @@ function Social({ classes }: WithStyles<typeof styles>) {
         </Typography>
       </div>
       <div className={classes.iconsContainer}>
-        <Button>
+        <Button
+          onClick={() =>
+            window.open('https://www.facebook.com/uWaterlooACS', '_blank')
+          }
+        >
           <FacebookIcon className={classes.icon} />
         </Button>
-        <Button>
+        <Button
+          onClick={() =>
+            window.open('https://twitter.com/uWaterlooACS', '_blank')
+          }
+        >
           <TwitterIcon className={classes.icon} />
         </Button>
-        <Button>
+        <Button
+          onClick={() =>
+            window.open('https://www.instagram.com/uwaterlooacs', '_blank')
+          }
+        >
           <InstagramIcon className={classes.icon} />
         </Button>
       </div>
@@ -62,4 +79,4 @@ function Social({ classes }: WithStyles<typeof styles>) {
   );
 }
 
-export default withStyles(styles)(Social);
+export default withStyles(styles)(forwardRef(Social));
