@@ -7,6 +7,7 @@ import validator from 'validator';
 import EmailSlide from './slides/Email';
 import FeedbackSlide from './slides/Feedback';
 import SocialSlide from './slides/Social';
+import { mailingListSubmit } from 'utils/data/mailingList';
 
 const LOGO_SIZE = 200;
 const TRANSITION_TIME = '0.5s';
@@ -85,6 +86,19 @@ function MailingListForm({ classes }: WithStyles<typeof styles>) {
     }
   };
 
+  const submit = async () => {
+    try {
+      await mailingListSubmit({
+        email,
+        interestedEvents: events.map((event) => event.title),
+        otherFeedback: feedback,
+      });
+      goRight();
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
     <div className={classes.container}>
       <div className={classes.logoContainer}>
@@ -108,7 +122,7 @@ function MailingListForm({ classes }: WithStyles<typeof styles>) {
                 feedback={feedback}
                 setFeedback={setFeedback}
                 goLeft={goLeft}
-                goRight={goRight}
+                submit={submit}
               />
             )}
             {index === 2 && <SocialSlide />}
