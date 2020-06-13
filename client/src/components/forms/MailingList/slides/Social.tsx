@@ -1,5 +1,6 @@
-import React from 'react';
 import { /*type*/ WithStyles, Theme } from '@material-ui/core/styles';
+
+import React from 'react';
 import { withStyles, createStyles } from '@material-ui/core/styles';
 import { Typography, Button } from '@material-ui/core';
 import FacebookIcon from '@material-ui/icons/Facebook';
@@ -15,16 +16,16 @@ const styles = (theme: Theme) =>
       flexDirection: 'column',
       justifyContent: 'center',
       alignItems: 'center',
-      width: '100%',
+      width: '90%',
     },
     textContainer: {
       display: 'flex',
       flexDirection: 'column',
-      marginBottom: theme.spacing(1),
+      marginBottom: theme.spacing(6),
     },
     iconsContainer: {
       display: 'flex',
-      justifyContent: 'space-between',
+      justifyContent: 'space-around',
       width: '100%',
     },
     icon: {
@@ -48,13 +49,25 @@ function Social({ classes }: WithStyles<typeof styles>) {
         </Typography>
       </div>
       <div className={classes.iconsContainer}>
-        <Button>
+        <Button
+          onClick={() =>
+            window.open('https://www.facebook.com/uWaterlooACS', '_blank')
+          }
+        >
           <FacebookIcon className={classes.icon} />
         </Button>
-        <Button>
+        <Button
+          onClick={() =>
+            window.open('https://twitter.com/uWaterlooACS', '_blank')
+          }
+        >
           <TwitterIcon className={classes.icon} />
         </Button>
-        <Button>
+        <Button
+          onClick={() =>
+            window.open('https://www.instagram.com/uwaterlooacs', '_blank')
+          }
+        >
           <InstagramIcon className={classes.icon} />
         </Button>
       </div>

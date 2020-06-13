@@ -7,16 +7,14 @@ export default {
 };
 
 export const Form = () => (
-  <div
-    style={{
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      width: '100vw',
-      height: '100vh',
-      backgroundColor: '#f8f8ff',
-    }}
-  >
+  <div style={{
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100vw',
+    height: '100%',
+    backgroundColor: '#f8f8ff'
+  }}>
     <MailingListForm />
   </div>
 );

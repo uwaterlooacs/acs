@@ -4,12 +4,10 @@ import { Method } from 'types/network';
 const DEV_URL = 'http://localhost:5000';
 
 export const getUrl = (urlExt: string) => {
-  const { NODE_ENV, REACT_APP_PROD_URL } = process.env;
-  const baseUrl =
-    NODE_ENV === 'production' && REACT_APP_PROD_URL
-      ? REACT_APP_PROD_URL
-      : DEV_URL;
-  return baseUrl + urlExt;
+  if (process.env.NODE_ENV === 'production') {
+    return urlExt;
+  }
+  return DEV_URL + urlExt;
 };
 
 export const makeRequest = async <R, D = Record<string, unknown>>(

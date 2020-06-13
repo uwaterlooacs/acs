@@ -1,17 +1,15 @@
-import React from 'react';
 import { /*type*/ WithStyles, Theme } from '@material-ui/core/styles';
+import { /*type*/ Event } from 'components/forms/MailingList/events';
+
+import React, { useState } from 'react';
 import { withStyles, createStyles } from '@material-ui/core/styles';
-import { Button } from '@material-ui/core';
-import { useState } from 'react';
-import NavigateNextIcon from '@material-ui/icons/NavigateNext';
-import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
+import validator from 'validator';
 import EmailSlide from './slides/Email';
 import FeedbackSlide from './slides/Feedback';
 import SocialSlide from './slides/Social';
-import { EVENT } from './types';
 
 const LOGO_SIZE = 200;
-const TRANSITION_TIME = '0.3s';
+const TRANSITION_TIME = '0.5s';
 const NUMBER_OF_SLIDES = 3;
 
 const styles = (theme: Theme) =>
@@ -21,11 +19,15 @@ const styles = (theme: Theme) =>
       flexDirection: 'column',
       justifyContent: 'center',
       alignItems: 'center',
+      maxWidth: 960,
+      [theme.breakpoints.down('sm')]: {
+        width: '100%',
+      },
     },
     logoContainer: {
       width: LOGO_SIZE,
       height: LOGO_SIZE,
-      marginBottom: theme.spacing(1),
+      margin: `${theme.spacing(2)} 0 ${theme.spacing(1)}`,
     },
     logo: {
       maxWidth: '100%',
@@ -34,48 +36,53 @@ const styles = (theme: Theme) =>
     },
     slider: {
       display: 'flex',
-      width: 400,
       marginBottom: theme.spacing(2),
       boxSizing: 'border-box',
       position: 'relative',
       overflow: 'hidden',
       transition: TRANSITION_TIME,
+      maxWidth: '100%',
     },
     slide: {
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
       minWidth: '100%',
-      minHeight: 100,
       transition: TRANSITION_TIME,
     },
     buttonContainer: {
       display: 'flex',
       justifyContent: 'space-between',
       alignItems: 'center',
+      margin: `0 ${theme.spacing(2)}px ${theme.spacing(4)}px`,
     },
     button: {
       transition: TRANSITION_TIME,
     },
   });
 
-const isFirstSlide = (translateValue: number) => translateValue === 0;
-
-const isLastSlide = (translateValue: number) =>
-  translateValue === -100 * (NUMBER_OF_SLIDES - 1);
+const slideArr = new Array(NUMBER_OF_SLIDES).fill(null);
 
 function MailingListForm({ classes }: WithStyles<typeof styles>) {
   const [email, setEmail] = useState('');
-  const [events, setEvents] = useState<EVENT[]>([]);
+  const [events, setEvents] = useState<Event[]>([]);
   const [feedback, setFeedback] = useState('');
   const [translateValue, setTranslateValue] = useState(0);
 
+  const currentSlideIndex = (translateValue * -1) / 100;
+
+  const isValidEmail = validator.isEmail(email);
+
   const goLeft = () => {
     setTranslateValue(translateValue + 100);
+    window.scrollTo(0, 0);
   };
 
   const goRight = () => {
-    setTranslateValue(translateValue - 100);
+    if (currentSlideIndex !== 0 || isValidEmail) {
+      setTranslateValue(translateValue - 100);
+      window.scrollTo(0, 0);
+    }
   };
 
   return (
@@ -85,49 +92,28 @@ function MailingListForm({ classes }: WithStyles<typeof styles>) {
       </div>
 
       <div className={classes.slider}>
-        <div
-          className={classes.slide}
-          style={{ transform: `translateX(${translateValue}%)` }}
-        >
-          <EmailSlide email={email} setEmail={setEmail} />
-        </div>
-        <div
-          className={classes.slide}
-          style={{ transform: `translateX(${translateValue}%)` }}
-        >
-          <FeedbackSlide
-            events={events}
-            setEvents={setEvents}
-            feedback={feedback}
-            setFeedback={setFeedback}
-          />
-        </div>
-        <div
-          className={classes.slide}
-          style={{ transform: `translateX(${translateValue}%)` }}
-        >
-          <SocialSlide />
-        </div>
-      </div>
-
-      <div
-        className={classes.buttonContainer}
-        style={!isFirstSlide(translateValue) ? { width: '100%' } : {}}
-      >
-        {!isFirstSlide(translateValue) && !isLastSlide(translateValue) && (
-          <Button onClick={goLeft} className={classes.button}>
-            <NavigateBeforeIcon />
-            Back
-          </Button>
-        )}
-        {!isLastSlide(translateValue) && (
-          <Button onClick={goRight} className={classes.button}>
-            {translateValue === -100 * (NUMBER_OF_SLIDES - 2)
-              ? 'Submit'
-              : 'Next'}
-            <NavigateNextIcon />
-          </Button>
-        )}
+        {slideArr.map((s, index) => (
+          <div
+            key={index}
+            className={classes.slide}
+            style={{ transform: `translateX(${translateValue}%)` }}
+          >
+            {index === 0 && (
+              <EmailSlide email={email} setEmail={setEmail} goRight={goRight} />
+            )}
+            {index === 1 && (
+              <FeedbackSlide
+                events={events}
+                setEvents={setEvents}
+                feedback={feedback}
+                setFeedback={setFeedback}
+                goLeft={goLeft}
+                goRight={goRight}
+              />
+            )}
+            {index === 2 && <SocialSlide />}
+          </div>
+        ))}
       </div>
     </div>
   );
