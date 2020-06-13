@@ -20,7 +20,7 @@ router.post('/signup', async (req: Request, res: Response) => {
 });
 
 // login
-router.post('', async (req: Request, res: Response) => {
+router.post('/', async (req: Request, res: Response) => {
   try {
     const { email, secret } = req.body;
     const user = await UserModel.findByCredentials(email, secret);
@@ -90,7 +90,7 @@ router.get('/me', auth, async (req: UserRequest, res: Response) => {
 });
 
 // get someone
-router.get('', auth, async (req: Request, res: Response) => {
+router.get('/', auth, async (req: Request, res: Response) => {
   try {
     const user = await UserModel.findOne({ email: req.body.email });
     if (!user) {
