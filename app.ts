@@ -1,6 +1,7 @@
 import express, { Request, Response } from 'express';
 import path from 'path';
 import UserRouter from './src/routers/user';
+import MailingListRouter from './src/routers/mailingList';
 import 'dotenv/config';
 
 // create server
@@ -24,6 +25,7 @@ if (process.env.NODE_ENV !== 'production') {
 app.use(express.json());
 
 app.use(UserRouter);
+app.use(MailingListRouter);
 
 // The "catchall" handler: for a request that doesn't
 // match one above, send back React's index.html file.
