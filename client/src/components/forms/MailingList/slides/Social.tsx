@@ -1,7 +1,6 @@
-import { /*type*/ Ref } from 'react';
 import { /*type*/ WithStyles, Theme } from '@material-ui/core/styles';
 
-import React, { forwardRef } from 'react';
+import React from 'react';
 import { withStyles, createStyles } from '@material-ui/core/styles';
 import { Typography, Button } from '@material-ui/core';
 import FacebookIcon from '@material-ui/icons/Facebook';
@@ -35,12 +34,9 @@ const styles = (theme: Theme) =>
     },
   });
 
-function Social(
-  { classes }: WithStyles<typeof styles>,
-  ref: Ref<HTMLDivElement>,
-) {
+function Social({ classes }: WithStyles<typeof styles>) {
   return (
-    <div className={classes.container} ref={ref}>
+    <div className={classes.container}>
       <div className={classes.textContainer}>
         <Typography color="textPrimary" variant="h4">
           Thanks for your feedback!
@@ -79,4 +75,4 @@ function Social(
   );
 }
 
-export default withStyles(styles)(forwardRef(Social));
+export default withStyles(styles)(Social);

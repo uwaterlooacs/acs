@@ -1,11 +1,8 @@
 import { /*type*/ WithStyles, Theme } from '@material-ui/core/styles';
 import { /*type*/ Event } from 'components/forms/MailingList/events';
 
-import React, { createRef, useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { withStyles, createStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
-import NavigateNextIcon from '@material-ui/icons/NavigateNext';
-import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
 import validator from 'validator';
 import EmailSlide from './slides/Email';
 import FeedbackSlide from './slides/Feedback';
@@ -50,7 +47,6 @@ const styles = (theme: Theme) =>
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
-      height: '100%',
       minWidth: '100%',
       transition: TRANSITION_TIME,
     },
@@ -65,13 +61,7 @@ const styles = (theme: Theme) =>
     },
   });
 
-const isFirstSlide = (translateValue: number) => translateValue === 0;
-
-const isLastSlide = (translateValue: number) =>
-  translateValue === -100 * (NUMBER_OF_SLIDES - 1);
-
 const slideArr = new Array(NUMBER_OF_SLIDES).fill(null);
-const slideRefs = slideArr.map(() => createRef<HTMLDivElement>());
 
 function MailingListForm({ classes }: WithStyles<typeof styles>) {
   const [email, setEmail] = useState('');
@@ -80,9 +70,6 @@ function MailingListForm({ classes }: WithStyles<typeof styles>) {
   const [translateValue, setTranslateValue] = useState(0);
 
   const currentSlideIndex = (translateValue * -1) / 100;
-  const currentSlide = slideRefs[currentSlideIndex].current;
-
-  const [sliderHeight, setSliderHeight] = useState(155);
 
   const isValidEmail = validator.isEmail(email);
 
@@ -96,19 +83,13 @@ function MailingListForm({ classes }: WithStyles<typeof styles>) {
     }
   };
 
-  useEffect(() => {
-    if (currentSlide) {
-      setSliderHeight(currentSlide.offsetHeight);
-    }
-  }, [currentSlide]);
-
   return (
     <div className={classes.container}>
       <div className={classes.logoContainer}>
         <img className={classes.logo} src="/assets/logo.jpg" alt="ACS Logo" />
       </div>
 
-      <div className={classes.slider} style={{ height: sliderHeight }}>
+      <div className={classes.slider}>
         {slideArr.map((s, index) => (
           <div
             key={index}
@@ -116,11 +97,7 @@ function MailingListForm({ classes }: WithStyles<typeof styles>) {
             style={{ transform: `translateX(${translateValue}%)` }}
           >
             {index === 0 && (
-              <EmailSlide
-                email={email}
-                setEmail={setEmail}
-                ref={slideRefs[index]}
-              />
+              <EmailSlide email={email} setEmail={setEmail} goRight={goRight} />
             )}
             {index === 1 && (
               <FeedbackSlide
@@ -128,32 +105,13 @@ function MailingListForm({ classes }: WithStyles<typeof styles>) {
                 setEvents={setEvents}
                 feedback={feedback}
                 setFeedback={setFeedback}
-                ref={slideRefs[index]}
+                goLeft={goLeft}
+                goRight={goRight}
               />
             )}
-            {index === 2 && <SocialSlide ref={slideRefs[index]} />}
+            {index === 2 && <SocialSlide />}
           </div>
         ))}
-      </div>
-
-      <div
-        className={classes.buttonContainer}
-        style={!isFirstSlide(translateValue) ? { width: '100%' } : {}}
-      >
-        {!isFirstSlide(translateValue) && !isLastSlide(translateValue) && (
-          <Button onClick={goLeft} className={classes.button}>
-            <NavigateBeforeIcon />
-            Back
-          </Button>
-        )}
-        {!isLastSlide(translateValue) && (
-          <Button onClick={goRight} className={classes.button}>
-            {translateValue === -100 * (NUMBER_OF_SLIDES - 2)
-              ? 'Submit'
-              : 'Next'}
-            <NavigateNextIcon />
-          </Button>
-        )}
       </div>
     </div>
   );

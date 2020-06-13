@@ -1,10 +1,13 @@
-import { /*type*/ Dispatch, SetStateAction, Ref } from 'react';
+import { /*type*/ Dispatch, SetStateAction } from 'react';
 import { /*type*/ WithStyles, Theme } from '@material-ui/core/styles';
 
-import React, { forwardRef } from 'react';
+import React from 'react';
 import { withStyles, createStyles } from '@material-ui/core/styles';
 import validator from 'validator';
-import { TextField, Typography } from '@material-ui/core';
+import { TextField, Typography, Button } from '@material-ui/core';
+import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+
+const TRANSITION_TIME = '0.5s';
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -26,18 +29,28 @@ const styles = (theme: Theme) =>
       width: '100%',
       height: 64,
     },
+    buttonContainer: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      margin: `0 ${theme.spacing(2)}px ${theme.spacing(4)}px`,
+    },
+    button: {
+      transition: TRANSITION_TIME,
+    },
   });
 
 interface Props extends WithStyles<typeof styles> {
   email: string;
   setEmail: Dispatch<SetStateAction<string>>;
+  goRight: () => void;
 }
 
-function Email({ classes, email, setEmail }: Props, ref: Ref<HTMLDivElement>) {
+function Email({ classes, email, setEmail, goRight }: Props) {
   const isInvalidEmail = Boolean(email) && !validator.isEmail(email);
 
   return (
-    <div className={classes.container} ref={ref}>
+    <div className={classes.container}>
       <div className={classes.textContainer}>
         <Typography variant="h4" color="textPrimary">
           Join our mailing list!
@@ -62,8 +75,14 @@ function Email({ classes, email, setEmail }: Props, ref: Ref<HTMLDivElement>) {
           }
         />
       </div>
+      <div className={classes.buttonContainer}>
+        <Button onClick={goRight} className={classes.button}>
+          Next
+          <NavigateNextIcon />
+        </Button>
+      </div>
     </div>
   );
 }
 
-export default withStyles(styles)(forwardRef(Email));
+export default withStyles(styles)(Email);

@@ -1,17 +1,22 @@
-import { /*type*/ Dispatch, SetStateAction, Ref } from 'react';
+import { /*type*/ Dispatch, SetStateAction } from 'react';
 import { /*type*/ WithStyles, Theme } from '@material-ui/core/styles';
 import { /*type*/ Event } from 'components/forms/MailingList/events';
 
-import React, { forwardRef } from 'react';
+import React from 'react';
 import { withStyles, createStyles } from '@material-ui/core/styles';
 import {
   Typography,
   FormGroup,
   FormControlLabel,
   Checkbox,
+  Button,
   TextField,
 } from '@material-ui/core';
+import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
 import EVENTS from 'components/forms/MailingList/events';
+
+const TRANSITION_TIME = '0.5s';
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -34,6 +39,16 @@ const styles = (theme: Theme) =>
     },
     feedback: {
       width: '100%',
+      marginBottom: theme.spacing(2),
+    },
+    buttonContainer: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      margin: `0 ${theme.spacing(2)}px ${theme.spacing(4)}px`,
+    },
+    button: {
+      transition: TRANSITION_TIME,
     },
   });
 
@@ -43,12 +58,20 @@ interface Props extends WithStyles<typeof styles> {
   setEvents: Dispatch<SetStateAction<Event[]>>;
   feedback: string;
   setFeedback: Dispatch<SetStateAction<string>>;
+  goLeft: () => void;
+  goRight: () => void;
 }
 
-function Feedback(
-  { classes, theme, events, setEvents, feedback, setFeedback }: Props,
-  ref: Ref<HTMLDivElement>,
-) {
+function Feedback({
+  classes,
+  theme,
+  events,
+  setEvents,
+  feedback,
+  setFeedback,
+  goLeft,
+  goRight,
+}: Props) {
   const toggleEvent = (event: Event) => {
     const index = events.indexOf(event);
     if (index > -1) {
@@ -59,7 +82,7 @@ function Feedback(
   };
 
   return (
-    <div className={classes.container} ref={ref}>
+    <div className={classes.container}>
       <div className={classes.textContainer}>
         <Typography variant="h4" color="textPrimary">
           What events are you interested in?
@@ -94,24 +117,32 @@ function Feedback(
           </FormGroup>
         ))}
       </div>
-      <div>
-        <div className={classes.textContainer}>
-          <Typography variant="h5" color="textPrimary">
-            Are there any other events that you would like to happen this term?
-          </Typography>
-        </div>
-        <TextField
-          className={classes.feedback}
-          value={feedback}
-          onChange={(e) => setFeedback(e.target.value)}
-          type="text"
-          label="Feedback"
-          variant="outlined"
-          multiline
-        />
+      <div className={classes.textContainer}>
+        <Typography variant="h5" color="textPrimary">
+          Are there any other events that you would like to happen this term?
+        </Typography>
+      </div>
+      <TextField
+        className={classes.feedback}
+        value={feedback}
+        onChange={(e) => setFeedback(e.target.value)}
+        type="text"
+        label="Feedback"
+        variant="outlined"
+        multiline
+      />
+      <div className={classes.buttonContainer}>
+        <Button onClick={goLeft} className={classes.button}>
+          <NavigateBeforeIcon />
+          Back
+        </Button>
+        <Button onClick={goRight} className={classes.button}>
+          Submit
+          <NavigateNextIcon />
+        </Button>
       </div>
     </div>
   );
 }
 
-export default withStyles(styles, { withTheme: true })(forwardRef(Feedback));
+export default withStyles(styles, { withTheme: true })(Feedback);
