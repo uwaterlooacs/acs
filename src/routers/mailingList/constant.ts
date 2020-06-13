@@ -12,10 +12,9 @@ export const EVENT_NAMES = [
 ];
 
 // Object with event names as keys and all values set to false
-export const DEFAULT_EVENT_RESPONSES = EVENT_NAMES.reduce(
-  (partial, eventName) => {
-    partial[eventName] = false;
-    return partial;
-  },
-  {} as Record<string, boolean>,
-);
+export const DEFAULT_EVENT_RESPONSES = EVENT_NAMES.reduce<
+  Record<string, boolean>
+>((partial, eventName) => {
+  partial[eventName] = false;
+  return partial;
+}, {});
