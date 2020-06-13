@@ -75,11 +75,13 @@ function MailingListForm({ classes }: WithStyles<typeof styles>) {
 
   const goLeft = () => {
     setTranslateValue(translateValue + 100);
+    window.scrollTo(0, 0);
   };
 
   const goRight = () => {
     if (currentSlideIndex !== 0 || isValidEmail) {
       setTranslateValue(translateValue - 100);
+      window.scrollTo(0, 0);
     }
   };
 
