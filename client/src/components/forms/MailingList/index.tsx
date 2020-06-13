@@ -1,12 +1,12 @@
 import { /*type*/ WithStyles, Theme } from '@material-ui/core/styles';
 import { /*type*/ Event } from 'components/forms/MailingList/events';
 
-import React, { createRef, useEffect } from 'react';
+import React, { createRef, useEffect, useState } from 'react';
 import { withStyles, createStyles } from '@material-ui/core/styles';
-import { Button } from '@material-ui/core';
-import { useState } from 'react';
+import Button from '@material-ui/core/Button';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
+import validator from 'validator';
 import EmailSlide from './slides/Email';
 import FeedbackSlide from './slides/Feedback';
 import SocialSlide from './slides/Social';
@@ -82,14 +82,18 @@ function MailingListForm({ classes }: WithStyles<typeof styles>) {
   const currentSlideIndex = (translateValue * -1) / 100;
   const currentSlide = slideRefs[currentSlideIndex].current;
 
-  const [sliderHeight, setSliderHeight] = useState(145);
+  const [sliderHeight, setSliderHeight] = useState(155);
+
+  const isValidEmail = validator.isEmail(email);
 
   const goLeft = () => {
     setTranslateValue(translateValue + 100);
   };
 
   const goRight = () => {
-    setTranslateValue(translateValue - 100);
+    if (currentSlideIndex !== 0 || isValidEmail) {
+      setTranslateValue(translateValue - 100);
+    }
   };
 
   useEffect(() => {

@@ -3,6 +3,7 @@ import { /*type*/ WithStyles, Theme } from '@material-ui/core/styles';
 
 import React, { forwardRef } from 'react';
 import { withStyles, createStyles } from '@material-ui/core/styles';
+import validator from 'validator';
 import { TextField, Typography } from '@material-ui/core';
 
 const styles = (theme: Theme) =>
@@ -17,8 +18,12 @@ const styles = (theme: Theme) =>
       flexDirection: 'column',
       marginBottom: theme.spacing(2),
     },
+    textFieldContainer: {
+      width: '100%',
+      height: 74,
+    },
     textField: {
-      width: '90%',
+      width: '100%',
       height: 64,
     },
   });
@@ -29,6 +34,8 @@ interface Props extends WithStyles<typeof styles> {
 }
 
 function Email({ classes, email, setEmail }: Props, ref: Ref<HTMLDivElement>) {
+  const isInvalidEmail = Boolean(email) && !validator.isEmail(email);
+
   return (
     <div className={classes.container} ref={ref}>
       <div className={classes.textContainer}>
@@ -39,14 +46,22 @@ function Email({ classes, email, setEmail }: Props, ref: Ref<HTMLDivElement>) {
           Get the latest and greatest updates from ACS
         </Typography>
       </div>
-      <TextField
-        className={classes.textField}
-        value={email}
-        type="email"
-        onChange={(e) => setEmail(e.target.value)}
-        label="Email"
-        variant="outlined"
-      />
+      <div className={classes.textFieldContainer}>
+        <TextField
+          className={classes.textField}
+          value={email}
+          type="email"
+          onChange={(e) => setEmail(e.target.value)}
+          label="Email"
+          variant="outlined"
+          error={isInvalidEmail}
+          helperText={
+            isInvalidEmail
+              ? 'Enter a valid email address (example@gmail.com)'
+              : ''
+          }
+        />
+      </div>
     </div>
   );
 }
