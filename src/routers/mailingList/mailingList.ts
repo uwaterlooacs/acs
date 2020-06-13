@@ -10,7 +10,7 @@ const doc = new GoogleSpreadsheet(
 
 const router = express.Router();
 
-// sign up
+// add to mailing list with responses of interest in events and other feedback
 router.post('/api/mailingList', async (req: Request, res: Response) => {
   if (!isMailingListRequestBody(req.body)) {
     return res.status(400).end();
