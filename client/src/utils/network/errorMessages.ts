@@ -5,4 +5,4 @@ export const FETCH_USER = 'Could not fetch user';
 export const FETCH_USERS = 'Could not fetch all users';
 export const LOGOUT = 'Could not log user out';
 
-export const MAILING_LIST = 'Could not submit mailing list response';
+export const MAILING_LIST = 'Could not submit mailing list request';
