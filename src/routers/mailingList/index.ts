@@ -1,7 +1,9 @@
-import express, { Request, Response } from 'express';
+import express, { Request, Response, NextFunction } from 'express';
 import { GoogleSpreadsheet } from 'google-spreadsheet';
-import { isMailingListRequestBody } from './utils';
+import validate from '../../middleware/validate';
+import validator from './validator';
 import { DEFAULT_EVENT_RESPONSES } from './constant';
+import { MailingListRequestBody } from './types';
 import GoogleCreds from '../../config/acs-web-5aaaf-768e669e2d39.json';
 
 const doc = new GoogleSpreadsheet(
@@ -11,29 +13,37 @@ const doc = new GoogleSpreadsheet(
 const router = express.Router();
 
 // add to mailing list with responses of interest in events and other feedback
-router.post('/', async (req: Request, res: Response) => {
-  if (!isMailingListRequestBody(req.body)) {
-    return res.status(400).end();
-  }
+router.post(
+  '/',
+  validator('/'),
+  validate,
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      await doc.useServiceAccountAuth(GoogleCreds);
+      await doc.loadInfo();
+      const responseSheet = doc.sheetsById['0'];
 
-  await doc.useServiceAccountAuth(GoogleCreds);
-  await doc.loadInfo();
-  const responseSheet = doc.sheetsById['0'];
-  await responseSheet.loadHeaderRow();
+      const {
+        email,
+        interestedEvents,
+        otherFeedback,
+      } = req.body as MailingListRequestBody;
+      const eventsResponses = DEFAULT_EVENT_RESPONSES;
+      for (const eventName of interestedEvents) {
+        eventsResponses[eventName] = true;
+      }
+      const newRow = {
+        Email: email,
+        'Other Feedback': otherFeedback,
+        ...eventsResponses,
+      };
 
-  const { email, interestedEvents, otherFeedback } = req.body;
-  const eventsResponses = DEFAULT_EVENT_RESPONSES;
-  for (const eventName of interestedEvents) {
-    eventsResponses[eventName] = true;
-  }
-  const newRow = {
-    Email: email,
-    'Other Feedback': otherFeedback,
-    ...eventsResponses,
-  };
-
-  await responseSheet.addRow(newRow);
-  return res.send();
-});
+      await responseSheet.addRow(newRow);
+      return res.send();
+    } catch (err) {
+      next(err);
+    }
+  },
+);
 
 export default router;
