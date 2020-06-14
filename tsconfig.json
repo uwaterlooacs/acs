@@ -6,7 +6,8 @@
     "noImplicitThis": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "outDir": "build"
+    "outDir": "build",
+    "resolveJsonModule": true
   },
   "exclude": ["client", "node_modules"]
 }

@@ -59,7 +59,7 @@ interface Props extends WithStyles<typeof styles> {
   feedback: string;
   setFeedback: Dispatch<SetStateAction<string>>;
   goLeft: () => void;
-  goRight: () => void;
+  submit: () => Promise<void>;
 }
 
 function Feedback({
@@ -70,7 +70,7 @@ function Feedback({
   feedback,
   setFeedback,
   goLeft,
-  goRight,
+  submit,
 }: Props) {
   const toggleEvent = (event: Event) => {
     const index = events.indexOf(event);
@@ -136,7 +136,7 @@ function Feedback({
           <NavigateBeforeIcon />
           Back
         </Button>
-        <Button onClick={goRight} className={classes.button}>
+        <Button onClick={submit} className={classes.button}>
           Submit
           <NavigateNextIcon />
         </Button>

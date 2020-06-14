@@ -8,7 +8,7 @@ import '../db/mongoose';
 const router = express.Router();
 
 // sign up
-router.post('/api/user/signup', async (req: Request, res: Response) => {
+router.post('/signup', async (req: Request, res: Response) => {
   try {
     const user = new UserModel(req.body);
     const token = await user.generateAuthToken();
@@ -20,7 +20,7 @@ router.post('/api/user/signup', async (req: Request, res: Response) => {
 });
 
 // login
-router.post('/api/user', async (req: Request, res: Response) => {
+router.post('/', async (req: Request, res: Response) => {
   try {
     const { email, secret } = req.body;
     const user = await UserModel.findByCredentials(email, secret);
@@ -33,7 +33,7 @@ router.post('/api/user', async (req: Request, res: Response) => {
 });
 
 // third party authentication
-router.post('/api/user/thirdPartyAuth', async (req: Request, res: Response) => {
+router.post('/thirdPartyAuth', async (req: Request, res: Response) => {
   try {
     const { email, secret } = req.body;
     const user = await UserModel.findOne({ email });
@@ -53,52 +53,44 @@ router.post('/api/user/thirdPartyAuth', async (req: Request, res: Response) => {
 });
 
 // logout
-router.post(
-  '/api/user/logout',
-  auth,
-  async (req: UserRequest, res: Response) => {
-    try {
-      if (req.user == null) {
-        throw new Error();
-      }
-      req.user.tokens = req.user.tokens.filter((token) => {
-        return token !== req.token;
-      });
-      await req.user.save();
-      res.send();
-    } catch (err) {
-      console.log(err);
-      res.status(500).send();
+router.post('/logout', auth, async (req: UserRequest, res: Response) => {
+  try {
+    if (req.user == null) {
+      throw new Error();
     }
-  },
-);
+    req.user.tokens = req.user.tokens.filter((token) => {
+      return token !== req.token;
+    });
+    await req.user.save();
+    res.send();
+  } catch (err) {
+    console.log(err);
+    res.status(500).send();
+  }
+});
 
 // logout all
-router.post(
-  '/api/user/logoutAll',
-  auth,
-  async (req: UserRequest, res: Response) => {
-    try {
-      if (req.user == null) {
-        throw new Error();
-      }
-      req.user.tokens = [];
-      await req.user.save();
-      res.send();
-    } catch (err) {
-      console.log(err);
-      res.status(500).send();
+router.post('/logoutAll', auth, async (req: UserRequest, res: Response) => {
+  try {
+    if (req.user == null) {
+      throw new Error();
     }
-  },
-);
+    req.user.tokens = [];
+    await req.user.save();
+    res.send();
+  } catch (err) {
+    console.log(err);
+    res.status(500).send();
+  }
+});
 
 // get me
-router.get('/api/user/me', auth, async (req: UserRequest, res: Response) => {
+router.get('/me', auth, async (req: UserRequest, res: Response) => {
   res.send(req.user);
 });
 
 // get someone
-router.get('/api/user', auth, async (req: Request, res: Response) => {
+router.get('/', auth, async (req: Request, res: Response) => {
   try {
     const user = await UserModel.findOne({ email: req.body.email });
     if (!user) {
@@ -113,7 +105,7 @@ router.get('/api/user', auth, async (req: Request, res: Response) => {
 
 // REMOVE THIS ROUTE
 // get all users
-router.get('/api/user/all', async (req: Request, res: Response) => {
+router.get('/all', async (req: Request, res: Response) => {
   try {
     const users = await UserModel.find({});
     if (!users) {
@@ -127,7 +119,7 @@ router.get('/api/user/all', async (req: Request, res: Response) => {
 });
 
 // get avatar
-router.get('/api/user/:id/picture', async (req: Request, res: Response) => {
+router.get('/:id/picture', async (req: Request, res: Response) => {
   try {
     const user = await UserModel.findById(req.params.id);
     if (!user || !user.picture) {
@@ -142,7 +134,7 @@ router.get('/api/user/:id/picture', async (req: Request, res: Response) => {
 });
 
 // update me
-router.patch('/api/user/me', auth, async (req: UserRequest, res: Response) => {
+router.patch('/me', auth, async (req: UserRequest, res: Response) => {
   try {
     const source = req.body as UserDoc;
     if (!req.user) throw new Error();
@@ -156,7 +148,7 @@ router.patch('/api/user/me', auth, async (req: UserRequest, res: Response) => {
 });
 
 // update someone
-router.patch('/api/user/:id', auth, async (req: Request, res: Response) => {
+router.patch('/:id', auth, async (req: Request, res: Response) => {
   const source = req.body as UserDoc;
   try {
     const user = await UserModel.findById(req.params.id);
@@ -175,7 +167,7 @@ router.patch('/api/user/:id', auth, async (req: Request, res: Response) => {
 });
 
 // delete me
-router.delete('/api/user/me', auth, async (req: UserRequest, res: Response) => {
+router.delete('/me', auth, async (req: UserRequest, res: Response) => {
   try {
     if (!req.user) throw new Error();
     await req.user.remove();
@@ -187,7 +179,7 @@ router.delete('/api/user/me', auth, async (req: UserRequest, res: Response) => {
 });
 
 // delete someone
-router.delete('/api/user/:id', auth, async (req: Request, res: Response) => {
+router.delete('/:id', auth, async (req: Request, res: Response) => {
   try {
     const user = await UserModel.findById(req.params.id);
     if (user != null) {
