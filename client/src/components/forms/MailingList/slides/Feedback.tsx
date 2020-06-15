@@ -2,7 +2,7 @@ import { /*type*/ Dispatch, SetStateAction } from 'react';
 import { /*type*/ WithStyles, Theme } from '@material-ui/core/styles';
 import { /*type*/ Event } from 'components/forms/MailingList/events';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { withStyles, createStyles } from '@material-ui/core/styles';
 import {
   Typography,
@@ -11,6 +11,7 @@ import {
   Checkbox,
   Button,
   TextField,
+  CircularProgress,
 } from '@material-ui/core';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
@@ -45,10 +46,19 @@ const styles = (theme: Theme) =>
       display: 'flex',
       justifyContent: 'space-between',
       alignItems: 'center',
-      margin: `0 ${theme.spacing(2)}px ${theme.spacing(4)}px`,
+      margin: `0 ${theme.spacing(2)}px ${theme.spacing(2)}px`,
     },
     button: {
       transition: TRANSITION_TIME,
+    },
+    progressContainer: {
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginBottom: theme.spacing(4),
+    },
+    progress: {
+      color: theme.palette.success.main,
     },
   });
 
@@ -72,6 +82,8 @@ function Feedback({
   goLeft,
   submit,
 }: Props) {
+  const [loading, setLoading] = useState(false);
+
   const toggleEvent = (event: Event) => {
     const index = events.indexOf(event);
     if (index > -1) {
@@ -79,6 +91,11 @@ function Feedback({
     } else {
       setEvents([...events, event]);
     }
+  };
+
+  const handleSubmit = async () => {
+    setLoading(true);
+    await submit();
   };
 
   return (
@@ -136,11 +153,16 @@ function Feedback({
           <NavigateBeforeIcon />
           Back
         </Button>
-        <Button onClick={submit} className={classes.button}>
+        <Button onClick={handleSubmit} className={classes.button}>
           Submit
           <NavigateNextIcon />
         </Button>
       </div>
+      {loading && (
+        <div className={classes.progressContainer}>
+          <CircularProgress className={classes.progress} />
+        </div>
+      )}
     </div>
   );
 }
