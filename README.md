@@ -2,7 +2,7 @@
 
 ## Manual Deployment
 
-This app is hosted on AWS through the uw acs gmail account.
+This app is hosted on AWS through the UW ACS gmail account.
 Follow the steps below to manually deploy the app:
 
 1. Download the `acs-website.pem` from the ACS Google Drive at `/Website/Keys`.
