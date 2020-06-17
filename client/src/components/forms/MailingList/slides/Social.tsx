@@ -26,11 +26,12 @@ const styles = (theme: Theme) =>
     },
     iconsContainer: {
       display: 'flex',
-      justifyContent: 'space-around',
+      justifyContent: 'space-between',
       width: '100%',
       flexWrap: 'wrap',
       marginBottom: theme.spacing(2),
       [theme.breakpoints.down('sm')]: {
+        justifyContent: 'center',
         marginBottom: 0,
       },
     },
@@ -58,7 +59,6 @@ const styles = (theme: Theme) =>
     snapCodeContainer: {
       height: 400,
       [theme.breakpoints.down('sm')]: {
-        height: 'unset',
         width: `calc(100% - ${2 * theme.spacing(2)}px)`,
         margin: `0 ${theme.spacing(2)}px`,
         marginTop: theme.spacing(2),
@@ -67,7 +67,6 @@ const styles = (theme: Theme) =>
     snapCode: {
       maxHeight: '100%',
       [theme.breakpoints.down('sm')]: {
-        maxHeight: 'unset',
         maxWidth: '100%',
       },
     },
@@ -79,28 +78,28 @@ function Social({ classes }: WithStyles<typeof styles>) {
   return (
     <div className={classes.container}>
       <div className={classes.textContainer}>
-        <Typography color="textPrimary" variant="h4">
+        <Typography color="textPrimary" variant="h4" align="center">
           Thanks for your feedback!
         </Typography>
-        <Typography color="textPrimary" variant="body1">
+        <Typography color="textPrimary" variant="body1" align="center">
           Make sure to follow us on social media:
         </Typography>
       </div>
       <div className={classes.iconsContainer}>
         <Button
           className={classes.button}
-          onClick={() =>
-            window.open('https://www.facebook.com/uWaterlooACS', '_blank')
-          }
+          href="https://www.facebook.com/uWaterlooACS"
+          target="_blank"
+          rel="noreferrer noopener"
         >
           <FacebookIcon className={classes.icon} />
-          facebook.com/uWaterlooACS
+          /uWaterlooACS
         </Button>
         <Button
           className={classes.button}
-          onClick={() =>
-            window.open('https://twitter.com/uWaterlooACS', '_blank')
-          }
+          href="https://twitter.com/uWaterlooACS"
+          target="_blank"
+          rel="noreferrer noopener"
         >
           <TwitterIcon className={classes.icon} />
           @uWaterlooACS
@@ -109,9 +108,9 @@ function Social({ classes }: WithStyles<typeof styles>) {
       <div className={classes.iconsContainer}>
         <Button
           className={classes.button}
-          onClick={() =>
-            window.open('https://www.instagram.com/uwaterlooacs', '_blank')
-          }
+          href="https://www.instagram.com/uwaterlooacs"
+          target="_blank"
+          rel="noreferrer noopener"
         >
           <InstagramIcon className={classes.icon} />
           @uwaterlooacs

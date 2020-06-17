@@ -44,9 +44,6 @@ const styles = (theme: Theme) =>
         0 
         ${theme.spacing(2)}px`,
     },
-    title: {
-      textAlign: 'center',
-    },
     slider: {
       display: 'flex',
       marginBottom: theme.spacing(2),
@@ -106,8 +103,8 @@ function MailingListForm({ classes }: WithStyles<typeof styles>) {
   return (
     <div className={classes.container}>
       <div className={classes.titleContainer}>
-        <Typography variant="h4" color="textPrimary" className={classes.title}>
-          {'Mailing List And Event Suggestions'}
+        <Typography variant="h4" color="textPrimary" align="center">
+          Mailing List And Event Suggestions
         </Typography>
       </div>
 

@@ -101,11 +101,8 @@ function Feedback({
   return (
     <div className={classes.container}>
       <div className={classes.textContainer}>
-        <Typography variant="h4" color="textPrimary">
-          What events are you interested in?
-        </Typography>
-        <Typography variant="body1" color="textPrimary">
-          {"Are there any ACS events that you'd be interested in this term?"}
+        <Typography variant="h4" color="textPrimary" align="center">
+          Which events would you be you interested in?
         </Typography>
       </div>
       <div className={classes.eventsContainer}>

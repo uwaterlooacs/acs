@@ -65,10 +65,10 @@ function Email({ classes, email, setEmail, goRight }: Props) {
   return (
     <div className={classes.container}>
       <div className={classes.textContainer}>
-        <Typography variant="h4" color="textPrimary">
+        <Typography variant="h4" color="textPrimary" align="center">
           Join our mailing list!
         </Typography>
-        <Typography variant="body1" color="textPrimary">
+        <Typography variant="body1" color="textPrimary" align="center">
           Get the latest and greatest updates from ACS.
         </Typography>
       </div>
