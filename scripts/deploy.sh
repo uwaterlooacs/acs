@@ -1,3 +1,5 @@
+#!/bin/sh
+
 # Exit when any command fails
 set -e
 
@@ -8,8 +10,7 @@ NC='\033[0m' # No Color
 
 # Display warning if not on Master branch
 branch=$(git symbolic-ref --short -q HEAD)
-if [ branch != "master" ]
-then
+if [ branch != "master" ]; then
   echo "${RED}Warning: Deploying a branch other than master${NC}"
   sleep 3
 fi
