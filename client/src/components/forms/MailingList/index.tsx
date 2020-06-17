@@ -11,7 +11,6 @@ import { mailingListSubmit } from 'utils/data/mailingList';
 
 const LOGO_SIZE = 200;
 const TRANSITION_TIME = '0.5s';
-const NUMBER_OF_SLIDES = 3;
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -62,8 +61,6 @@ const styles = (theme: Theme) =>
     },
   });
 
-const slideArr = new Array(NUMBER_OF_SLIDES).fill(null);
-
 function MailingListForm({ classes }: WithStyles<typeof styles>) {
   const [email, setEmail] = useState('');
   const [events, setEvents] = useState<Event[]>([]);
@@ -106,28 +103,31 @@ function MailingListForm({ classes }: WithStyles<typeof styles>) {
       </div>
 
       <div className={classes.slider}>
-        {slideArr.map((s, index) => (
-          <div
-            key={index}
-            className={classes.slide}
-            style={{ transform: `translateX(${translateValue}%)` }}
-          >
-            {index === 0 && (
-              <EmailSlide email={email} setEmail={setEmail} goRight={goRight} />
-            )}
-            {index === 1 && (
-              <FeedbackSlide
-                events={events}
-                setEvents={setEvents}
-                feedback={feedback}
-                setFeedback={setFeedback}
-                goLeft={goLeft}
-                submit={submit}
-              />
-            )}
-            {index === 2 && <SocialSlide />}
-          </div>
-        ))}
+        <div
+          className={classes.slide}
+          style={{ transform: `translateX(${translateValue}%)` }}
+        >
+          <EmailSlide email={email} setEmail={setEmail} goRight={goRight} />
+        </div>
+        <div
+          className={classes.slide}
+          style={{ transform: `translateX(${translateValue}%)` }}
+        >
+          <FeedbackSlide
+            events={events}
+            setEvents={setEvents}
+            feedback={feedback}
+            setFeedback={setFeedback}
+            goLeft={goLeft}
+            submit={submit}
+          />
+        </div>
+        <div
+          className={classes.slide}
+          style={{ transform: `translateX(${translateValue}%)` }}
+        >
+          <SocialSlide />
+        </div>
       </div>
     </div>
   );
