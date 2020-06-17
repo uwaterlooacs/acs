@@ -105,7 +105,7 @@ function Feedback({
           What events are you interested in?
         </Typography>
         <Typography variant="body1" color="textPrimary">
-          {"Are there any ACS events that you're looking forward to this term?"}
+          {"Are there any ACS events that you'd be interested in this term?"}
         </Typography>
       </div>
       <div className={classes.eventsContainer}>

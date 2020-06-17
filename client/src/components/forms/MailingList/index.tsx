@@ -3,7 +3,7 @@ import { /*type*/ Event } from 'components/forms/MailingList/events';
 
 import React, { useState } from 'react';
 import { withStyles, createStyles } from '@material-ui/core/styles';
-import validator from 'validator';
+import Typography from '@material-ui/core/Typography';
 import EmailSlide from './slides/Email';
 import FeedbackSlide from './slides/Feedback';
 import SocialSlide from './slides/Social';
@@ -33,6 +33,19 @@ const styles = (theme: Theme) =>
       maxWidth: '100%',
       maxHeight: '100%',
       borderRadius: LOGO_SIZE / 2,
+    },
+    titleContainer: {
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      margin: `
+        ${theme.spacing(4)}px 
+        ${theme.spacing(2)}px 
+        0 
+        ${theme.spacing(2)}px`,
+    },
+    title: {
+      textAlign: 'center',
     },
     slider: {
       display: 'flex',
@@ -67,20 +80,14 @@ function MailingListForm({ classes }: WithStyles<typeof styles>) {
   const [feedback, setFeedback] = useState('');
   const [translateValue, setTranslateValue] = useState(0);
 
-  const currentSlideIndex = (translateValue * -1) / 100;
-
-  const isValidEmail = validator.isEmail(email);
-
   const goLeft = () => {
     setTranslateValue(translateValue + 100);
     window.scrollTo(0, 0);
   };
 
   const goRight = () => {
-    if (currentSlideIndex !== 0 || isValidEmail) {
-      setTranslateValue(translateValue - 100);
-      window.scrollTo(0, 0);
-    }
+    setTranslateValue(translateValue - 100);
+    window.scrollTo(0, 0);
   };
 
   const submit = async () => {
@@ -98,6 +105,12 @@ function MailingListForm({ classes }: WithStyles<typeof styles>) {
 
   return (
     <div className={classes.container}>
+      <div className={classes.titleContainer}>
+        <Typography variant="h4" color="textPrimary" className={classes.title}>
+          {'Mailing List And Event Suggestions'}
+        </Typography>
+      </div>
+
       <div className={classes.logoContainer}>
         <img className={classes.logo} src="/assets/logo.jpg" alt="ACS Logo" />
       </div>
