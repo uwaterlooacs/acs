@@ -4,6 +4,7 @@ import { /*type*/ WithStyles, Theme } from '@material-ui/core/styles';
 import React from 'react';
 import { withStyles, createStyles } from '@material-ui/core/styles';
 import validator from 'validator';
+import classNames from 'classnames';
 import { TextField, Typography, Button } from '@material-ui/core';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 
@@ -19,6 +20,7 @@ const styles = (theme: Theme) =>
     textContainer: {
       display: 'flex',
       flexDirection: 'column',
+      alignItems: 'center',
       marginBottom: theme.spacing(2),
     },
     textFieldContainer: {
@@ -31,12 +33,17 @@ const styles = (theme: Theme) =>
     },
     buttonContainer: {
       display: 'flex',
-      justifyContent: 'space-between',
-      alignItems: 'center',
+      flexDirection: 'column',
+      justifyContent: 'flex-end',
+      alignItems: 'flex-end',
+      width: '100%',
       margin: `0 ${theme.spacing(2)}px ${theme.spacing(4)}px`,
     },
     button: {
       transition: TRANSITION_TIME,
+    },
+    nextButton: {
+      marginBottom: theme.spacing(1),
     },
   });
 
@@ -49,14 +56,20 @@ interface Props extends WithStyles<typeof styles> {
 function Email({ classes, email, setEmail, goRight }: Props) {
   const isInvalidEmail = Boolean(email) && !validator.isEmail(email);
 
+  const joinMailingList = () => {
+    if (validator.isEmail(email)) {
+      goRight();
+    }
+  };
+
   return (
     <div className={classes.container}>
       <div className={classes.textContainer}>
-        <Typography variant="h4" color="textPrimary">
+        <Typography variant="h4" color="textPrimary" align="center">
           Join our mailing list!
         </Typography>
-        <Typography variant="body1" color="textPrimary">
-          Get the latest and greatest updates from ACS
+        <Typography variant="body1" color="textPrimary" align="center">
+          Get the latest and greatest updates from ACS.
         </Typography>
       </div>
       <div className={classes.textFieldContainer}>
@@ -76,8 +89,15 @@ function Email({ classes, email, setEmail, goRight }: Props) {
         />
       </div>
       <div className={classes.buttonContainer}>
+        <Button
+          onClick={joinMailingList}
+          className={classNames(classes.button, classes.nextButton)}
+        >
+          Join
+          <NavigateNextIcon />
+        </Button>
         <Button onClick={goRight} className={classes.button}>
-          Next
+          Skip to event suggestions
           <NavigateNextIcon />
         </Button>
       </div>

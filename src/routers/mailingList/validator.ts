@@ -4,7 +4,10 @@ const validator = (route: string) => {
   switch (route) {
     case '/':
       return [
-        check('email').normalizeEmail().isEmail(),
+        check('email')
+          .optional({ checkFalsy: true })
+          .normalizeEmail()
+          .isEmail(),
         check('interestedEvents').isArray(),
         check('interestedEvents.*').notEmpty(),
         check('otherFeedback').isString(),
