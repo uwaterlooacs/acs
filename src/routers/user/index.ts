@@ -212,7 +212,7 @@ router.post(
       } else {
         conditions.watIAMUserId = emailOrWatIAMUserId;
       }
-      const user = await UserModel.findOne(conditions);
+      const user = await UserModel.findOne(conditions, 'membershipStatus');
 
       if (user === null) {
         throw createError(
