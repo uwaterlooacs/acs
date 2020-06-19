@@ -6,8 +6,8 @@ const validator = (route: string) => {
       return [
         check('email')
           .optional({ checkFalsy: true })
-          .normalizeEmail()
-          .isEmail(),
+          .isEmail()
+          .normalizeEmail(),
         check('interestedEvents').isArray(),
         check('interestedEvents.*').notEmpty(),
         check('otherFeedback').isString(),

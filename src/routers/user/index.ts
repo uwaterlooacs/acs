@@ -1,9 +1,14 @@
-import express, { Request, Response } from 'express';
-import UserModel, { UserDoc } from '../models/user';
-import { UserRequest } from '../types/network';
-import auth from '../middleware/auth';
-import * as M from '../utils/errorMessages';
-import '../db/mongoose';
+import express, { Request, Response, NextFunction } from 'express';
+import validator from 'validator';
+import createError from 'http-errors';
+import UserModel, { UserDoc } from '../../models/user';
+import { UserRequest } from '../../types/network';
+import auth from '../../middleware/auth';
+import * as M from '../../utils/errorMessages';
+import '../../db/mongoose';
+import routeValidator from './routeValidator';
+import validate from '../../middleware/validate';
+import { MembershipCheckRequestBody } from './types';
 
 const router = express.Router();
 
@@ -191,5 +196,38 @@ router.delete('/:id', auth, async (req: Request, res: Response) => {
     res.status(400).send();
   }
 });
+
+// check membership by email or watiam user id
+router.post(
+  '/membership-check',
+  routeValidator('/membership-check'),
+  validate,
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { emailOrWatIAMUserId } = req.body as MembershipCheckRequestBody;
+
+      const isEmail = validator.isEmail(emailOrWatIAMUserId);
+      const conditions: Record<string, string> = {};
+      if (isEmail) {
+        conditions.email = emailOrWatIAMUserId;
+      } else {
+        conditions.watIAMUserId = emailOrWatIAMUserId;
+      }
+      const user = await UserModel.findOne(conditions);
+
+      if (user === null) {
+        throw createError(
+          404,
+          `${
+            isEmail ? 'Email' : 'WatIAM user id'
+          } provided does not match an existing user.`,
+        );
+      }
+      res.send(user);
+    } catch (err) {
+      next(err);
+    }
+  },
+);
 
 export default router;
