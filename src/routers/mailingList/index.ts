@@ -1,7 +1,7 @@
 import express, { Request, Response, NextFunction } from 'express';
 import { GoogleSpreadsheet } from 'google-spreadsheet';
 import validate from '../../middleware/validate';
-import validator from './validator';
+import routeValidator from './routeValidator';
 import { DEFAULT_EVENT_RESPONSES } from './constant';
 import { MailingListRequestBody } from './types';
 import GoogleCreds from '../../config/acs-web-5aaaf-768e669e2d39.json';
@@ -15,7 +15,7 @@ const router = express.Router();
 // add to mailing list with responses of interest in events and other feedback
 router.post(
   '/',
-  validator('/'),
+  routeValidator('/'),
   validate,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
