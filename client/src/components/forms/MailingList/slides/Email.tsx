@@ -93,7 +93,7 @@ function Email({ classes, email, setEmail, goRight }: Props) {
           onClick={joinMailingList}
           className={classNames(classes.button, classes.nextButton)}
         >
-          Join
+          Next
           <NavigateNextIcon />
         </Button>
         <Button onClick={goRight} className={classes.button}>

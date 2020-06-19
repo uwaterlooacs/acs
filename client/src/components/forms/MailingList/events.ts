@@ -14,7 +14,7 @@ export default [
     description: 'Stream a movie together with the ACS fam.',
   },
   {
-    title: 'Online Party',
+    title: 'Virtual Party',
     description:
       'The ACS fam comes together to party virtually with live music.',
   },
