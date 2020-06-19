@@ -16,6 +16,13 @@ const UserSchema = new mongoose.Schema(
       trim: true,
       lowercase: true,
     },
+    watIAMUserId: {
+      unique: true,
+      type: String,
+      required: true,
+      trim: true,
+      lowercase: true,
+    },
     secret: {
       type: String,
       required: true,
