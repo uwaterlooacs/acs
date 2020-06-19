@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import { MEMBERSHIP_TYPE } from '../types/user';
+import { MEMBERSHIP_STATUS } from '../types/user';
 
 const UserSchema = new mongoose.Schema(
   {
@@ -24,7 +24,7 @@ const UserSchema = new mongoose.Schema(
     picture: {
       type: String,
     },
-    membership: {
+    membershipStatus: {
       type: String,
       required: true,
     },
@@ -94,7 +94,7 @@ export interface UserDoc extends mongoose.Document {
   email: string;
   secret: string;
   picture?: string;
-  membership: MEMBERSHIP_TYPE;
+  membershipStatus: MEMBERSHIP_STATUS;
   tokens: string[];
   generateAuthToken: () => Promise<string>;
 }
