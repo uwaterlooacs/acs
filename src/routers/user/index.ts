@@ -27,8 +27,8 @@ router.post('/signup', async (req: Request, res: Response) => {
 // login
 router.post('/', async (req: Request, res: Response) => {
   try {
-    const { email, secret } = req.body;
-    const user = await UserModel.findByCredentials(email, secret);
+    const { email, password } = req.body;
+    const user = await UserModel.findByCredentials(email, password);
     const token = await user.generateAuthToken();
     res.send({ user, token });
   } catch (err) {
@@ -40,14 +40,14 @@ router.post('/', async (req: Request, res: Response) => {
 // third party authentication
 router.post('/thirdPartyAuth', async (req: Request, res: Response) => {
   try {
-    const { email, secret } = req.body;
+    const { email, password } = req.body;
     const user = await UserModel.findOne({ email });
     if (!user) {
       const user = new UserModel(req.body);
       const token = await user.generateAuthToken();
       res.status(201).send({ user, token });
     } else {
-      const verifiedUser = await UserModel.validateSecret(user, secret);
+      const verifiedUser = await UserModel.validatePassword(user, password);
       const token = await verifiedUser.generateAuthToken();
       res.send({ user: verifiedUser, token });
     }
