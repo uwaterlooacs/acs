@@ -7,21 +7,31 @@ import auth from '../../middleware/auth';
 import * as M from '../../utils/errorMessages';
 import routeValidator from './routeValidator';
 import validate from '../../middleware/validate';
-import { MembershipCheckRequestBody } from './types';
+import { MEMBERSHIP_STATUS } from '../../types/user';
+import { MembershipCheckRequestBody, SignInRequestBody } from './types';
 
 const router = express.Router();
 
 // sign up
-router.post('/signup', async (req: Request, res: Response) => {
-  try {
-    const user = new UserModel(req.body);
-    const token = await user.generateAuthToken();
-    res.status(201).send({ user, token });
-  } catch (err) {
-    console.log(err);
-    res.status(400).send(M.SIGN_UP);
-  }
-});
+router.post(
+  '/signup',
+  routeValidator('/signup'),
+  validate,
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const signupData = req.body as SignInRequestBody;
+      const membershipStatus = signupData.paid
+        ? MEMBERSHIP_STATUS.PAID
+        : MEMBERSHIP_STATUS.UNPAID;
+
+      const user = new UserModel({ ...signupData, membershipStatus });
+      const token = await user.generateAuthToken();
+      res.status(201).send({ user, token });
+    } catch (err) {
+      next(err);
+    }
+  },
+);
 
 // login
 router.post('/', async (req: Request, res: Response) => {
