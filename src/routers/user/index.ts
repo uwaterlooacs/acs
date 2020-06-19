@@ -206,13 +206,10 @@ router.post(
       const { emailOrWatIAMUserId } = req.body as MembershipCheckRequestBody;
 
       const isEmail = validator.isEmail(emailOrWatIAMUserId);
-      const conditions: Record<string, string> = {};
-      if (isEmail) {
-        conditions.email = emailOrWatIAMUserId;
-      } else {
-        conditions.watIAMUserId = emailOrWatIAMUserId;
-      }
-      const user = await UserModel.findOne(conditions);
+      const user = await UserModel.findOne(
+        { [isEmail ? 'email' : 'watIAMUserId']: emailOrWatIAMUserId },
+        'membershipStatus',
+      );
 
       if (user === null) {
         throw createError(
