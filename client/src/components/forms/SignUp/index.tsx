@@ -9,7 +9,7 @@ function SignUp() {
 
   const submit = async () => {
     try {
-      const { user, token } = await signup({ email, secret: password, name });
+      const { user, token } = await signup({ email, password, name });
       console.log('Sign up successful', user, token);
     } catch (error) {
       console.log(M.SIGN_UP, error);

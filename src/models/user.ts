@@ -23,7 +23,7 @@ const UserSchema = new mongoose.Schema(
       trim: true,
       lowercase: true,
     },
-    secret: {
+    password: {
       type: String,
       required: true,
     },
@@ -51,7 +51,7 @@ UserSchema.virtual('event', {
 UserSchema.methods.toJSON = function () {
   const userObject = this.toObject();
 
-  delete userObject.secret;
+  delete userObject.password;
   delete userObject.tokens;
 
   return userObject;
@@ -64,8 +64,11 @@ UserSchema.methods.generateAuthToken = async function () {
   return token;
 };
 
-UserSchema.statics.validateSecret = async (user: UserDoc, secret: string) => {
-  const isMatch = await bcrypt.compare(secret, user.secret);
+UserSchema.statics.validatePassword = async (
+  user: UserDoc,
+  password: string,
+) => {
+  const isMatch = await bcrypt.compare(password, user.password);
   if (!isMatch) {
     throw new Error('Unable to login');
   }
@@ -74,19 +77,19 @@ UserSchema.statics.validateSecret = async (user: UserDoc, secret: string) => {
 
 UserSchema.statics.findByCredentials = async (
   email: string,
-  secret: string,
+  password: string,
 ) => {
   const user = await UserModel.findOne({ email });
   if (!user) {
     throw new Error('Unable to login');
   }
-  return await UserModel.validateSecret(user, secret);
+  return await UserModel.validatePassword(user, password);
 };
 
 UserSchema.pre('save', async function (next) {
   const user = this as UserDoc;
-  if (user.isModified('secret')) {
-    user.secret = await bcrypt.hash(user.secret, 8);
+  if (user.isModified('password')) {
+    user.password = await bcrypt.hash(user.password, 8);
   }
   next();
 });
@@ -94,15 +97,15 @@ UserSchema.pre('save', async function (next) {
 export interface UserDoc extends mongoose.Document {
   name: string;
   email: string;
-  secret: string;
+  password: string;
   picture?: string;
   tokens: string[];
   generateAuthToken: () => Promise<string>;
 }
 
 interface User extends mongoose.Model<UserDoc> {
-  findByCredentials: (email: string, secret: string) => Promise<UserDoc>;
-  validateSecret: (user: UserDoc, secret: string) => Promise<UserDoc>;
+  findByCredentials: (email: string, password: string) => Promise<UserDoc>;
+  validatePassword: (user: UserDoc, password: string) => Promise<UserDoc>;
 }
 
 const UserModel: User = mongoose.model<UserDoc, User>('User', UserSchema);
