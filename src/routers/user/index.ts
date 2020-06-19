@@ -5,7 +5,6 @@ import UserModel, { UserDoc } from '../../models/user';
 import { UserRequest } from '../../types/network';
 import auth from '../../middleware/auth';
 import * as M from '../../utils/errorMessages';
-import '../../db/mongoose';
 import routeValidator from './routeValidator';
 import validate from '../../middleware/validate';
 import { MembershipCheckRequestBody } from './types';
