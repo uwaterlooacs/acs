@@ -1,7 +1,17 @@
 import { check, oneOf } from 'express-validator';
+import { isPassword } from '../../utils/customValidators';
 
 const routeValidator = (route: string) => {
   switch (route) {
+    case '/signup':
+      return [
+        check('name').notEmpty().trim(),
+        check('email').isEmail().normalizeEmail(),
+        check('watIAMUserId').notEmpty().trim(),
+        check('password').custom(isPassword),
+        check('paid').optional().isBoolean(),
+        check('picture').optional().isString().trim(),
+      ];
     case '/membership-check':
       return [
         oneOf(
