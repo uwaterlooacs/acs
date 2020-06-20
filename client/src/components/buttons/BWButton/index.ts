@@ -1,6 +1,6 @@
 import { Button, withStyles } from '@material-ui/core';
 
-const ColorButton = withStyles((theme) => ({
+const BWButton = withStyles((theme) => ({
   root: {
     paddingLeft: theme.spacing(2),
     paddingRight: theme.spacing(2),
@@ -18,4 +18,4 @@ const ColorButton = withStyles((theme) => ({
   },
 }))(Button);
 
-export default ColorButton;
+export default BWButton;
