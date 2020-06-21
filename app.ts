@@ -2,6 +2,7 @@ import express, { Request, Response } from 'express';
 import path from 'path';
 import apiRouter from './src/routers/api';
 import './src/db/mongoose';
+import './src/jobs/membership';
 import 'dotenv/config';
 
 // create server
