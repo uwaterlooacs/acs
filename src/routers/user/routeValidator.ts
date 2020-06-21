@@ -1,4 +1,4 @@
-import { check, oneOf } from 'express-validator';
+import { check, oneOf, query } from 'express-validator';
 import { isPassword } from '../../utils/customValidators';
 
 const routeValidator = (route: string) => {
@@ -12,15 +12,17 @@ const routeValidator = (route: string) => {
         check('paid').optional().isBoolean(),
         check('picture').optional().isString().trim(),
       ];
-    case '/membership-check':
+    case '/membership':
+      return [check('membershipStatus').notEmpty(), query('id').notEmpty()];
+    case '/membership/check':
       return [
         oneOf(
           [
-            check('emailOrWatIAMUserId')
+            query('emailOrWatIAMUserId')
               .isEmail()
               .withMessage('Invalid email')
               .normalizeEmail(),
-            check('emailOrWatIAMUserId')
+            query('emailOrWatIAMUserId')
               .isAlphanumeric()
               .withMessage('Invalid WatIAM user id')
               .trim(),

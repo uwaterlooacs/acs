@@ -1,6 +1,4 @@
 import express, { Request, Response, NextFunction } from 'express';
-import validator from 'validator';
-import createError from 'http-errors';
 import UserModel, { UserDoc } from '../../models/user';
 import { UserRequest } from '../../types/network';
 import auth from '../../middleware/auth';
@@ -8,9 +6,11 @@ import * as M from '../../utils/errorMessages';
 import routeValidator from './routeValidator';
 import validate from '../../middleware/validate';
 import { MEMBERSHIP_STATUS } from '../../types/user';
-import { MembershipCheckRequestBody } from './types';
+import MembershipRouter from './membership';
 
 const router = express.Router();
+
+router.use('/membership', MembershipRouter);
 
 // sign up
 router.post(
@@ -204,35 +204,5 @@ router.delete('/:id', auth, async (req: Request, res: Response) => {
     res.status(400).send();
   }
 });
-
-// check membership by email or watiam user id
-router.post(
-  '/membership-check',
-  routeValidator('/membership-check'),
-  validate,
-  async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const { emailOrWatIAMUserId } = req.body as MembershipCheckRequestBody;
-
-      const isEmail = validator.isEmail(emailOrWatIAMUserId);
-      const user = await UserModel.findOne(
-        { [isEmail ? 'email' : 'watIAMUserId']: emailOrWatIAMUserId },
-        'membershipStatus',
-      );
-
-      if (user === null) {
-        throw createError(
-          404,
-          `${
-            isEmail ? 'Email' : 'WatIAM user id'
-          } provided does not match an existing user.`,
-        );
-      }
-      res.send(user);
-    } catch (err) {
-      next(err);
-    }
-  },
-);
 
 export default router;
