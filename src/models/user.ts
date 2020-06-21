@@ -104,6 +104,7 @@ export interface UserDoc extends mongoose.Document {
   email: string;
   password: string;
   picture?: string;
+  watIAMUserId: string;
   membershipStatus: MEMBERSHIP_STATUS;
   tokens: string[];
   generateAuthToken: () => Promise<string>;
