@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { withStyles, createStyles } from '@material-ui/core/styles';
 import { /*type*/ WithStyles, Theme } from '@material-ui/core/styles';
+import Header from 'components/Header';
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -8,7 +9,7 @@ const styles = (theme: Theme) =>
       display: 'flex',
       flex: 1,
       flexDirection: 'column',
-      alignItems: 'center',
+      alignItems: 'stretch',
       width: '100%',
       backgroundColor: theme.palette.background.default,
       minHeight: '100vh',
@@ -21,7 +22,18 @@ interface Props extends WithStyles<typeof styles> {
 }
 
 function Page({ classes, children }: Props) {
-  return <div className={classes.page}>{children}</div>;
+  const [isAuthPanelOpen, setIsAuthPanelOpen] = useState(false);
+  const openAuthPanel = () => {
+    setIsAuthPanelOpen(true);
+    console.log({ isAuthPanelOpen });
+  };
+
+  return (
+    <div className={classes.page}>
+      <Header onLoginClicked={openAuthPanel} />
+      {children}
+    </div>
+  );
 }
 
 export default withStyles(styles, { withTheme: true })(Page);
