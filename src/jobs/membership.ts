@@ -37,9 +37,7 @@ cron.schedule('0 0 1 JAN,MAY,SEP *', async function () {
       const { name, email, watIAMUserId, membershipStatus } = member;
       const newRow = { name, email, watIAMUserId, membershipStatus };
       await newSheet.addRow(newRow);
-      Object.assign(member, {
-        membershipStatus: MEMBERSHIP_STATUS.EXPIRED,
-      });
+      member.membershipStatus = MEMBERSHIP_STATUS.EXPIRED;
       await member.save();
     });
   } catch (error) {
