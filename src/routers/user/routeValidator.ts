@@ -1,5 +1,6 @@
-import { check, oneOf, query } from 'express-validator';
+import { check, oneOf, query, body } from 'express-validator';
 import { isPassword } from '../../utils/customValidators';
+import { MEMBERSHIP_STATUS } from '../../types/user';
 
 const routeValidator = (route: string) => {
   switch (route) {
@@ -13,7 +14,13 @@ const routeValidator = (route: string) => {
         check('picture').optional().isString().trim(),
       ];
     case '/membership':
-      return [check('membershipStatus').notEmpty(), query('id').notEmpty()];
+      return [
+        body('membershipStatus').custom((val) => {
+          if (!Object.values(MEMBERSHIP_STATUS).includes(val))
+            throw new Error('Invalid membership status');
+        }),
+        query('id').notEmpty(),
+      ];
     case '/membership/check':
       return [
         oneOf(
