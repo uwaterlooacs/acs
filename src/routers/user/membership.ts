@@ -2,7 +2,6 @@ import express, { Request, Response, NextFunction } from 'express';
 import validate from '../../middleware/validate';
 import routeValidator from './routeValidator';
 import User from '../../models/user';
-import { MEMBERSHIP_STATUS } from '../../types/user';
 import createHttpError from 'http-errors';
 import validator from 'validator';
 
@@ -19,11 +18,7 @@ router.patch(
       if (!user) {
         throw createHttpError(404, 'Cannot find user with that id');
       }
-      const membershipStatus = req.body.membershipStatus;
-      if (!Object.values(MEMBERSHIP_STATUS).includes(membershipStatus)) {
-        throw createHttpError(422, 'invalid membership status');
-      }
-      Object.assign(user, { membershipStatus });
+      user.membershipStatus = req.body.membershipStatus;
       await user.save();
       res.send();
     } catch (err) {
