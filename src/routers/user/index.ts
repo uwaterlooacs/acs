@@ -8,7 +8,7 @@ import * as M from '../../utils/errorMessages';
 import routeValidator from './routeValidator';
 import validate from '../../middleware/validate';
 import { MEMBERSHIP_STATUS } from '../../types/user';
-import { MembershipCheckRequestBody, SignInRequestBody } from './types';
+import { MembershipCheckRequestBody } from './types';
 
 const router = express.Router();
 
@@ -19,12 +19,11 @@ router.post(
   validate,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const signupData = req.body as SignInRequestBody;
-      const membershipStatus = signupData.paid
+      const membershipStatus = req.body.paid
         ? MEMBERSHIP_STATUS.PAID
         : MEMBERSHIP_STATUS.UNPAID;
 
-      const user = new UserModel({ ...signupData, membershipStatus });
+      const user = new UserModel({ ...req.body, membershipStatus });
       const token = await user.generateAuthToken();
       res.status(201).send({ user, token });
     } catch (err) {
