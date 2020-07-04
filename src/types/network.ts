@@ -1,7 +1,7 @@
 import { Request } from 'express';
 import { UserDoc } from '../models/user';
 
-export interface UserRequest extends Request {
+export interface AuthenticatedRequest extends Request {
   user?: UserDoc;
   token?: string;
 }

@@ -1,6 +1,6 @@
 import express, { Request, Response, NextFunction } from 'express';
 import UserModel, { UserDoc } from '../../models/user';
-import { UserRequest } from '../../types/network';
+import { AuthenticatedRequest } from '../../types/network';
 import auth from '../../middleware/auth';
 import * as M from '../../utils/errorMessages';
 import routeValidator from './routeValidator';
@@ -66,39 +66,47 @@ router.post('/thirdPartyAuth', async (req: Request, res: Response) => {
 });
 
 // logout
-router.post('/logout', auth, async (req: UserRequest, res: Response) => {
-  try {
-    if (req.user == null) {
-      throw new Error();
+router.post(
+  '/logout',
+  auth,
+  async (req: AuthenticatedRequest, res: Response) => {
+    try {
+      if (req.user == null) {
+        throw new Error();
+      }
+      req.user.tokens = req.user.tokens.filter((token) => {
+        return token !== req.token;
+      });
+      await req.user.save();
+      res.send();
+    } catch (err) {
+      console.log(err);
+      res.status(500).send();
     }
-    req.user.tokens = req.user.tokens.filter((token) => {
-      return token !== req.token;
-    });
-    await req.user.save();
-    res.send();
-  } catch (err) {
-    console.log(err);
-    res.status(500).send();
-  }
-});
+  },
+);
 
 // logout all
-router.post('/logoutAll', auth, async (req: UserRequest, res: Response) => {
-  try {
-    if (req.user == null) {
-      throw new Error();
+router.post(
+  '/logoutAll',
+  auth,
+  async (req: AuthenticatedRequest, res: Response) => {
+    try {
+      if (req.user == null) {
+        throw new Error();
+      }
+      req.user.tokens = [];
+      await req.user.save();
+      res.send();
+    } catch (err) {
+      console.log(err);
+      res.status(500).send();
     }
-    req.user.tokens = [];
-    await req.user.save();
-    res.send();
-  } catch (err) {
-    console.log(err);
-    res.status(500).send();
-  }
-});
+  },
+);
 
 // get me
-router.get('/me', auth, async (req: UserRequest, res: Response) => {
+router.get('/me', auth, async (req: AuthenticatedRequest, res: Response) => {
   res.send(req.user);
 });
 
@@ -147,7 +155,7 @@ router.get('/:id/picture', async (req: Request, res: Response) => {
 });
 
 // update me
-router.patch('/me', auth, async (req: UserRequest, res: Response) => {
+router.patch('/me', auth, async (req: AuthenticatedRequest, res: Response) => {
   try {
     const source = req.body as UserDoc;
     if (!req.user) throw new Error();
@@ -180,7 +188,7 @@ router.patch('/:id', auth, async (req: Request, res: Response) => {
 });
 
 // delete me
-router.delete('/me', auth, async (req: UserRequest, res: Response) => {
+router.delete('/me', auth, async (req: AuthenticatedRequest, res: Response) => {
   try {
     if (!req.user) throw new Error();
     await req.user.remove();

@@ -35,6 +35,11 @@ const UserSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    isAdmin: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
     tokens: [
       {
         type: String,
@@ -106,6 +111,7 @@ export interface UserDoc extends mongoose.Document {
   picture?: string;
   watIAMUserId: string;
   membershipStatus: MEMBERSHIP_STATUS;
+  isAdmin: boolean;
   tokens: string[];
   generateAuthToken: () => Promise<string>;
 }

@@ -1,5 +1,5 @@
 import { Response, NextFunction } from 'express';
-import { UserRequest } from '../types/network';
+import { AuthenticatedRequest } from '../types/network';
 import jwt from 'jsonwebtoken';
 import UserModel from '../models/user';
 
@@ -7,7 +7,11 @@ type TokenVerification = {
   id: string;
 };
 
-const auth = async (req: UserRequest, res: Response, next: NextFunction) => {
+const auth = async (
+  req: AuthenticatedRequest,
+  res: Response,
+  next: NextFunction,
+) => {
   try {
     const { APP_SECRET } = process.env;
     const authHeader = req.header('Authorization');

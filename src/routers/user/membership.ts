@@ -2,18 +2,48 @@ import express, { Request, Response, NextFunction } from 'express';
 import validate from '../../middleware/validate';
 import routeValidator from './routeValidator';
 import User from '../../models/user';
+import { AuthenticatedRequest } from '../../types/network';
 import createHttpError from 'http-errors';
 import validator from 'validator';
+import auth from '../../middleware/auth';
+import { MEMBERSHIP_STATUS } from '../../types/user';
 
 const router = express.Router();
 
 // update user's membership status
 router.patch(
-  '/',
+  '/unpaid',
+  routeValidator('/membership/unpaid'),
+  validate,
+  auth,
+  async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
+    try {
+      if (!req.user) {
+        throw createHttpError(401, 'Must authenticate');
+      }
+      req.user.membershipStatus = MEMBERSHIP_STATUS.UNPAID;
+      await req.user.save();
+      res.send();
+    } catch (err) {
+      next(err);
+    }
+  },
+);
+
+// update user's membership status
+router.patch(
+  '/paid',
   routeValidator('/membership'),
   validate,
-  async (req: Request, res: Response, next: NextFunction) => {
+  auth,
+  async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
     try {
+      if (!req.user || !req.user.isAdmin) {
+        throw createHttpError(
+          401,
+          'Must be an admin to update membership status',
+        );
+      }
       const user = await User.findById(req.query.id);
       if (!user) {
         throw createHttpError(404, 'Cannot find user with that id');
