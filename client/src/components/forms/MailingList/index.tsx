@@ -20,6 +20,7 @@ const styles = (theme: Theme) =>
       justifyContent: 'center',
       alignItems: 'center',
       maxWidth: 960,
+      margin: '0 auto',
       [theme.breakpoints.down('sm')]: {
         width: '100%',
       },

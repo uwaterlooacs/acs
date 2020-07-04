@@ -11,3 +11,5 @@ client/build
 client/node_modules
 
 acs-web-5aaaf-768e669e2d39.json
+
+.DS_Store
