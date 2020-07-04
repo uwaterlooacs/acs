@@ -9,7 +9,6 @@ const styles = (theme: Theme) =>
       display: 'flex',
       flex: 1,
       flexDirection: 'column',
-      alignItems: 'stretch',
       width: '100%',
       backgroundColor: theme.palette.background.default,
       minHeight: '100vh',
