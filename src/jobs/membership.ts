@@ -7,11 +7,11 @@ import GoogleCreds from '../config/acs-web-5aaaf-768e669e2d39.json';
 const getTerm = () => {
   const date = new Date();
   const month = date.getMonth();
-  if (month === 1) {
+  if (month === 0) {
     return 'Fall' + (date.getFullYear() - 1);
-  } else if (month === 5) {
+  } else if (month === 4) {
     return 'Winter' + date.getFullYear();
-  } else if (month === 9) {
+  } else if (month === 8) {
     return 'Spring' + date.getFullYear();
   }
 };
