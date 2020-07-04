@@ -16,12 +16,12 @@ const styles = (theme: Theme) =>
   });
 
 interface Props extends WithStyles<typeof styles> {
-  theme: Theme;
   children: React.ReactNode;
 }
 
 function Page({ classes, children }: Props) {
   const [isAuthPanelOpen, setIsAuthPanelOpen] = useState(false);
+
   const openAuthPanel = () => {
     setIsAuthPanelOpen(true);
     console.log({ isAuthPanelOpen });
@@ -35,4 +35,4 @@ function Page({ classes, children }: Props) {
   );
 }
 
-export default withStyles(styles, { withTheme: true })(Page);
+export default withStyles(styles)(Page);
