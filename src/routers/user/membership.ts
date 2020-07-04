@@ -13,8 +13,6 @@ const router = express.Router();
 // update user's membership status
 router.patch(
   '/unpaid',
-  routeValidator('/membership/unpaid'),
-  validate,
   auth,
   async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
     try {
@@ -32,7 +30,7 @@ router.patch(
 
 // update user's membership status
 router.patch(
-  '/paid',
+  '/',
   routeValidator('/membership'),
   validate,
   auth,
