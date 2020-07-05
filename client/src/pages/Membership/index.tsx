@@ -18,10 +18,7 @@ function Membership() {
   };
 
   return (
-    <Page
-      isAuthPanelOpen={isAuthPanelOpen}
-      setIsAuthPanelOpen={setIsAuthPanelOpen}
-    >
+    <Page>
       <AuthPanel
         isOpen={isAuthPanelOpen}
         setIsOpen={setIsAuthPanelOpen}

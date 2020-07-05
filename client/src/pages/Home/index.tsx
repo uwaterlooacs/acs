@@ -1,15 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Page from 'components/Page';
 import MailingList from 'components/forms/MailingList';
 
 function Home() {
-  const [isAuthPanelOpen, setIsAuthPanelOpen] = useState(false);
-
   return (
-    <Page
-      isAuthPanelOpen={isAuthPanelOpen}
-      setIsAuthPanelOpen={setIsAuthPanelOpen}
-    >
+    <Page>
       <MailingList />
     </Page>
   );

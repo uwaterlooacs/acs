@@ -1,5 +1,4 @@
-import React from 'react';
-import { /*type*/ Dispatch, SetStateAction } from 'react';
+import React, { useState } from 'react';
 import { /*type*/ WithStyles, Theme } from '@material-ui/core/styles';
 import { withStyles, createStyles } from '@material-ui/core/styles';
 import Header from 'components/Header';
@@ -19,16 +18,11 @@ const styles = (theme: Theme) =>
 
 interface Props extends WithStyles<typeof styles> {
   children: React.ReactNode;
-  isAuthPanelOpen: boolean;
-  setIsAuthPanelOpen: Dispatch<SetStateAction<boolean>>;
 }
 
-function Page({
-  classes,
-  children,
-  isAuthPanelOpen,
-  setIsAuthPanelOpen,
-}: Props) {
+function Page({ classes, children }: Props) {
+  const [isAuthPanelOpen, setIsAuthPanelOpen] = useState(false);
+
   const openAuthPanel = () => {
     setIsAuthPanelOpen(true);
   };
