@@ -1,7 +1,7 @@
 import React from 'react';
 import ShrinkImage from '.';
 import BigArtWorkFlags from './BigArtworkFlags.png';
-import AreYouAMember from './AreYouAMember.png';
+import AreYouAMember from 'pages/Membership/AreYouAMember.png';
 
 export default {
   component: ShrinkImage,
