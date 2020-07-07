@@ -4,6 +4,8 @@ import Page from 'components/Page';
 import { Button } from '@material-ui/core';
 import AuthPanel from 'components/AuthPanel';
 import { AUTH_PANEL_OPTIONS } from 'components/AuthPanel/constants';
+import ShrinkImage from 'components/ShrinkImage';
+import AreYouAMember from './AreYouAMember.png';
 
 function Membership() {
   const [authPanelOption, setAuthPanelOption] = useState<AuthPanelOption>(
@@ -24,6 +26,7 @@ function Membership() {
         setIsOpen={setIsAuthPanelOpen}
         option={authPanelOption}
       />
+      <ShrinkImage shift src={AreYouAMember} alt="Are you a member?" />
       <Button onClick={() => openAuthPanel(AUTH_PANEL_OPTIONS.LOGIN)}>
         login
       </Button>
