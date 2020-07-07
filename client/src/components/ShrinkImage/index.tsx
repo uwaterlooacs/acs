@@ -16,6 +16,7 @@ const styles = (theme: Theme) =>
       display: 'block',
       height: '100%',
       maxWidth: '80vw',
+      maxHeight: '80vh',
       margin: `${theme.spacing(4)}px auto`,
       transition: 'transform 300ms ease-in-out',
     },
