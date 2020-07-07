@@ -2,6 +2,7 @@ import React from 'react';
 import UserContextProvider from 'context/user/provider';
 import ThemeContextProvider from 'context/theme/provider';
 import ThemeProvider from 'theme/themeProvider';
+import AuthPanelProvider from 'context/authPanel/provider';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Home from 'pages/Home';
 import Membership from 'pages/Membership';
@@ -12,12 +13,14 @@ function App() {
     <UserContextProvider>
       <ThemeContextProvider>
         <ThemeProvider>
-          <BrowserRouter>
-            <Switch>
-              <Route exact path={ROUTES.HOME} component={Home} />
-              <Route path={ROUTES.MEMBERSHIP} component={Membership} />
-            </Switch>
-          </BrowserRouter>
+          <AuthPanelProvider>
+            <BrowserRouter>
+              <Switch>
+                <Route exact path={ROUTES.HOME} component={Home} />
+                <Route path={ROUTES.MEMBERSHIP} component={Membership} />
+              </Switch>
+            </BrowserRouter>
+          </AuthPanelProvider>
         </ThemeProvider>
       </ThemeContextProvider>
     </UserContextProvider>

@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import { /*type*/ WithStyles, Theme } from '@material-ui/core/styles';
 import { withStyles, createStyles } from '@material-ui/core/styles';
+import { AuthPanelContext } from 'context/authPanel/state';
 import Header from 'components/Header';
 import AuthPanel from 'components/AuthPanel';
+import { AUTH_PANEL_OPTIONS } from 'components/AuthPanel/constants';
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -21,16 +23,17 @@ interface Props extends WithStyles<typeof styles> {
 }
 
 function Page({ classes, children }: Props) {
-  const [isAuthPanelOpen, setIsAuthPanelOpen] = useState(false);
+  const { setIsOpen, setOption } = useContext(AuthPanelContext);
 
   const openAuthPanel = () => {
-    setIsAuthPanelOpen(true);
+    setOption(AUTH_PANEL_OPTIONS.LOGIN);
+    setIsOpen(true);
   };
 
   return (
     <div className={classes.page}>
       <Header onLoginClicked={openAuthPanel} />
-      <AuthPanel isOpen={isAuthPanelOpen} setIsOpen={setIsAuthPanelOpen} />
+      <AuthPanel />
       {children}
     </div>
   );
