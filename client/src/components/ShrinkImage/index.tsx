@@ -15,10 +15,13 @@ const styles = (theme: Theme) =>
     shrinkimage: {
       display: 'block',
       height: '100%',
-      maxWidth: '80vw',
-      maxHeight: '80vh',
+      maxWidth: '75vw',
+      maxHeight: '75vh',
       margin: `${theme.spacing(4)}px auto`,
       transition: 'transform 300ms ease-in-out',
+      [theme.breakpoints.down('sm')]: {
+        height: 'auto',
+      },
     },
     entering: {
       transform: 'scale(1.25)',
@@ -54,6 +57,7 @@ const ShrinkImage: React.FC<Props> = ({
   return (
     <Transition in appear timeout={1000}>
       {(state) => (
+        // eslint-disable-next-line jsx-a11y/alt-text
         <img
           className={classNames(classes.shrinkimage, classes[state], {
             [classes[`${state}-shift` as ShiftedClassName]]: shift,
