@@ -1,22 +1,19 @@
-import React, { useState } from 'react';
 import { /*type*/ AuthPanelOption } from 'components/AuthPanel/types';
+
+import React, { useContext } from 'react';
 import Page from 'components/Page';
 import { Button } from '@material-ui/core';
-import AuthPanel from 'components/AuthPanel';
 import { AUTH_PANEL_OPTIONS } from 'components/AuthPanel/constants';
 import ShrinkImage from 'components/ShrinkImage';
 import AreYouAMember from './AreYouAMember.png';
+import { AuthPanelContext } from 'context/authPanel/state';
 
 function Membership() {
-  const [authPanelOption, setAuthPanelOption] = useState<AuthPanelOption>(
-    AUTH_PANEL_OPTIONS.LOGIN,
-  );
-
-  const [isAuthPanelOpen, setIsAuthPanelOpen] = useState(false);
+  const { setOption, setIsOpen } = useContext(AuthPanelContext);
 
   const openAuthPanel = (option: AuthPanelOption) => {
-    setAuthPanelOption(option);
-    setIsAuthPanelOpen(true);
+    setOption(option);
+    setIsOpen(true);
   };
 
   return (

@@ -1,10 +1,10 @@
-import React, { memo, useState } from 'react';
-import { /*type*/ Dispatch, SetStateAction } from 'react';
 import { /*type*/ WithStyles, Theme } from '@material-ui/core/styles';
-import { /*type*/ AuthPanelOption } from './types';
+
+import React, { memo, useState, useContext } from 'react';
 import { withStyles, createStyles } from '@material-ui/core/styles';
-import CloseIcon from '@material-ui/icons/Close';
 import { Typography, Button, TextField, Drawer } from '@material-ui/core';
+import CloseIcon from '@material-ui/icons/Close';
+import { AuthPanelContext } from 'context/authPanel/state';
 import { AUTH_PANEL_OPTIONS } from './constants';
 import BWButton from 'components/buttons/BWButton';
 
@@ -61,18 +61,9 @@ const styles = (theme: Theme) =>
     },
   });
 
-interface Props extends WithStyles<typeof styles> {
-  isOpen: boolean;
-  setIsOpen: Dispatch<SetStateAction<boolean>>;
-  option?: AuthPanelOption;
-}
+const AuthPanel = ({ classes }: WithStyles<typeof styles>) => {
+  const { option, isOpen, setIsOpen } = useContext(AuthPanelContext);
 
-const AuthPanel = ({
-  classes,
-  isOpen,
-  setIsOpen,
-  option = AUTH_PANEL_OPTIONS.LOGIN,
-}: Props) => {
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
   const [membershipStatus, setMembershipStatus] = useState('');
