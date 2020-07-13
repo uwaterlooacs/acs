@@ -20,6 +20,9 @@ const styles = (theme: Theme) =>
       padding: theme.spacing(4),
     },
     imageContainer: {
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
       width: `calc(100% - ${2 * theme.spacing(2)}px)`,
     },
     image: {
