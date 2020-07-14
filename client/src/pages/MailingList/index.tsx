@@ -1,5 +1,5 @@
 import { /*type*/ WithStyles, Theme } from '@material-ui/core/styles';
-import { /*type*/ Event } from 'components/forms/MailingList/events';
+import { /*type*/ Event } from './events';
 
 import React, { useState } from 'react';
 import { withStyles, createStyles } from '@material-ui/core/styles';

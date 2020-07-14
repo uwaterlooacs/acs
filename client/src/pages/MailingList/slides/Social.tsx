@@ -19,6 +19,9 @@ const styles = (theme: Theme) =>
       flexDirection: 'column',
       marginBottom: theme.spacing(6),
     },
+    socialIconContainer: {
+      marginTop: theme.spacing(2),
+    },
   });
 
 function Social({ classes }: WithStyles<typeof styles>) {
@@ -31,7 +34,9 @@ function Social({ classes }: WithStyles<typeof styles>) {
         <Typography color="textPrimary" variant="body1" align="center">
           Make sure to follow us on social media:
         </Typography>
-        <SocialIcons />
+        <div className={classes.socialIconContainer}>
+          <SocialIcons />
+        </div>
       </div>
     </div>
   );

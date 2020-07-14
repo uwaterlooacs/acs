@@ -1,6 +1,6 @@
 import { /*type*/ Dispatch, SetStateAction } from 'react';
 import { /*type*/ WithStyles, Theme } from '@material-ui/core/styles';
-import { /*type*/ Event } from 'components/forms/MailingList/events';
+import { /*type*/ Event } from 'pages/MailingList/events';
 
 import React, { useState } from 'react';
 import { withStyles, createStyles } from '@material-ui/core/styles';
@@ -15,7 +15,7 @@ import {
 } from '@material-ui/core';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
-import EVENTS from 'components/forms/MailingList/events';
+import EVENTS from 'pages/MailingList/events';
 
 const TRANSITION_TIME = '0.5s';
 

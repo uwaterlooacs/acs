@@ -63,10 +63,10 @@ const styles = (theme: Theme) =>
   });
 
 interface Props extends WithStyles<typeof styles> {
-  theme?: 'white' | 'default';
+  theme?: 'white' | 'black';
 }
 
-function SocialIcons({ classes, theme = 'default' }: Props) {
+function SocialIcons({ classes, theme = 'black' }: Props) {
   const [isSCHidden, setIsSCHidden] = useState(true);
   const snapchatSrc =
     theme === 'white'
@@ -81,7 +81,7 @@ function SocialIcons({ classes, theme = 'default' }: Props) {
           href="https://www.facebook.com/uWaterlooACS"
           target="_blank"
           rel="noreferrer noopener"
-          style={theme === 'white' ? { color: 'white' } : {}}
+          style={{ color: theme }}
         >
           <FacebookIcon className={classes.icon} />
           /uWaterlooACS
@@ -91,7 +91,7 @@ function SocialIcons({ classes, theme = 'default' }: Props) {
           href="https://twitter.com/uWaterlooACS"
           target="_blank"
           rel="noreferrer noopener"
-          style={theme === 'white' ? { color: 'white' } : {}}
+          style={{ color: theme }}
         >
           <TwitterIcon className={classes.icon} />
           @uWaterlooACS
@@ -103,7 +103,7 @@ function SocialIcons({ classes, theme = 'default' }: Props) {
           href="https://www.instagram.com/uwaterlooacs"
           target="_blank"
           rel="noreferrer noopener"
-          style={theme === 'white' ? { color: 'white' } : {}}
+          style={{ color: theme }}
         >
           <InstagramIcon className={classes.icon} />
           @uwaterlooacs
@@ -111,7 +111,7 @@ function SocialIcons({ classes, theme = 'default' }: Props) {
         <Button
           onClick={() => setIsSCHidden(false)}
           className={classes.button}
-          style={theme === 'white' ? { color: 'white' } : {}}
+          style={{ color: theme }}
         >
           <div className={classNames(classes.icon, classes.scContainer)}>
             <img className={classes.sc} src={snapchatSrc} alt="snapchat" />
