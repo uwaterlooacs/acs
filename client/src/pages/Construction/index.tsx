@@ -45,11 +45,10 @@ const styles = (theme: Theme) =>
   });
 
 function Home({ classes }: WithStyles<typeof styles>) {
-  const ss = useScreenSize();
-  const bannerSrc =
-    ss === ScreenSize.SM || ss === ScreenSize.XS
-      ? 'assets/constr.png'
-      : 'assets/constr-wide.png';
+  const { down } = useScreenSize();
+  const bannerSrc = down(ScreenSize.SM)
+    ? 'assets/constr.png'
+    : 'assets/constr-wide.png';
 
   return (
     <div className={classes.container}>
