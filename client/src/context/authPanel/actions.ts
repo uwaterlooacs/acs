@@ -1,4 +1,4 @@
-import { AuthPanelOption } from 'components/AuthPanel/types';
+import { AuthPanelOption } from 'types/auth';
 
 enum ActionTypes {
   SET_IS_OPEN = 'Open / Close the panel',

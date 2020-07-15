@@ -1,5 +1,5 @@
 import { /*type*/ WithStyles } from '@material-ui/core/styles';
-import { /*type*/ AuthPanelOption } from 'components/AuthPanel/types';
+import { /*type*/ AuthPanelOption } from 'types/auth';
 
 import React, { useContext } from 'react';
 import { AuthPanelContext } from 'context/authPanel/state';

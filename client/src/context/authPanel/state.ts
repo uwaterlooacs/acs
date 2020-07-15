@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { /*type*/ AuthPanelOption } from 'components/AuthPanel/types';
+import { /*type*/ AuthPanelOption } from 'types/auth';
 import { createContext } from 'react';
 import { AUTH_PANEL_OPTIONS } from 'utils/constants';
 
