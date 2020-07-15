@@ -15,13 +15,11 @@ const getScreenSize = (width: number) => {
 };
 
 function useScreenSize() {
-  const width = window.innerWidth;
-  const [ss, setSS] = useState(getScreenSize(width));
+  const [ss, setSS] = useState(getScreenSize(window.innerWidth));
 
   useLayoutEffect(() => {
     function updateSize() {
-      const width = window.innerWidth;
-      const currentSS = getScreenSize(width);
+      const currentSS = getScreenSize(window.innerWidth);
       if (currentSS !== ss) {
         setSS(currentSS);
       }
