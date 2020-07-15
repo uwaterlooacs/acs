@@ -44,7 +44,7 @@ const styles = (theme: Theme) =>
     },
   });
 
-function Home({ classes }: WithStyles<typeof styles>) {
+function Construction({ classes }: WithStyles<typeof styles>) {
   const { down } = useScreenSize();
   const bannerSrc = down(ScreenSize.SM)
     ? 'assets/constr.png'
@@ -80,4 +80,4 @@ function Home({ classes }: WithStyles<typeof styles>) {
   );
 }
 
-export default withStyles(styles)(Home);
+export default withStyles(styles)(Construction);
