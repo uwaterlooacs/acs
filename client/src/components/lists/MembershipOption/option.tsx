@@ -1,7 +1,7 @@
 import { /*type*/ WithStyles, Theme } from '@material-ui/core/styles';
 import { /*type*/ MembershipOption } from './types';
 
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { AuthPanelContext } from 'context/authPanel/state';
 import { withStyles, createStyles } from '@material-ui/core/styles';
 import classnames from 'classnames';
@@ -33,6 +33,7 @@ interface Props extends WithStyles<typeof styles> {
 }
 
 function Option({ classes, option, isLast }: Props) {
+  const [showDescription, setShowDescription] = useState(false);
   const { setOption, setIsOpen } = useContext(AuthPanelContext);
 
   const openAuthPanel = () => {
@@ -44,6 +45,8 @@ function Option({ classes, option, isLast }: Props) {
 
   return (
     <div
+      onMouseEnter={() => setShowDescription(true)}
+      onMouseLeave={() => setShowDescription(false)}
       className={classnames(classes.container, {
         [classes.separator]: !isLast,
       })}
@@ -55,9 +58,11 @@ function Option({ classes, option, isLast }: Props) {
       >
         {option.title}
       </Typography>
-      <Typography variant="body2" align="center" className={classes.text}>
-        {option.description}
-      </Typography>
+      {showDescription && (
+        <Typography variant="body2" align="center" className={classes.text}>
+          {option.description}
+        </Typography>
+      )}
       <BWButton onClick={openAuthPanel}>{option.cta}</BWButton>
     </div>
   );
