@@ -1,7 +1,8 @@
 import { useLayoutEffect, useState } from 'react';
 import { ScreenSize } from 'types/theme';
 
-const getScreenSize = (width: number) => {
+const getScreenSize = () => {
+  const width = window.innerWidth;
   if (width >= 1920) {
     return ScreenSize.XL;
   } else if (width >= 1280) {
@@ -15,11 +16,11 @@ const getScreenSize = (width: number) => {
 };
 
 function useScreenSize() {
-  const [ss, setSS] = useState(getScreenSize(window.innerWidth));
+  const [ss, setSS] = useState(getScreenSize());
 
   useLayoutEffect(() => {
     function updateSize() {
-      const currentSS = getScreenSize(window.innerWidth);
+      const currentSS = getScreenSize();
       if (currentSS !== ss) {
         setSS(currentSS);
       }
