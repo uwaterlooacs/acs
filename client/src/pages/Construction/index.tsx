@@ -65,14 +65,14 @@ function Home({ classes }: WithStyles<typeof styles>) {
         style={{ fontWeight: 'bold' }}
         className={classes.text}
       >
-        awesome new website
+        awesome new website!
       </Typography>
       <Typography
         variant="h5"
         align="center"
         className={classnames(classes.text, classes.topSpacing)}
       >
-        Check out our social media for the latest updates
+        Check out our social media for the latest updates:
       </Typography>
       <div className={classes.socialContainer}>
         <SocialIcons theme="white" />

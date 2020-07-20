@@ -1,8 +1,7 @@
 import { /*type*/ WithStyles, Theme } from '@material-ui/core/styles';
 
-import React, { useState } from 'react';
+import React from 'react';
 import { withStyles, createStyles } from '@material-ui/core/styles';
-import classNames from 'classnames';
 import Button from '@material-ui/core/Button';
 import FacebookIcon from '@material-ui/icons/Facebook';
 import TwitterIcon from '@material-ui/icons/Twitter';
@@ -67,7 +66,6 @@ interface Props extends WithStyles<typeof styles> {
 }
 
 function SocialIcons({ classes, theme = 'black' }: Props) {
-  const [isSCHidden, setIsSCHidden] = useState(true);
   const snapchatSrc =
     theme === 'white'
       ? 'assets/snapchat-white.png'
@@ -96,6 +94,22 @@ function SocialIcons({ classes, theme = 'black' }: Props) {
           <TwitterIcon className={classes.icon} />
           @uWaterlooACS
         </Button>
+        <Button
+          className={classes.button}
+          href="https://linktr.ee/uwaterlooacs"
+          target="_blank"
+          rel="noreferrer noopener"
+          style={{ color: theme }}
+        >
+          <div className={classes.icon}>
+            <img
+              className={classes.sc}
+              src="assets/linktree.png"
+              alt="linktree"
+            />
+          </div>
+          @uwaterlooacs
+        </Button>
       </div>
       <div className={classes.iconsContainer}>
         <Button
@@ -109,27 +123,18 @@ function SocialIcons({ classes, theme = 'black' }: Props) {
           @uwaterlooacs
         </Button>
         <Button
-          onClick={() => setIsSCHidden(false)}
           className={classes.button}
+          href="https://www.snapchat.com/add/uwaterlooacs"
+          target="_blank"
+          rel="noreferrer noopener"
           style={{ color: theme }}
         >
-          <div className={classNames(classes.icon, classes.scContainer)}>
+          <div className={classes.icon}>
             <img className={classes.sc} src={snapchatSrc} alt="snapchat" />
           </div>
           @uwaterlooacs
         </Button>
       </div>
-      {!isSCHidden && (
-        <div className={classes.snapCodeWrapper}>
-          <div className={classes.snapCodeContainer}>
-            <img
-              className={classes.snapCode}
-              src="assets/snapcode.png"
-              alt="snap code"
-            />
-          </div>
-        </div>
-      )}
     </>
   );
 }
