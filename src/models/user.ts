@@ -5,7 +5,12 @@ import { MEMBERSHIP_STATUS } from '../types/user';
 
 const UserSchema = new mongoose.Schema(
   {
-    name: {
+    firstName: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    lastName: {
       type: String,
       required: true,
       trim: true,

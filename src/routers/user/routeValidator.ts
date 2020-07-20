@@ -6,7 +6,8 @@ const routeValidator = (route: string) => {
   switch (route) {
     case '/signup':
       return [
-        check('name').notEmpty().trim(),
+        check('firstName').isString().trim(),
+        check('lastName').isString().trim(),
         check('email').isEmail().normalizeEmail(),
         check('watIAMUserId').notEmpty().trim(),
         check('studentNumber').custom(isStudentNumber),
