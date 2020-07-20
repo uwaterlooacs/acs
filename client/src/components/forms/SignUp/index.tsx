@@ -74,42 +74,15 @@ function SignUpForm({
   setFaculty,
   onNext,
 }: Props) {
-  const [showFirstNameError, setShowFirstNameError] = useState(false);
-  const [showLastNameError, setShowLastNameError] = useState(false);
-  const [showStudentNumberError, setShowStudentNumberError] = useState(false);
-  const [showEmailError, setShowEmailError] = useState(false);
-  const [showSemesterError, setShowSemesterError] = useState(false);
-  const [showFacultyError, setShowFacultyError] = useState(false);
   const [triedToSubmit, setTriedToSubmit] = useState(false);
 
-  useEffect(() => {
-    if (triedToSubmit && !isName(firstName)) setShowFirstNameError(true);
-    else setShowFirstNameError(false);
-
-    if (triedToSubmit && !isName(lastName)) setShowLastNameError(true);
-    else setShowLastNameError(false);
-
-    if (triedToSubmit && !isStudentNumber(studentNumber))
-      setShowStudentNumberError(true);
-    else setShowStudentNumberError(false);
-
-    if (triedToSubmit && !isUWEmail(email)) setShowEmailError(true);
-    else setShowEmailError(false);
-
-    if (triedToSubmit && !semester) setShowSemesterError(true);
-    else setShowSemesterError(false);
-
-    if (triedToSubmit && !faculty) setShowFacultyError(true);
-    else setShowFacultyError(false);
-  }, [
-    triedToSubmit,
-    firstName,
-    lastName,
-    studentNumber,
-    email,
-    semester,
-    faculty,
-  ]);
+  const showFirstNameError = triedToSubmit && !isName(firstName);
+  const showLastNameError = triedToSubmit && !isName(lastName);
+  const showStudentNumberError =
+    triedToSubmit && !isStudentNumber(studentNumber);
+  const showEmailError = triedToSubmit && !isUWEmail(email);
+  const showSemesterError = triedToSubmit && !semester;
+  const showFacultyError = triedToSubmit && !faculty;
 
   const onNextClicked = () => {
     setTriedToSubmit(true);
