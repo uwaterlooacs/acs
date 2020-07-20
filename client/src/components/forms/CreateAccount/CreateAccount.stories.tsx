@@ -1,9 +1,9 @@
 import React from 'react';
 import { action } from '@storybook/addon-actions';
-import CreateAccount from '.';
+import CreateAccountForm from '.';
 
 export default {
-  component: CreateAccount,
+  component: CreateAccountForm,
   title: 'CreateAccount',
 };
 
@@ -16,10 +16,10 @@ const baseProps = {
   onNext: action('onNext'),
 };
 
-export const Base = () => <CreateAccount {...baseProps} />;
+export const Base = () => <CreateAccountForm {...baseProps} />;
 
 export const LimittedWidth = () => (
   <div style={{ width: '400px' }}>
-    <CreateAccount {...baseProps} />
+    <CreateAccountForm {...baseProps} />
   </div>
 );

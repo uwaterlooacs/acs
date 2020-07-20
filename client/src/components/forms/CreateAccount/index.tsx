@@ -28,7 +28,7 @@ type Props = WithStyles<typeof styles> & {
   onNext: () => void;
 };
 
-function CreateAccount({
+function CreateAccountForm({
   classes,
   email,
   password,
@@ -82,4 +82,4 @@ function CreateAccount({
   );
 }
 
-export default withStyles(styles)(CreateAccount);
+export default withStyles(styles)(CreateAccountForm);
