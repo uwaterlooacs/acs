@@ -5,7 +5,7 @@ import { withStyles, createStyles } from '@material-ui/core/styles';
 import { Typography, Button, TextField, Drawer } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import { AuthPanelContext } from 'context/authPanel/state';
-import { AUTH_PANEL_OPTIONS } from './constants';
+import { AUTH_PANEL_OPTIONS } from 'utils/constants';
 import BWButton from 'components/buttons/BWButton';
 
 const styles = (theme: Theme) =>

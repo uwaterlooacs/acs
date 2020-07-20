@@ -1,15 +1,32 @@
 import React from 'react';
-import SignUp from '.';
+import { action } from '@storybook/addon-actions';
+import SignUpForm from '.';
 
 export default {
-  component: SignUp,
-  title: 'SignUp',
+  component: SignUpForm,
+  title: 'SignUpForm',
 };
 
-export const Base = () => <SignUp />;
+const baseProps = {
+  firstName: '',
+  setFirstName: action('setFirstName'),
+  lastName: '',
+  setLastName: action('setLastName'),
+  studentNumber: '',
+  setStudentNumber: action('setStudentNumber'),
+  email: '',
+  setEmail: action('setEmail'),
+  semester: '',
+  setSemester: action('setSemester'),
+  faculty: '',
+  setFaculty: action('setFaculty'),
+  onNext: action('onNext'),
+};
+
+export const Base = () => <SignUpForm {...baseProps} />;
 
 export const LimittedWidth = () => (
   <div style={{ width: '400px' }}>
-    <SignUp />
+    <SignUpForm {...baseProps} />
   </div>
 );
