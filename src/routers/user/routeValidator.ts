@@ -1,8 +1,7 @@
 import { check, oneOf, query, body } from 'express-validator';
-import { isPassword } from '../../utils/customValidators';
+import { isPassword, isStudentNumber } from '../../utils/customValidators';
 import { MEMBERSHIP_STATUS } from '../../types/user';
 
-const STUDENT_NUMBER_LENGTH = 8;
 const routeValidator = (route: string) => {
   switch (route) {
     case '/signup':
@@ -10,9 +9,7 @@ const routeValidator = (route: string) => {
         check('name').notEmpty().trim(),
         check('email').isEmail().normalizeEmail(),
         check('watIAMUserId').notEmpty().trim(),
-        check('studentNumber')
-          .isNumeric()
-          .isLength({ min: STUDENT_NUMBER_LENGTH, max: STUDENT_NUMBER_LENGTH }),
+        check('studentNumber').custom(isStudentNumber),
         check('password').custom(isPassword),
         check('paid').optional().isBoolean(),
         check('picture').optional().isString().trim(),
