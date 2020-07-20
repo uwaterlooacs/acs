@@ -1,4 +1,3 @@
-import validator from 'validator';
 import { SEMESTERS, FACULTIES } from '../types/user';
 
 const MIN_PASSWORD_LENGTH = 8;
@@ -16,17 +15,17 @@ export const isPassword = (password?: string) => {
 };
 
 const STUDENT_NUMBER_LENGTH = 8;
-export const isStudentNumber = (studentNumber?: string) => {
+export const isStudentNumber = (studentNumber?: number) => {
   if (!studentNumber) {
     throw new Error('studentNumber is required.');
   }
-  if (studentNumber.length !== STUDENT_NUMBER_LENGTH) {
-    throw new Error(
-      `studentNumber is must be ${STUDENT_NUMBER_LENGTH} characters in length.`,
-    );
+  if (typeof studentNumber !== 'number') {
+    throw new Error(`studentNumber must be a number.`);
   }
-  if (!validator.isNumeric(studentNumber)) {
-    throw new Error(`studentNumber is must only contain numeric characters.`);
+  if (studentNumber.toString().length !== STUDENT_NUMBER_LENGTH) {
+    throw new Error(
+      `studentNumber must be ${STUDENT_NUMBER_LENGTH} characters in length.`,
+    );
   }
   return true;
 };
@@ -36,7 +35,7 @@ export const isSemester = (semester?: string) => {
     throw new Error('semester is required.');
   }
   if (!SEMESTERS.includes(semester)) {
-    throw new Error(`semester is must be one of ${SEMESTERS.join(', ')}.`);
+    throw new Error(`semester must be one of ${SEMESTERS.join(', ')}.`);
   }
   return true;
 };
@@ -46,7 +45,7 @@ export const isFaculty = (faculty?: string) => {
     throw new Error('faculty is required.');
   }
   if (!FACULTIES.includes(faculty)) {
-    throw new Error(`faculty is must be one of ${FACULTIES.join(', ')}.`);
+    throw new Error(`faculty must be one of ${FACULTIES.join(', ')}.`);
   }
   return true;
 };
