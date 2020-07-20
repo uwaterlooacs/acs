@@ -1,47 +1,113 @@
-import React, { useState } from 'react';
-import { signup } from 'utils/data/user';
-import * as M from 'utils/network/errorMessages';
+import React from 'react';
+import {
+  Typography,
+  Theme,
+  createStyles,
+  WithStyles,
+  withStyles,
+  TextField,
+  Box,
+  Divider,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
+} from '@material-ui/core';
+import BWButton from 'components/buttons/BWButton';
+import { FACULTIES, SEMESTERS } from 'utils/constants';
 
-function SignUp() {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+const styles = (theme: Theme) =>
+  createStyles({
+    titleDivider: {
+      marginTop: theme.spacing(1),
+      backgroundColor: theme.palette.text.primary,
+    },
+    form: {
+      marginTop: theme.spacing(2),
+      padding: `${theme.spacing(1)}px ${theme.spacing(2)}px`,
+    },
+    actions: {
+      marginTop: theme.spacing(2),
+      padding: `0 ${theme.spacing(4)}px`,
+    },
+  });
 
-  const submit = async () => {
-    try {
-      const { user, token } = await signup({ email, password, name });
-      console.log('Sign up successful', user, token);
-    } catch (error) {
-      console.log(M.SIGN_UP, error);
-    }
-  };
+type Props = WithStyles<typeof styles>;
 
+function SignUp({ classes }: Props) {
   return (
     <div>
-      <h1>Sign Up</h1>
-      <p>Name</p>
-      <input
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        type="text"
-      />
-      <p>Email</p>
-      <input
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        type="email"
-      />
-      <p>Password</p>
-      <input
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        type="password"
-      />
-      <div style={{ marginTop: 10 }}>
-        <button onClick={submit}>Create</button>
+      <Typography variant="h4" align="center">
+        Enter Your Information
+      </Typography>
+      <Divider className={classes.titleDivider} />
+      <div className={classes.form}>
+        <Box display="flex">
+          <Box flex={1}>
+            <TextField label="First Name" variant="outlined" fullWidth />
+          </Box>
+          <Box marginLeft={1} flex={1}>
+            <TextField label="Last Name" variant="outlined" fullWidth />
+          </Box>
+        </Box>
+        <Box marginTop={2}>
+          <TextField label="Student Number" variant="outlined" fullWidth />
+        </Box>
+        <Box marginTop={2}>
+          <TextField label="Email Address" variant="outlined" fullWidth />
+        </Box>
+        <Box display="flex" marginTop={2}>
+          <Box flex={1}>
+            <FormControl fullWidth>
+              <InputLabel id="semester-label" variant="outlined">
+                Semester
+              </InputLabel>
+              <Select
+                id="semester"
+                labelId="semester-label"
+                label="Semester"
+                variant="outlined"
+              >
+                <MenuItem value={undefined} disabled>
+                  Select Semester
+                </MenuItem>
+                {SEMESTERS.map((semesters) => (
+                  <MenuItem key={semesters} value={semesters}>
+                    {semesters}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Box>
+          <Box marginLeft={1} flex={1}>
+            <FormControl fullWidth>
+              <InputLabel id="faculty-label" variant="outlined">
+                Faculty
+              </InputLabel>
+              <Select
+                id="faculty"
+                labelId="faculty-label"
+                label="Faculty"
+                variant="outlined"
+              >
+                <MenuItem value={undefined} disabled>
+                  Select Faculty
+                </MenuItem>
+                {FACULTIES.map((faculty) => (
+                  <MenuItem key={faculty} value={faculty}>
+                    {faculty}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Box>
+        </Box>
+      </div>
+      <div className={classes.actions}>
+        <BWButton fullWidth>Next</BWButton>
       </div>
     </div>
   );
 }
 
-export default SignUp;
+export default withStyles(styles)(SignUp);
