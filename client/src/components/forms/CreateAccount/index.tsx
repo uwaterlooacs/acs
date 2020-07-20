@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Typography,
   Theme,
@@ -10,6 +10,12 @@ import {
   Divider,
 } from '@material-ui/core';
 import BWButton from 'components/buttons/BWButton';
+import { isPassword } from './utils';
+import {
+  PASSWORDS_DONT_MATCH_ERROR,
+  INVALID_PASSWORD_ERROR,
+  CreateAccountError,
+} from './constants';
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -37,6 +43,26 @@ function CreateAccountForm({
   setReenteredPassword,
   onNext,
 }: Props) {
+  const [error, setError] = useState<CreateAccountError>();
+  const [triedToSubmit, setTriedToSubmit] = useState(false);
+
+  useEffect(() => {
+    if (password !== reenteredPassword) {
+      setError(PASSWORDS_DONT_MATCH_ERROR);
+    } else if (!isPassword(password)) {
+      setError(INVALID_PASSWORD_ERROR);
+    } else {
+      setError(undefined);
+    }
+  }, [password, reenteredPassword]);
+
+  const onNextClicked = () => {
+    setTriedToSubmit(true);
+    if (isPassword(password) && password === reenteredPassword) {
+      onNext();
+    }
+  };
+
   return (
     <div>
       <Typography variant="h4" align="center">
@@ -59,6 +85,8 @@ function CreateAccountForm({
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              error={triedToSubmit && !!error}
+              helperText={error}
             />
           </Box>
           <Box marginTop={2}>
@@ -69,11 +97,13 @@ function CreateAccountForm({
               type="password"
               value={reenteredPassword}
               onChange={(e) => setReenteredPassword(e.target.value)}
+              error={triedToSubmit && !!error}
+              helperText={error}
             />
           </Box>
         </Box>
         <Box marginTop={5}>
-          <BWButton onClick={onNext} fullWidth>
+          <BWButton onClick={onNextClicked} fullWidth>
             Next
           </BWButton>
         </Box>
