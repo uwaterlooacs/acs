@@ -1,12 +1,12 @@
 import { /*type*/ WithStyles, Theme } from '@material-ui/core/styles';
 import { /*type*/ MembershipOption } from './types';
 
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { AuthPanelContext } from 'context/authPanel/state';
 import { withStyles, createStyles } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import classnames from 'classnames';
-import Typography from '@material-ui/core/Typography';
+import { Typography, Slide } from '@material-ui/core';
 import BWButton from 'components/buttons/BWButton';
 
 const styles = (theme: Theme) =>
@@ -38,8 +38,13 @@ interface Props extends WithStyles<typeof styles> {
 }
 
 function Option({ classes, theme, option, isLast }: Props) {
+  const [showOptions, setShowOptions] = useState(false);
   const [showDescription, setShowDescription] = useState(false);
   const { setOption, setIsOpen } = useContext(AuthPanelContext);
+
+  useEffect(() => {
+    setTimeout(() => setShowOptions(true), 1000);
+  });
 
   const openAuthPanel = () => {
     if (option.authPanelOption) {
@@ -49,27 +54,29 @@ function Option({ classes, theme, option, isLast }: Props) {
   };
 
   return (
-    <div
-      onMouseEnter={() => setShowDescription(true)}
-      onMouseLeave={() => setShowDescription(false)}
-      className={classnames(classes.container, {
-        [classes.separator]: !isLast,
-      })}
-    >
-      <Typography
-        variant="h4"
-        align="center"
-        className={classnames(classes.text, classes.title)}
+    <Slide direction="up" in={showOptions} timeout={250}>
+      <div
+        onMouseEnter={() => setShowDescription(true)}
+        onMouseLeave={() => setShowDescription(false)}
+        className={classnames(classes.container, {
+          [classes.separator]: !isLast,
+        })}
       >
-        {option.title}
-      </Typography>
-      {(useMediaQuery(theme.breakpoints.down('sm')) || showDescription) && (
-        <Typography variant="body2" align="center" className={classes.text}>
-          {option.description}
+        <Typography
+          variant="h4"
+          align="center"
+          className={classnames(classes.text, classes.title)}
+        >
+          {option.title}
         </Typography>
-      )}
-      <BWButton onClick={openAuthPanel}>{option.cta}</BWButton>
-    </div>
+        {(useMediaQuery(theme.breakpoints.down('sm')) || showDescription) && (
+          <Typography variant="body2" align="center" className={classes.text}>
+            {option.description}
+          </Typography>
+        )}
+        <BWButton onClick={openAuthPanel}>{option.cta}</BWButton>
+      </div>
+    </Slide>
   );
 }
 
