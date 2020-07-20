@@ -1,6 +1,6 @@
 import { makeRequest } from 'utils/network/request';
 import { AuthResponse } from 'types/network';
-import { User, Credentials, UserData } from 'types/user';
+import { User, Credentials, UserData, SignUpUserData } from 'types/user';
 import { Method } from 'types/network';
 import { APIRoutes } from 'utils/network/endpoints';
 import * as M from 'utils/network/errorMessages';
@@ -14,8 +14,8 @@ export const login = async (data: Credentials) => {
   );
 };
 
-export const signup = async (data: UserData) => {
-  return await makeRequest<AuthResponse, UserData>(
+export const signup = async (data: SignUpUserData) => {
+  return await makeRequest<AuthResponse, SignUpUserData>(
     Method.POST,
     APIRoutes.USER + '/signup',
     M.SIGN_UP,
