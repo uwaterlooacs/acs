@@ -3,7 +3,7 @@ import { /*type*/ WithStyles, Theme } from '@material-ui/core/styles';
 import React, { useState } from 'react';
 import { withStyles, createStyles } from '@material-ui/core/styles';
 import classNames from 'classnames';
-import { Typography, Button } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
 import FacebookIcon from '@material-ui/icons/Facebook';
 import TwitterIcon from '@material-ui/icons/Twitter';
 import InstagramIcon from '@material-ui/icons/Instagram';
@@ -12,18 +12,6 @@ const ICON_SIZE = 40;
 
 const styles = (theme: Theme) =>
   createStyles({
-    container: {
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'center',
-      alignItems: 'center',
-      width: '90%',
-    },
-    textContainer: {
-      display: 'flex',
-      flexDirection: 'column',
-      marginBottom: theme.spacing(6),
-    },
     iconsContainer: {
       display: 'flex',
       justifyContent: 'space-between',
@@ -38,11 +26,13 @@ const styles = (theme: Theme) =>
     icon: {
       width: ICON_SIZE,
       height: ICON_SIZE,
+      marginRight: theme.spacing(1),
     },
     button: {
       [theme.breakpoints.down('sm')]: {
         marginBottom: theme.spacing(1),
       },
+      color: 'white',
     },
     scContainer: {
       cursor: 'pointer',
@@ -72,25 +62,26 @@ const styles = (theme: Theme) =>
     },
   });
 
-function Social({ classes }: WithStyles<typeof styles>) {
+interface Props extends WithStyles<typeof styles> {
+  theme?: 'white' | 'black';
+}
+
+function SocialIcons({ classes, theme = 'black' }: Props) {
   const [isSCHidden, setIsSCHidden] = useState(true);
+  const snapchatSrc =
+    theme === 'white'
+      ? 'assets/snapchat-white.png'
+      : 'assets/snapchat-logo.png';
 
   return (
-    <div className={classes.container}>
-      <div className={classes.textContainer}>
-        <Typography color="textPrimary" variant="h4" align="center">
-          Thanks for your feedback!
-        </Typography>
-        <Typography color="textPrimary" variant="body1" align="center">
-          Make sure to follow us on social media:
-        </Typography>
-      </div>
+    <>
       <div className={classes.iconsContainer}>
         <Button
           className={classes.button}
           href="https://www.facebook.com/uWaterlooACS"
           target="_blank"
           rel="noreferrer noopener"
+          style={{ color: theme }}
         >
           <FacebookIcon className={classes.icon} />
           /uWaterlooACS
@@ -100,6 +91,7 @@ function Social({ classes }: WithStyles<typeof styles>) {
           href="https://twitter.com/uWaterlooACS"
           target="_blank"
           rel="noreferrer noopener"
+          style={{ color: theme }}
         >
           <TwitterIcon className={classes.icon} />
           @uWaterlooACS
@@ -111,17 +103,18 @@ function Social({ classes }: WithStyles<typeof styles>) {
           href="https://www.instagram.com/uwaterlooacs"
           target="_blank"
           rel="noreferrer noopener"
+          style={{ color: theme }}
         >
           <InstagramIcon className={classes.icon} />
           @uwaterlooacs
         </Button>
-        <Button onClick={() => setIsSCHidden(false)} className={classes.button}>
+        <Button
+          onClick={() => setIsSCHidden(false)}
+          className={classes.button}
+          style={{ color: theme }}
+        >
           <div className={classNames(classes.icon, classes.scContainer)}>
-            <img
-              className={classes.sc}
-              src="assets/snapchat-logo.png"
-              alt="snapchat"
-            />
+            <img className={classes.sc} src={snapchatSrc} alt="snapchat" />
           </div>
           @uwaterlooacs
         </Button>
@@ -137,8 +130,8 @@ function Social({ classes }: WithStyles<typeof styles>) {
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 }
 
-export default withStyles(styles)(Social);
+export default withStyles(styles)(SocialIcons);
