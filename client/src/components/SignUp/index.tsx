@@ -1,5 +1,4 @@
-import React from 'react';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import SignUpComplete from 'components/SignUpComplete';
 import SignUpForm from 'components/forms/SignUp';
 import CreateAccountForm from 'components/forms/CreateAccount';
