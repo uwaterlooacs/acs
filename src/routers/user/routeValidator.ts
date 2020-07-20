@@ -1,14 +1,23 @@
 import { check, oneOf, query, body } from 'express-validator';
-import { isPassword } from '../../utils/customValidators';
+import {
+  isPassword,
+  isStudentNumber,
+  isSemester,
+  isFaculty,
+} from '../../utils/customValidators';
 import { MEMBERSHIP_STATUS } from '../../types/user';
 
 const routeValidator = (route: string) => {
   switch (route) {
     case '/signup':
       return [
-        check('name').notEmpty().trim(),
+        check('firstName').isString().trim(),
+        check('lastName').isString().trim(),
         check('email').isEmail().normalizeEmail(),
         check('watIAMUserId').notEmpty().trim(),
+        check('studentNumber').custom(isStudentNumber),
+        check('semester').custom(isSemester),
+        check('faculty').custom(isFaculty),
         check('password').custom(isPassword),
         check('paid').optional().isBoolean(),
         check('picture').optional().isString().trim(),

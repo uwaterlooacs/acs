@@ -1,11 +1,16 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import { MEMBERSHIP_STATUS } from '../types/user';
+import { MEMBERSHIP_STATUS, SEMESTERS, FACULTIES } from '../types/user';
 
 const UserSchema = new mongoose.Schema(
   {
-    name: {
+    firstName: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    lastName: {
       type: String,
       required: true,
       trim: true,
@@ -23,6 +28,21 @@ const UserSchema = new mongoose.Schema(
       required: true,
       trim: true,
       lowercase: true,
+    },
+    studentNumber: {
+      unique: true,
+      type: Number,
+      required: true,
+    },
+    semester: {
+      type: String,
+      enum: SEMESTERS,
+      required: true,
+    },
+    faculty: {
+      type: String,
+      enum: FACULTIES,
+      required: true,
     },
     password: {
       type: String,
@@ -105,11 +125,15 @@ UserSchema.pre('save', async function (next) {
 });
 
 export interface UserDoc extends mongoose.Document {
-  name: string;
+  firstName: string;
+  lastName: string;
   email: string;
   password: string;
   picture?: string;
   watIAMUserId: string;
+  studentNumber: number;
+  semester: string;
+  faculty: string;
   membershipStatus: MEMBERSHIP_STATUS;
   isAdmin: boolean;
   tokens: string[];
