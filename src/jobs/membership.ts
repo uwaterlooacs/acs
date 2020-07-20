@@ -34,8 +34,26 @@ cron.schedule('0 0 1 JAN,MAY,SEP *', async function () {
       ],
     });
     members.forEach(async (member) => {
-      const { name, email, watIAMUserId, membershipStatus } = member;
-      const newRow = { name, email, watIAMUserId, membershipStatus };
+      const {
+        firstName,
+        lastName,
+        email,
+        watIAMUserId,
+        studentNumber,
+        semester,
+        faculty,
+        membershipStatus,
+      } = member;
+      const newRow = {
+        firstName,
+        lastName,
+        email,
+        watIAMUserId,
+        studentNumber,
+        semester,
+        faculty,
+        membershipStatus,
+      };
       await newSheet.addRow(newRow);
       member.membershipStatus = MEMBERSHIP_STATUS.EXPIRED;
       await member.save();

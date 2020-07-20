@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Typography,
   Theme,
@@ -12,9 +12,19 @@ import {
   MenuItem,
   FormControl,
   InputLabel,
+  FormHelperText,
 } from '@material-ui/core';
 import BWButton from 'components/buttons/BWButton';
 import { FACULTIES, SEMESTERS } from 'utils/constants';
+import {
+  STUDENT_NUMBER_ERROR,
+  FIRST_NAME_ERROR,
+  LAST_NAME_ERROR,
+  EMAIL_ERROR,
+  SEMESTER_ERROR,
+  FACULTY_ERROR,
+} from './constants';
+import { isStudentNumber, isName, isUWEmail } from './utils';
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -32,9 +42,62 @@ const styles = (theme: Theme) =>
     },
   });
 
-type Props = WithStyles<typeof styles>;
+type Props = WithStyles<typeof styles> & {
+  firstName: string;
+  setFirstName: (newValue: string) => void;
+  lastName: string;
+  setLastName: (newValue: string) => void;
+  studentNumber: string;
+  setStudentNumber: (newValue: string) => void;
+  email: string;
+  setEmail: (newValue: string) => void;
+  semester: string;
+  setSemester: (newValue: string) => void;
+  faculty: string;
+  setFaculty: (newValue: string) => void;
+  onNext: () => void;
+};
 
-function SignUp({ classes }: Props) {
+function SignUpForm({
+  classes,
+  firstName,
+  setFirstName,
+  lastName,
+  setLastName,
+  studentNumber,
+  setStudentNumber,
+  email,
+  setEmail,
+  semester,
+  setSemester,
+  faculty,
+  setFaculty,
+  onNext,
+}: Props) {
+  const [triedToSubmit, setTriedToSubmit] = useState(false);
+
+  const showFirstNameError = triedToSubmit && !isName(firstName);
+  const showLastNameError = triedToSubmit && !isName(lastName);
+  const showStudentNumberError =
+    triedToSubmit && !isStudentNumber(studentNumber);
+  const showEmailError = triedToSubmit && !isUWEmail(email);
+  const showSemesterError = triedToSubmit && !semester;
+  const showFacultyError = triedToSubmit && !faculty;
+
+  const onNextClicked = () => {
+    setTriedToSubmit(true);
+    if (
+      isName(firstName) &&
+      isName(lastName) &&
+      isStudentNumber(studentNumber) &&
+      isUWEmail(email) &&
+      !!semester &&
+      !!faculty
+    ) {
+      onNext();
+    }
+  };
+
   return (
     <div>
       <Typography variant="h4" align="center">
@@ -44,21 +107,56 @@ function SignUp({ classes }: Props) {
       <div className={classes.form}>
         <Box display="flex">
           <Box flex={1}>
-            <TextField label="First Name" variant="outlined" fullWidth />
+            <TextField
+              label="First Name"
+              variant="outlined"
+              fullWidth
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+              error={showFirstNameError}
+              helperText={showFirstNameError ? FIRST_NAME_ERROR : undefined}
+            />
           </Box>
           <Box marginLeft={1} flex={1}>
-            <TextField label="Last Name" variant="outlined" fullWidth />
+            <TextField
+              label="Last Name"
+              variant="outlined"
+              fullWidth
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+              error={showLastNameError}
+              helperText={showLastNameError ? LAST_NAME_ERROR : undefined}
+            />
           </Box>
         </Box>
         <Box marginTop={2}>
-          <TextField label="Student Number" variant="outlined" fullWidth />
+          <TextField
+            label="Student Number"
+            variant="outlined"
+            fullWidth
+            type="number"
+            value={studentNumber}
+            onChange={(e) => setStudentNumber(e.target.value)}
+            error={showStudentNumberError}
+            helperText={
+              showStudentNumberError ? STUDENT_NUMBER_ERROR : undefined
+            }
+          />
         </Box>
         <Box marginTop={2}>
-          <TextField label="Email Address" variant="outlined" fullWidth />
+          <TextField
+            label="Email Address"
+            variant="outlined"
+            fullWidth
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            error={showEmailError}
+            helperText={showEmailError ? EMAIL_ERROR : undefined}
+          />
         </Box>
         <Box display="flex" marginTop={2}>
           <Box flex={1}>
-            <FormControl fullWidth>
+            <FormControl fullWidth error={showSemesterError}>
               <InputLabel id="semester-label" variant="outlined">
                 Semester
               </InputLabel>
@@ -67,6 +165,8 @@ function SignUp({ classes }: Props) {
                 labelId="semester-label"
                 label="Semester"
                 variant="outlined"
+                value={semester}
+                onChange={(e) => setSemester(e.target.value as string)}
               >
                 <MenuItem value={undefined} disabled>
                   Select Semester
@@ -77,10 +177,13 @@ function SignUp({ classes }: Props) {
                   </MenuItem>
                 ))}
               </Select>
+              {showSemesterError && (
+                <FormHelperText>{SEMESTER_ERROR}</FormHelperText>
+              )}
             </FormControl>
           </Box>
           <Box marginLeft={1} flex={1}>
-            <FormControl fullWidth>
+            <FormControl fullWidth error={showFacultyError}>
               <InputLabel id="faculty-label" variant="outlined">
                 Faculty
               </InputLabel>
@@ -89,6 +192,8 @@ function SignUp({ classes }: Props) {
                 labelId="faculty-label"
                 label="Faculty"
                 variant="outlined"
+                value={faculty}
+                onChange={(e) => setFaculty(e.target.value as string)}
               >
                 <MenuItem value={undefined} disabled>
                   Select Faculty
@@ -99,15 +204,20 @@ function SignUp({ classes }: Props) {
                   </MenuItem>
                 ))}
               </Select>
+              {showFacultyError && (
+                <FormHelperText>{FACULTY_ERROR}</FormHelperText>
+              )}
             </FormControl>
           </Box>
         </Box>
       </div>
       <div className={classes.actions}>
-        <BWButton fullWidth>Next</BWButton>
+        <BWButton onClick={onNextClicked} fullWidth>
+          Next
+        </BWButton>
       </div>
     </div>
   );
 }
 
-export default withStyles(styles)(SignUp);
+export default withStyles(styles)(SignUpForm);
