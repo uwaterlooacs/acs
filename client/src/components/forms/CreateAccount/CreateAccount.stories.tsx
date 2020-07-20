@@ -1,4 +1,5 @@
 import React from 'react';
+import { action } from '@storybook/addon-actions';
 import CreateAccount from '.';
 
 export default {
@@ -8,6 +9,11 @@ export default {
 
 const baseProps = {
   email: 'example@uwaterloo.ca',
+  password: '',
+  setPassword: action('setPassword'),
+  reenteredPassword: '',
+  setReenteredPassword: action('setReenteredPassword'),
+  onNext: action('onNext'),
 };
 
 export const Base = () => <CreateAccount {...baseProps} />;

@@ -21,9 +21,22 @@ const styles = (theme: Theme) =>
 
 type Props = WithStyles<typeof styles> & {
   email: string;
+  password: string;
+  setPassword: (newValue: string) => void;
+  reenteredPassword: string;
+  setReenteredPassword: (newValue: string) => void;
+  onNext: () => void;
 };
 
-function CreateAccount({ classes, email }: Props) {
+function CreateAccount({
+  classes,
+  email,
+  password,
+  setPassword,
+  reenteredPassword,
+  setReenteredPassword,
+  onNext,
+}: Props) {
   return (
     <div>
       <Typography variant="h4" align="center">
@@ -44,6 +57,8 @@ function CreateAccount({ classes, email }: Props) {
               variant="outlined"
               fullWidth
               type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
           </Box>
           <Box marginTop={2}>
@@ -52,11 +67,15 @@ function CreateAccount({ classes, email }: Props) {
               variant="outlined"
               fullWidth
               type="password"
+              value={reenteredPassword}
+              onChange={(e) => setReenteredPassword(e.target.value)}
             />
           </Box>
         </Box>
         <Box marginTop={5}>
-          <BWButton fullWidth>Next</BWButton>
+          <BWButton onClick={onNext} fullWidth>
+            Next
+          </BWButton>
         </Box>
       </Box>
     </div>
