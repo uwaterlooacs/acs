@@ -1,12 +1,10 @@
 import validator from 'validator';
 
 const MIN_NAME_LENGTH = 1;
-const isAlphaWithSpaces = (str: string) => {
-  return str.split(' ').every((substr) => validator.isAlpha(substr));
-};
+const NAME_REGEX = /^[a-zA-z -]+$/;
 export const isName = (name: string) => {
   if (name.length < MIN_NAME_LENGTH) return false;
-  if (!isAlphaWithSpaces(name)) return false;
+  if (!NAME_REGEX.test(name)) return false;
   return true;
 };
 
