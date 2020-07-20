@@ -24,6 +24,11 @@ const UserSchema = new mongoose.Schema(
       trim: true,
       lowercase: true,
     },
+    studentNumber: {
+      unique: true,
+      type: Number,
+      required: true,
+    },
     password: {
       type: String,
       required: true,
@@ -110,6 +115,7 @@ export interface UserDoc extends mongoose.Document {
   password: string;
   picture?: string;
   watIAMUserId: string;
+  studentNumber: number;
   membershipStatus: MEMBERSHIP_STATUS;
   isAdmin: boolean;
   tokens: string[];
