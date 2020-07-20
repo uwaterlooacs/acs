@@ -4,6 +4,7 @@ import { /*type*/ MembershipOption } from './types';
 import React, { useContext, useState } from 'react';
 import { AuthPanelContext } from 'context/authPanel/state';
 import { withStyles, createStyles } from '@material-ui/core/styles';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 import classnames from 'classnames';
 import Typography from '@material-ui/core/Typography';
 import BWButton from 'components/buttons/BWButton';
@@ -15,6 +16,9 @@ const styles = (theme: Theme) =>
       flexDirection: 'column',
       alignItems: 'center',
       padding: theme.spacing(4),
+      [theme.breakpoints.up('sm')]: {
+        width: '10%',
+      },
     },
     separator: {
       borderRight: '0.1vw solid black',
@@ -28,11 +32,12 @@ const styles = (theme: Theme) =>
   });
 
 interface Props extends WithStyles<typeof styles> {
+  theme: Theme;
   option: MembershipOption;
   isLast?: boolean;
 }
 
-function Option({ classes, option, isLast }: Props) {
+function Option({ classes, theme, option, isLast }: Props) {
   const [showDescription, setShowDescription] = useState(false);
   const { setOption, setIsOpen } = useContext(AuthPanelContext);
 
@@ -58,7 +63,7 @@ function Option({ classes, option, isLast }: Props) {
       >
         {option.title}
       </Typography>
-      {showDescription && (
+      {(useMediaQuery(theme.breakpoints.down('sm')) || showDescription) && (
         <Typography variant="body2" align="center" className={classes.text}>
           {option.description}
         </Typography>
@@ -68,4 +73,4 @@ function Option({ classes, option, isLast }: Props) {
   );
 }
 
-export default withStyles(styles)(Option);
+export default withStyles(styles, { withTheme: true })(Option);
