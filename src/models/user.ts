@@ -125,12 +125,15 @@ UserSchema.pre('save', async function (next) {
 });
 
 export interface UserDoc extends mongoose.Document {
-  name: string;
+  firstName: string;
+  lastName: string;
   email: string;
   password: string;
   picture?: string;
   watIAMUserId: string;
   studentNumber: number;
+  semester: string;
+  faculty: string;
   membershipStatus: MEMBERSHIP_STATUS;
   isAdmin: boolean;
   tokens: string[];
