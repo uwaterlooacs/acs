@@ -1,4 +1,5 @@
 import validator from 'validator';
+import { SEMESTERS, FACULTIES } from '../types/user';
 
 const MIN_PASSWORD_LENGTH = 8;
 export const isPassword = (password?: string) => {
@@ -26,6 +27,26 @@ export const isStudentNumber = (studentNumber?: string) => {
   }
   if (!validator.isNumeric(studentNumber)) {
     throw new Error(`studentNumber is must only contain numeric characters.`);
+  }
+  return true;
+};
+
+export const isSemester = (semester?: string) => {
+  if (!semester) {
+    throw new Error('semester is required.');
+  }
+  if (!SEMESTERS.includes(semester)) {
+    throw new Error(`semester is must be one of ${SEMESTERS.join(', ')}.`);
+  }
+  return true;
+};
+
+export const isFaculty = (faculty?: string) => {
+  if (!faculty) {
+    throw new Error('faculty is required.');
+  }
+  if (!FACULTIES.includes(faculty)) {
+    throw new Error(`faculty is must be one of ${FACULTIES.join(', ')}.`);
   }
   return true;
 };

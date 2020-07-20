@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import { MEMBERSHIP_STATUS } from '../types/user';
+import { MEMBERSHIP_STATUS, SEMESTERS, FACULTIES } from '../types/user';
 
 const UserSchema = new mongoose.Schema(
   {
@@ -32,6 +32,16 @@ const UserSchema = new mongoose.Schema(
     studentNumber: {
       unique: true,
       type: Number,
+      required: true,
+    },
+    semester: {
+      type: String,
+      enum: SEMESTERS,
+      required: true,
+    },
+    faculty: {
+      type: String,
+      enum: FACULTIES,
       required: true,
     },
     password: {
