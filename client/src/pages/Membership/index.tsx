@@ -1,35 +1,31 @@
-import { /*type*/ AuthPanelOption } from 'components/AuthPanel/types';
+import { /*type*/ WithStyles, Theme } from '@material-ui/core/styles';
 
-import React, { useContext } from 'react';
+import React from 'react';
+import { withStyles, createStyles } from '@material-ui/core/styles';
 import Page from 'components/Page';
-import { Button } from '@material-ui/core';
-import { AUTH_PANEL_OPTIONS } from 'components/AuthPanel/constants';
 import ShrinkImage from 'components/ShrinkImage';
+import MembershipOptionsList from 'components/lists/MembershipOption';
 import AreYouAMember from './AreYouAMember.png';
-import { AuthPanelContext } from 'context/authPanel/state';
 
-function Membership() {
-  const { setOption, setIsOpen } = useContext(AuthPanelContext);
+const styles = (theme: Theme) =>
+  createStyles({
+    listContainer: {
+      marginTop: theme.spacing(4),
+      [theme.breakpoints.down('sm')]: {
+        marginTop: theme.spacing(2),
+      },
+    },
+  });
 
-  const openAuthPanel = (option: AuthPanelOption) => {
-    setOption(option);
-    setIsOpen(true);
-  };
-
+function Membership({ classes }: WithStyles<typeof styles>) {
   return (
     <Page>
       <ShrinkImage shift src={AreYouAMember} alt="Are you a member?" />
-      <Button onClick={() => openAuthPanel(AUTH_PANEL_OPTIONS.LOGIN)}>
-        login
-      </Button>
-      <Button onClick={() => openAuthPanel(AUTH_PANEL_OPTIONS.RENEWAL)}>
-        renew
-      </Button>
-      <Button onClick={() => openAuthPanel(AUTH_PANEL_OPTIONS.CHECK)}>
-        check
-      </Button>
+      <div className={classes.listContainer}>
+        <MembershipOptionsList />
+      </div>
     </Page>
   );
 }
 
-export default Membership;
+export default withStyles(styles)(Membership);

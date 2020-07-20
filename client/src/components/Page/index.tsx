@@ -4,7 +4,7 @@ import { withStyles, createStyles } from '@material-ui/core/styles';
 import { AuthPanelContext } from 'context/authPanel/state';
 import Header from 'components/Header';
 import AuthPanel from 'components/AuthPanel';
-import { AUTH_PANEL_OPTIONS } from 'components/AuthPanel/constants';
+import { AUTH_PANEL_OPTIONS } from 'utils/constants';
 
 const styles = (theme: Theme) =>
   createStyles({
