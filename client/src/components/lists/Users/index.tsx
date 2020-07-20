@@ -12,7 +12,9 @@ function UserList({ users }: Props) {
       <ul>
         {users.map((user) => (
           <li key={user._id}>
-            <p>{user.name}</p>
+            <p>
+              {user.firstName} {user.lastName}
+            </p>
           </li>
         ))}
       </ul>

@@ -16,9 +16,11 @@ export type UserData = Omit<Credentials, 'password'> & {
   lastName: string;
   watIAMUserId: string;
   studentNumber: number;
+  semester: string;
+  faculty: string;
   picture?: string;
   membershipStatus: MEMBERSHIP_STATUS;
-  isAdmin: string;
+  isAdmin: boolean;
   password?: string;
 };
 
