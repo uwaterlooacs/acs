@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import SignUpComplete from 'components/SignUpComplete';
 import SignUpForm from 'components/forms/SignUp';
 import CreateAccountForm from 'components/forms/CreateAccount';
+import { signup } from 'utils/data/user';
 
 const SignUp = () => {
   const [firstName, setFirstName] = useState('');
@@ -17,6 +18,21 @@ const SignUp = () => {
   const [isInfoEntered, setIsInfoEntered] = useState(false);
   const [isSignupComplete, setIsSignupComplete] = useState(false);
 
+  const onSignUp = async () => {
+    const watIAMUserId = email.split('@')[0];
+    await signup({
+      firstName,
+      lastName,
+      studentNumber: +studentNumber,
+      email,
+      watIAMUserId,
+      semester,
+      faculty,
+      password,
+    });
+    setIsSignupComplete(true);
+  };
+
   if (isSignupComplete) {
     return <SignUpComplete />;
   }
@@ -29,7 +45,7 @@ const SignUp = () => {
         setPassword={setPassword}
         reenteredPassword={reenteredPassword}
         setReenteredPassword={setReenteredPassword}
-        onNext={() => setIsSignupComplete(true)}
+        onNext={onSignUp}
       />
     );
   }
