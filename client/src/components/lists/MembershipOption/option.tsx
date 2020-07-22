@@ -16,6 +16,7 @@ const styles = (theme: Theme) =>
       flexDirection: 'column',
       alignItems: 'center',
       padding: theme.spacing(4),
+      cursor: 'pointer',
       [theme.breakpoints.up('sm')]: {
         width: '10%',
       },
@@ -39,12 +40,12 @@ interface Props extends WithStyles<typeof styles> {
 
 function Option({ classes, theme, option, isLast }: Props) {
   const [showOptions, setShowOptions] = useState(false);
-  const [showDescription, setShowDescription] = useState(false);
+  const [isHovering, setIsHovering] = useState(false);
   const { setOption, setIsOpen } = useContext(AuthPanelContext);
 
   useEffect(() => {
     setTimeout(() => setShowOptions(true), 1000);
-  });
+  }, []);
 
   const openAuthPanel = () => {
     if (option.authPanelOption) {
@@ -56,11 +57,12 @@ function Option({ classes, theme, option, isLast }: Props) {
   return (
     <Slide direction="up" in={showOptions} timeout={250}>
       <div
-        onMouseEnter={() => setShowDescription(true)}
-        onMouseLeave={() => setShowDescription(false)}
+        onMouseEnter={() => setIsHovering(true)}
+        onMouseLeave={() => setIsHovering(false)}
         className={classnames(classes.container, {
           [classes.separator]: !isLast,
         })}
+        onClick={openAuthPanel}
       >
         <Typography
           variant="h4"
@@ -69,12 +71,14 @@ function Option({ classes, theme, option, isLast }: Props) {
         >
           {option.title}
         </Typography>
-        {(useMediaQuery(theme.breakpoints.down('sm')) || showDescription) && (
+        {(useMediaQuery(theme.breakpoints.down('sm')) || isHovering) && (
           <Typography variant="body2" align="center" className={classes.text}>
             {option.description}
           </Typography>
         )}
-        <BWButton onClick={openAuthPanel}>{option.cta}</BWButton>
+        <BWButton classes={isHovering ? { root: 'hover' } : {}}>
+          {option.cta}
+        </BWButton>
       </div>
     </Slide>
   );
