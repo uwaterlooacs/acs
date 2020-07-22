@@ -1,10 +1,10 @@
-import { /*type*/ WithStyles, Theme } from '@material-ui/core/styles';
-import { /*type*/ ScreenSize } from 'types/theme';
+import type { WithStyles, Theme } from '@material-ui/core/styles';
+import { ScreenSize } from 'types/theme';
 
 import React from 'react';
 import { withStyles, createStyles } from '@material-ui/core/styles';
 import classnames from 'classnames';
-import { Typography } from '@material-ui/core';
+import Typography from '@material-ui/core/Typography';
 import useScreenSize from 'utils/hooks/useScreenSize';
 import SocialIcons from 'components/SocialIcons';
 

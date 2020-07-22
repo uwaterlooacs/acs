@@ -1,5 +1,5 @@
-import { /*type*/ WithStyles, Theme } from '@material-ui/core/styles';
-import { /*type*/ MembershipOption } from './types';
+import type { WithStyles, Theme } from '@material-ui/core/styles';
+import type { MembershipOption } from './types';
 
 import React from 'react';
 import { withStyles, createStyles } from '@material-ui/core/styles';

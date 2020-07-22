@@ -1,5 +1,6 @@
+import type { WithStyles, Theme } from '@material-ui/core/styles';
+
 import React, { useContext } from 'react';
-import { /*type*/ WithStyles, Theme } from '@material-ui/core/styles';
 import { withStyles, createStyles } from '@material-ui/core/styles';
 import { AuthPanelContext } from 'context/authPanel/state';
 import Header from 'components/Header';

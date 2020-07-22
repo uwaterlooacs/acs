@@ -1,3 +1,5 @@
+import type { WithStyles, Theme } from '@material-ui/core/styles';
+
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
@@ -9,7 +11,6 @@ import {
   ListItemIcon,
 } from '@material-ui/core';
 import { withStyles, createStyles } from '@material-ui/core/styles';
-import { /*type*/ WithStyles, Theme } from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
