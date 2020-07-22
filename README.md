@@ -1,5 +1,11 @@
 # ACS
 
+## Environmental Variables
+
+The server portion of the application needs access to an `APP_SECRET` environmental variable.
+For local development you may choose any string.
+It is required for generating authentication tokens.
+
 ## Manual Deployment
 
 This app is hosted on AWS through the UW ACS gmail account.
