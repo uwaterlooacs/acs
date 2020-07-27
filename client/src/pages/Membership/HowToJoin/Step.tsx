@@ -1,11 +1,8 @@
+import { /*type*/ WithStyles } from '@material-ui/core';
+import { /*type*/ ImgIcon } from 'types/imgIcon';
+
 import React from 'react';
-import {
-  Typography,
-  createStyles,
-  WithStyles,
-  withStyles,
-  Theme,
-} from '@material-ui/core';
+import { Typography, createStyles, withStyles, Theme } from '@material-ui/core';
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -29,17 +26,10 @@ const styles = (theme: Theme) =>
 type Props = WithStyles<typeof styles> & {
   stepNumber: number;
   text: string;
-  icon: string;
-  iconAlt: string;
+  icon: ImgIcon;
 };
 
-const Step: React.FC<Props> = ({
-  classes,
-  stepNumber,
-  text,
-  icon,
-  iconAlt,
-}: Props) => {
+const Step: React.FC<Props> = ({ classes, stepNumber, text, icon }: Props) => {
   return (
     <div className={classes.step}>
       <Typography variant="h6" align="center" className={classes.stepNumber}>
@@ -48,7 +38,7 @@ const Step: React.FC<Props> = ({
       <Typography variant="h4" align="center" className={classes.stepText}>
         {text}
       </Typography>
-      <img src={icon} alt={iconAlt} />
+      <img src={icon.src} alt={icon.alt} />
     </div>
   );
 };

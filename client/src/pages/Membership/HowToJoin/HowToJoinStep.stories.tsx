@@ -11,7 +11,6 @@ export const Base = () => (
   <Step
     stepNumber={3}
     text="Enjoy All Of The Benefits"
-    icon={BenefitsSrc}
-    iconAlt="Benefits"
+    icon={{ src: BenefitsSrc, alt: 'Benefits' }}
   />
 );
