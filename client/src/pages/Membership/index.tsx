@@ -7,7 +7,8 @@ import { withStyles, createStyles } from '@material-ui/core/styles';
 import Page from 'components/Page';
 import ShrinkImage from 'components/ShrinkImage';
 import MembershipOptionsList from 'components/lists/MembershipOption';
-import HowToJoin from './HowToJoin';
+import HowToJoinPage from './HowToJoin';
+import SignUpPage from './SignUp';
 import AreYouAMember from './AreYouAMember.png';
 
 const styles = (theme: Theme) =>
@@ -24,10 +25,17 @@ function Membership({ classes }: WithStyles<typeof styles>) {
   return (
     <Page>
       <Switch>
-        <Route path="/membership/howtojoin" exact>
-          <Fade in appear timeout={1000}>
+        <Route path="/membership/signup" exact>
+          <Fade key="/membership/signup" in appear timeout={1000}>
             <div>
-              <HowToJoin />
+              <SignUpPage />
+            </div>
+          </Fade>
+        </Route>
+        <Route path="/membership/howtojoin" exact>
+          <Fade key="/membership/howtojoin" in appear timeout={1000}>
+            <div>
+              <HowToJoinPage />
             </div>
           </Fade>
         </Route>
