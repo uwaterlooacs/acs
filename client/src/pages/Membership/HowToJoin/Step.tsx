@@ -1,8 +1,8 @@
-import { /*type*/ WithStyles } from '@material-ui/core';
+import { /*type*/ WithStyles, Theme } from '@material-ui/core';
 import { /*type*/ ImgIcon } from 'types/imgIcon';
 
 import React from 'react';
-import { Typography, createStyles, withStyles, Theme } from '@material-ui/core';
+import { Typography, createStyles, withStyles } from '@material-ui/core';
 
 const styles = (theme: Theme) =>
   createStyles({
