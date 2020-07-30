@@ -2,17 +2,12 @@ import { /*type*/ WithStyles } from '@material-ui/core';
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import {
-  Typography,
-  Box,
-  Button,
-  createStyles,
-  withStyles,
-} from '@material-ui/core';
+import { Typography, Box, createStyles, withStyles } from '@material-ui/core';
 import Step from './Step';
 import ProfileSrc from './Profile.png';
 import MoneySrc from './Money.png';
 import BenefitsSrc from './Benefits.png';
+import BWButton from 'components/buttons/BWButton';
 
 const styles = createStyles({
   title: {
@@ -46,9 +41,9 @@ const HowToJoin: React.FC<Props> = ({ classes }: Props) => {
         />
       </Box>
       <Box marginY={12} display="flex" justifyContent="center">
-        <Button component={Link} to="/membership/signup" variant="outlined">
+        <BWButton component={Link} to="/membership/signup" variant="outlined">
           Continue
-        </Button>
+        </BWButton>
       </Box>
     </div>
   );
