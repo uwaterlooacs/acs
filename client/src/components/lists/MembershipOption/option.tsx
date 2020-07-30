@@ -1,8 +1,7 @@
 import { /*type*/ WithStyles, Theme } from '@material-ui/core/styles';
 import { /*type*/ MembershipOption } from './types';
 
-import React, { useContext, useState, useEffect } from 'react';
-import { AuthPanelContext } from 'context/authPanel/state';
+import React, { useState, useEffect } from 'react';
 import { withStyles, createStyles } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import classnames from 'classnames';
@@ -36,23 +35,16 @@ interface Props extends WithStyles<typeof styles> {
   theme: Theme;
   option: MembershipOption;
   isLast?: boolean;
+  onClick: () => void;
 }
 
-function Option({ classes, theme, option, isLast }: Props) {
+function Option({ classes, theme, option, isLast, onClick }: Props) {
   const [showOptions, setShowOptions] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
-  const { setOption, setIsOpen } = useContext(AuthPanelContext);
 
   useEffect(() => {
     setTimeout(() => setShowOptions(true), 1000);
   }, []);
-
-  const openAuthPanel = () => {
-    if (option.authPanelOption) {
-      setOption(option.authPanelOption);
-      setIsOpen(true);
-    }
-  };
 
   return (
     <Slide direction="up" in={showOptions} timeout={250}>
@@ -62,7 +54,7 @@ function Option({ classes, theme, option, isLast }: Props) {
         className={classnames(classes.container, {
           [classes.separator]: !isLast,
         })}
-        onClick={openAuthPanel}
+        onClick={onClick}
       >
         <Typography
           variant="h4"
