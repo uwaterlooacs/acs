@@ -57,6 +57,7 @@ const ShrinkImage: React.FC<Props> = ({
   return (
     <Transition in appear timeout={1000}>
       {(state) => (
+        // eslint-disable-next-line
         <img
           className={classNames(classes.shrinkimage, classes[state], {
             [classes[`${state}-shift` as ShiftedClassName]]: shift,
