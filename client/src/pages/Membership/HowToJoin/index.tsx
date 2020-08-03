@@ -17,7 +17,7 @@ const styles = createStyles({
 
 type Props = WithStyles<typeof styles>;
 
-const HowToJoin: React.FC<Props> = ({ classes }: Props) => {
+const HowToJoinPage: React.FC<Props> = ({ classes }: Props) => {
   return (
     <div>
       <Typography variant="h2" className={classes.title} align="center">
@@ -49,4 +49,4 @@ const HowToJoin: React.FC<Props> = ({ classes }: Props) => {
   );
 };
 
-export default withStyles(styles)(HowToJoin);
+export default withStyles(styles)(HowToJoinPage);
