@@ -16,7 +16,7 @@ const styles = (theme: Theme) =>
       alignItems: 'center',
       padding: theme.spacing(4),
       cursor: 'pointer',
-      [theme.breakpoints.up('sm')]: {
+      [theme.breakpoints.up('md')]: {
         width: '10%',
       },
     },
