@@ -4,7 +4,7 @@ import ThemeContextProvider from 'context/theme/provider';
 import ThemeProvider from 'theme/themeProvider';
 import AuthPanelProvider from 'context/authPanel/provider';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import Construction from 'pages/Construction';
+import Home from 'pages/Home';
 import Membership from 'pages/Membership';
 import { ROUTES } from 'utils/constants';
 
@@ -16,7 +16,7 @@ function App() {
           <AuthPanelProvider>
             <BrowserRouter>
               <Switch>
-                <Route exact path={ROUTES.HOME} component={Construction} />
+                <Route exact path={ROUTES.HOME} component={Home} />
                 <Route path={ROUTES.MEMBERSHIP} component={Membership} />
               </Switch>
             </BrowserRouter>
