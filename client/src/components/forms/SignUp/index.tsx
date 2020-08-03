@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   Typography,
   Theme,
@@ -28,6 +28,9 @@ import { isStudentNumber, isName, isUWEmail } from './utils';
 
 const styles = (theme: Theme) =>
   createStyles({
+    title: {
+      fontWeight: 'bold',
+    },
     titleDivider: {
       marginTop: theme.spacing(1),
       backgroundColor: theme.palette.text.primary,
@@ -100,7 +103,7 @@ function SignUpForm({
 
   return (
     <div>
-      <Typography variant="h4" align="center">
+      <Typography variant="h4" align="center" className={classes.title}>
         Enter Your Information
       </Typography>
       <Divider className={classes.titleDivider} />
