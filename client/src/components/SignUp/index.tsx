@@ -34,7 +34,7 @@ const SignUp = () => {
   };
 
   if (isSignupComplete) {
-    return <Complete />;
+    return <Complete variant="signUp" />;
   }
 
   if (isInfoEntered) {
