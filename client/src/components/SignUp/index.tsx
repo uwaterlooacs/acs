@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import SignUpComplete from 'components/SignUpComplete';
+import Complete from 'components/Complete';
 import SignUpForm from 'components/forms/SignUp';
 import CreateAccountForm from 'components/forms/CreateAccount';
 import { signup } from 'utils/data/user';
@@ -34,7 +34,7 @@ const SignUp = () => {
   };
 
   if (isSignupComplete) {
-    return <SignUpComplete />;
+    return <Complete />;
   }
 
   if (isInfoEntered) {
