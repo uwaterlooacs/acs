@@ -1,17 +1,27 @@
 import React from 'react';
-import SignUpComplete from '.';
+import Complete from '.';
 
 export default {
-  component: SignUpComplete,
-  title: 'SignUpComplete',
+  component: Complete,
+  title: 'Complete',
 };
 
 const baseProps = {};
 
-export const Base = () => <SignUpComplete {...baseProps} />;
+export const BaseSignUp = () => <Complete {...baseProps} variant="signUp" />;
 
-export const LimittedWidth = () => (
+export const LimittedWidthSignUp = () => (
   <div style={{ width: '600px' }}>
-    <SignUpComplete {...baseProps} />
+    <Complete {...baseProps} variant="signUp" />
+  </div>
+);
+
+export const BaseRenewMembership = () => (
+  <Complete {...baseProps} variant="renewMembership" />
+);
+
+export const LimittedWidthRenewMembership = () => (
+  <div style={{ width: '600px' }}>
+    <Complete {...baseProps} variant="renewMembership" />
   </div>
 );

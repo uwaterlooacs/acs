@@ -1,15 +1,22 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Slide, Typography, Box, Fade } from '@material-ui/core';
 import BWButton from 'components/buttons/BWButton';
 import CheckMarkSrc from './checkmark.png';
 
-const SignUpComplete = () => {
+type Props = {
+  variant: 'signUp' | 'renewMembership';
+};
+
+const Complete = ({ variant }: Props) => {
+  const titleSuffix =
+    variant === 'signUp' ? 'signing up' : 'renewing your membership';
   return (
     <div>
       <Slide direction="up" appear in timeout={500}>
         <Box display="flex" flexDirection="column" alignItems="center">
           <Typography variant="h3" align="center">
-            Thanks for signing up!
+            {`Thanks for ${titleSuffix}!`}
           </Typography>
           <Box marginTop={6}>
             <img src={CheckMarkSrc} alt="Check mark" />
@@ -26,11 +33,13 @@ const SignUpComplete = () => {
       </Fade>
       <Fade appear in timeout={1000}>
         <Box marginTop={6} display="flex" justifyContent="center">
-          <BWButton>View Upcoming Events</BWButton>
+          <BWButton component={Link} to="/events">
+            View Upcoming Events
+          </BWButton>
         </Box>
       </Fade>
     </div>
   );
 };
 
-export default SignUpComplete;
+export default Complete;
