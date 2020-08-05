@@ -8,10 +8,10 @@ export default {
 
 const baseProps = {};
 
-export const Base = () => <VerifyInfo {...baseProps} />;
+export const Base = () => <VerifyInfo {...baseProps} onVerify={() => {}} />;
 
 export const LimittedWidth = () => (
   <div style={{ width: '600px' }}>
-    <VerifyInfo {...baseProps} />
+    <VerifyInfo {...baseProps} onVerify={() => {}} />
   </div>
 );
