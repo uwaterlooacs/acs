@@ -13,7 +13,7 @@ const styles = (theme: Theme) =>
       flex: 1,
       flexDirection: 'column',
       backgroundColor: theme.palette.background.default,
-      width: '100vw',
+      maxWidth: '100vw',
       minHeight: '100vh',
     },
   });
