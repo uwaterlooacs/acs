@@ -7,7 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import EmailSlide from './slides/Email';
 import FeedbackSlide from './slides/Feedback';
 import SocialSlide from './slides/Social';
-import { mailingListSubmit } from 'utils/data/mailingList';
+import { mailingListSubmit } from 'utils/api/mailingList';
 
 const LOGO_SIZE = 200;
 const TRANSITION_TIME = '0.5s';

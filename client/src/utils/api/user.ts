@@ -1,9 +1,9 @@
-import { makeRequest } from 'utils/network/request';
+import { makeRequest } from 'utils/api/request';
 import { AuthResponse } from 'types/network';
 import { User, Credentials, UserData, SignUpUserData } from 'types/user';
 import { Method } from 'types/network';
-import { APIRoutes } from 'utils/network/endpoints';
-import * as M from 'utils/network/errorMessages';
+import { APIRoutes } from 'utils/api/endpoints';
+import * as M from 'utils/api/errorMessages';
 
 export const login = async (data: Credentials) => {
   return await makeRequest<AuthResponse, Credentials>(
