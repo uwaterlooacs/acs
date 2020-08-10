@@ -1,6 +1,17 @@
 import axios from 'axios';
 import { Method } from 'types/network';
 
+export class RequestError<D> extends Error {
+  data!: D;
+  error!: Error;
+  constructor(message: string, data: D, error: Error) {
+    super(message);
+
+    this.data = data;
+    this.error = error;
+  }
+}
+
 export const makeRequest = async <R, D = Record<string, unknown>>(
   method: Method,
   route: string,
@@ -28,6 +39,6 @@ export const makeRequest = async <R, D = Record<string, unknown>>(
         return {} as R;
     }
   } catch (error) {
-    throw new Error(errorMessage);
+    throw new RequestError(errorMessage, error?.response?.data ?? {}, error);
   }
 };

@@ -3,6 +3,7 @@ import UserModel, { UserDoc } from '../../models/user';
 import { AuthenticatedRequest } from '../../types/network';
 import auth from '../../middleware/auth';
 import * as M from '../../utils/errorMessages';
+import { MONGO_ERRORS } from '../../utils/constants';
 import routeValidator from './routeValidator';
 import validate from '../../middleware/validate';
 import { MEMBERSHIP_STATUS } from '../../types/user';
@@ -27,6 +28,12 @@ router.post(
       const token = await user.generateAuthToken();
       res.status(201).send({ user, token });
     } catch (err) {
+      if (err.code === MONGO_ERRORS.DUPLICATE_KEY) {
+        return res.status(400).send({
+          message: 'User with specified unique fields already exists.',
+          duplicateKeys: err.keyValue,
+        });
+      }
       next(err);
     }
   },
