@@ -1,20 +1,21 @@
 import { MenuLink } from './types';
+import { ROUTES } from 'utils/constants';
 
 export const MENU_LINKS: MenuLink[] = [
   {
     title: 'Home',
-    link: '/',
+    link: ROUTES.HOME,
   },
   {
     title: 'Events',
-    link: '/events',
+    link: ROUTES.EVENTS,
   },
   {
     title: 'Voting',
-    link: '/voting',
+    link: ROUTES.VOTING,
   },
   {
     title: 'Membership',
-    link: '/membership',
+    link: ROUTES.MEMBERSHIP,
   },
 ];

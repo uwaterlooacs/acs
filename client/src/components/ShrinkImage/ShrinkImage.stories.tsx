@@ -1,6 +1,6 @@
 import React from 'react';
 import ShrinkImage from '.';
-import BigArtWorkFlags from './BigArtworkFlags.png';
+import BigArtWorkFlags from 'pages/Home/BigArtworkFlags.png';
 import AreYouAMember from 'pages/Membership/AreYouAMember.png';
 
 export default {
