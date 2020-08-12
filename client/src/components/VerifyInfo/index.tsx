@@ -19,7 +19,11 @@ const styles = (theme: Theme) =>
     },
   });
 
-function VerifyInfo({ classes }: WithStyles<typeof styles>) {
+type Props = WithStyles<typeof styles> & {
+  onVerify: () => void;
+};
+
+function VerifyInfo({ classes, onVerify }: Props) {
   const { user, setUser } = useContext(UserContext);
   const [firstName, setFirstName] = useState(user.firstName);
   const [lastName, setLastName] = useState(user.lastName);
@@ -51,6 +55,7 @@ function VerifyInfo({ classes }: WithStyles<typeof styles>) {
         semester,
         faculty,
       });
+      onVerify();
     }
   };
 
