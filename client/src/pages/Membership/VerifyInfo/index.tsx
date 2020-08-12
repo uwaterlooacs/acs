@@ -14,7 +14,6 @@ const styles = (theme: Theme) =>
       width: `calc(100% - ${2 * theme.spacing(3)}px)`,
       padding: `0 ${theme.spacing(3)}px`,
     },
-    contentContainer: {},
   });
 
 function VerifyInfoPage({ classes }: WithStyles<typeof styles>) {
