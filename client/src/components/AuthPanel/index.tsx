@@ -1,6 +1,7 @@
 import { /*type*/ WithStyles, Theme } from '@material-ui/core/styles';
 
 import React, { memo, useState, useContext } from 'react';
+import { useHistory } from 'react-router-dom';
 import { withStyles, createStyles } from '@material-ui/core/styles';
 import { Typography, Button, TextField, Drawer } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
@@ -62,6 +63,7 @@ const styles = (theme: Theme) =>
   });
 
 const AuthPanel = ({ classes }: WithStyles<typeof styles>) => {
+  const history = useHistory();
   const { option, isOpen, setIsOpen } = useContext(AuthPanelContext);
 
   const [id, setId] = useState('');
@@ -69,9 +71,19 @@ const AuthPanel = ({ classes }: WithStyles<typeof styles>) => {
   const [membershipStatus, setMembershipStatus] = useState('');
 
   const submit = () => {
-    // replace with api calls
-    if (option.title === AUTH_PANEL_OPTIONS.CHECK.title) {
-      setMembershipStatus('Full Member');
+    switch (option.title) {
+      case AUTH_PANEL_OPTIONS.LOGIN.title:
+        // will replace with API call
+        break;
+      case AUTH_PANEL_OPTIONS.RENEWAL.title:
+        // will replace with API call
+        setIsOpen(false);
+        history.push('/membership/verifyinfo');
+        break;
+      case AUTH_PANEL_OPTIONS.CHECK.title:
+        // will replace with API call
+        setMembershipStatus('Full Member');
+        break;
     }
   };
 

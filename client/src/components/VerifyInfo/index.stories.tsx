@@ -1,5 +1,6 @@
 import React from 'react';
 import VerifyInfo from '.';
+import { action } from '@storybook/addon-actions';
 
 export default {
   component: VerifyInfo,
@@ -8,10 +9,12 @@ export default {
 
 const baseProps = {};
 
-export const Base = () => <VerifyInfo {...baseProps} />;
+export const Base = () => (
+  <VerifyInfo {...baseProps} onVerify={action('onVerify')} />
+);
 
 export const LimittedWidth = () => (
   <div style={{ width: '600px' }}>
-    <VerifyInfo {...baseProps} />
+    <VerifyInfo {...baseProps} onVerify={action('onVerify')} />
   </div>
 );

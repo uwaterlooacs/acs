@@ -1,11 +1,9 @@
 import { /*type*/ WithStyles, Theme } from '@material-ui/core/styles';
-import { /*type*/ ScreenSize } from 'types/theme';
 
 import React from 'react';
 import { withStyles, createStyles } from '@material-ui/core/styles';
 import classnames from 'classnames';
-import { Typography } from '@material-ui/core';
-import useScreenSize from 'utils/hooks/useScreenSize';
+import { Typography, useMediaQuery } from '@material-ui/core';
 import SocialIcons from 'components/SocialIcons';
 
 const styles = (theme: Theme) =>
@@ -44,12 +42,14 @@ const styles = (theme: Theme) =>
     },
   });
 
-function Home({ classes }: WithStyles<typeof styles>) {
-  const ss = useScreenSize();
-  const bannerSrc =
-    ss === ScreenSize.SM || ss === ScreenSize.XS
-      ? 'assets/constr.png'
-      : 'assets/constr-wide.png';
+type Props = WithStyles<typeof styles> & {
+  theme: Theme;
+};
+
+function Home({ classes, theme }: Props) {
+  const bannerSrc = useMediaQuery(theme.breakpoints.down('sm'))
+    ? 'assets/constr.png'
+    : 'assets/constr-wide.png';
 
   return (
     <div className={classes.container}>
@@ -81,4 +81,4 @@ function Home({ classes }: WithStyles<typeof styles>) {
   );
 }
 
-export default withStyles(styles)(Home);
+export default withStyles(styles, { withTheme: true })(Home);
