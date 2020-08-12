@@ -10,30 +10,32 @@ import {
 } from '@material-ui/core';
 import { isStudentNumber, isName, isUWEmail } from '../utils';
 import { FACULTIES, SEMESTERS } from 'utils/constants';
-import {
-  FIRST_NAME_ERROR,
-  LAST_NAME_ERROR,
-  STUDENT_NUMBER_ERROR,
-  EMAIL_ERROR,
-  SEMESTER_ERROR,
-  FACULTY_ERROR,
-} from './constants';
+import { INPUT_ERRORS } from './constants';
 
-type Props = {
+export type FieldValues = {
   firstName: string;
-  setFirstName: (newValue: string) => void;
   lastName: string;
-  setLastName: (newValue: string) => void;
   studentNumber: string;
-  setStudentNumber: (newValue: string) => void;
   email: string;
-  setEmail: (newValue: string) => void;
   semester: string;
-  setSemester: (newValue: string) => void;
   faculty: string;
-  setFaculty: (newValue: string) => void;
-  triedToSubmit: boolean;
 };
+export type FieldKeys = keyof FieldValues;
+
+export type FieldSetters = {
+  setFirstName: (newValue: string) => void;
+  setLastName: (newValue: string) => void;
+  setStudentNumber: (newValue: string) => void;
+  setEmail: (newValue: string) => void;
+  setSemester: (newValue: string) => void;
+  setFaculty: (newValue: string) => void;
+};
+
+type Props = FieldValues &
+  FieldSetters & {
+    errors?: Partial<Record<keyof FieldValues, string>>;
+    triedToSubmit: boolean;
+  };
 
 function UserInfoForm({
   firstName,
@@ -48,15 +50,16 @@ function UserInfoForm({
   setSemester,
   faculty,
   setFaculty,
+  errors,
   triedToSubmit,
 }: Props) {
-  const showFirstNameError = triedToSubmit && !isName(firstName);
-  const showLastNameError = triedToSubmit && !isName(lastName);
-  const showStudentNumberError =
+  const showFirstNameInputError = triedToSubmit && !isName(firstName);
+  const showLastNameInputError = triedToSubmit && !isName(lastName);
+  const showStudentNumberInputError =
     triedToSubmit && !isStudentNumber(studentNumber);
-  const showEmailError = triedToSubmit && !isUWEmail(email);
-  const showSemesterError = triedToSubmit && !semester;
-  const showFacultyError = triedToSubmit && !faculty;
+  const showEmailInputError = triedToSubmit && !isUWEmail(email);
+  const showSemesterInputError = triedToSubmit && !semester;
+  const showFacultyInputError = triedToSubmit && !faculty;
 
   return (
     <>
@@ -68,8 +71,12 @@ function UserInfoForm({
             fullWidth
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
-            error={showFirstNameError}
-            helperText={showFirstNameError ? FIRST_NAME_ERROR : undefined}
+            error={showFirstNameInputError || !!errors?.firstName}
+            helperText={
+              showFirstNameInputError
+                ? INPUT_ERRORS.FIRST_NAME
+                : errors?.firstName
+            }
           />
         </Box>
         <Box marginLeft={1} flex={1}>
@@ -79,8 +86,10 @@ function UserInfoForm({
             fullWidth
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
-            error={showLastNameError}
-            helperText={showLastNameError ? LAST_NAME_ERROR : undefined}
+            error={showLastNameInputError || !!errors?.lastName}
+            helperText={
+              showLastNameInputError ? INPUT_ERRORS.LAST_NAME : errors?.lastName
+            }
           />
         </Box>
       </Box>
@@ -92,8 +101,12 @@ function UserInfoForm({
           type="number"
           value={studentNumber}
           onChange={(e) => setStudentNumber(e.target.value)}
-          error={showStudentNumberError}
-          helperText={showStudentNumberError ? STUDENT_NUMBER_ERROR : undefined}
+          error={showStudentNumberInputError || !!errors?.studentNumber}
+          helperText={
+            showStudentNumberInputError
+              ? INPUT_ERRORS.STUDENT_NUMBER
+              : errors?.studentNumber
+          }
         />
       </Box>
       <Box marginTop={2}>
@@ -103,13 +116,13 @@ function UserInfoForm({
           fullWidth
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          error={showEmailError}
-          helperText={showEmailError ? EMAIL_ERROR : undefined}
+          error={showEmailInputError || !!errors?.email}
+          helperText={showEmailInputError ? INPUT_ERRORS.EMAIL : errors?.email}
         />
       </Box>
       <Box display="flex" marginTop={2}>
         <Box flex={1}>
-          <FormControl fullWidth error={showSemesterError}>
+          <FormControl fullWidth error={showSemesterInputError}>
             <InputLabel id="semester-label" variant="outlined">
               Semester
             </InputLabel>
@@ -130,13 +143,17 @@ function UserInfoForm({
                 </MenuItem>
               ))}
             </Select>
-            {showSemesterError && (
-              <FormHelperText>{SEMESTER_ERROR}</FormHelperText>
+            {(showSemesterInputError || !!errors?.semester) && (
+              <FormHelperText>
+                {showSemesterInputError
+                  ? INPUT_ERRORS.SEMESTER
+                  : errors?.semester}
+              </FormHelperText>
             )}
           </FormControl>
         </Box>
         <Box marginLeft={1} flex={1}>
-          <FormControl fullWidth error={showFacultyError}>
+          <FormControl fullWidth error={showFacultyInputError}>
             <InputLabel id="faculty-label" variant="outlined">
               Faculty
             </InputLabel>
@@ -157,8 +174,10 @@ function UserInfoForm({
                 </MenuItem>
               ))}
             </Select>
-            {showFacultyError && (
-              <FormHelperText>{FACULTY_ERROR}</FormHelperText>
+            {(showFacultyInputError || !!errors?.faculty) && (
+              <FormHelperText>
+                {showFacultyInputError ? INPUT_ERRORS.FACULTY : errors?.faculty}
+              </FormHelperText>
             )}
           </FormControl>
         </Box>

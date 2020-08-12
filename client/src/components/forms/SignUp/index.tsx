@@ -9,7 +9,7 @@ import {
 } from '@material-ui/core';
 import BWButton from 'components/buttons/BWButton';
 import { isStudentNumber, isName, isUWEmail } from '../utils';
-import UserInfo from '../UserInfo';
+import UserInfo, { FieldValues, FieldSetters } from '../UserInfo';
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -30,21 +30,12 @@ const styles = (theme: Theme) =>
     },
   });
 
-type Props = WithStyles<typeof styles> & {
-  firstName: string;
-  setFirstName: (newValue: string) => void;
-  lastName: string;
-  setLastName: (newValue: string) => void;
-  studentNumber: string;
-  setStudentNumber: (newValue: string) => void;
-  email: string;
-  setEmail: (newValue: string) => void;
-  semester: string;
-  setSemester: (newValue: string) => void;
-  faculty: string;
-  setFaculty: (newValue: string) => void;
-  onNext: () => void;
-};
+type Props = WithStyles<typeof styles> &
+  FieldValues &
+  FieldSetters & {
+    errors?: Partial<FieldValues>;
+    onNext: () => void;
+  };
 
 function SignUpForm({
   classes,
@@ -60,6 +51,7 @@ function SignUpForm({
   setSemester,
   faculty,
   setFaculty,
+  errors,
   onNext,
 }: Props) {
   const [triedToSubmit, setTriedToSubmit] = useState(false);
@@ -99,6 +91,7 @@ function SignUpForm({
           faculty={faculty}
           setFaculty={setFaculty}
           triedToSubmit={triedToSubmit}
+          errors={errors}
         />
       </div>
       <div className={classes.actions}>
