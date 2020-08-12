@@ -1,3 +1,5 @@
+import { ROUTES } from 'utils/constants';
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Slide, Typography, Box, Fade } from '@material-ui/core';
@@ -33,7 +35,7 @@ const Complete = ({ variant }: Props) => {
       </Fade>
       <Fade appear in timeout={1000}>
         <Box marginTop={6} display="flex" justifyContent="center">
-          <BWButton component={Link} to="/events">
+          <BWButton component={Link} to={ROUTES.EVENTS}>
             View Upcoming Events
           </BWButton>
         </Box>
