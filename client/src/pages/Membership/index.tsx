@@ -9,6 +9,7 @@ import ShrinkImage from 'components/ShrinkImage';
 import MembershipOptionsList from 'components/lists/MembershipOption';
 import HowToJoinPage from './HowToJoin';
 import SignUpPage from './SignUp';
+import VerifyInfoPage from './VerifyInfo';
 import AreYouAMember from './AreYouAMember.png';
 
 const styles = (theme: Theme) =>
@@ -36,6 +37,13 @@ function Membership({ classes }: WithStyles<typeof styles>) {
           <Fade key="/membership/howtojoin" in appear timeout={1000}>
             <div>
               <HowToJoinPage />
+            </div>
+          </Fade>
+        </Route>
+        <Route path="/membership/verifyinfo" exact>
+          <Fade key="/membership/verifyinfo" in appear timeout={1000}>
+            <div>
+              <VerifyInfoPage />
             </div>
           </Fade>
         </Route>
