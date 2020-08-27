@@ -3,11 +3,13 @@ import { /*type*/ WithStyles, Theme } from '@material-ui/core/styles';
 import React, { memo, useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import { withStyles, createStyles } from '@material-ui/core/styles';
-import { Typography, Button, TextField, Drawer } from '@material-ui/core';
+import { Typography, Button, TextField, Drawer, Box } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import { AuthPanelContext } from 'context/authPanel/state';
+import { UserContext } from 'context/user/state';
 import { AUTH_PANEL_OPTIONS } from 'utils/constants';
 import BWButton from 'components/buttons/BWButton';
+import { login } from 'utils/api/user';
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -65,15 +67,29 @@ const styles = (theme: Theme) =>
 const AuthPanel = ({ classes }: WithStyles<typeof styles>) => {
   const history = useHistory();
   const { option, isOpen, setIsOpen } = useContext(AuthPanelContext);
+  const { setUser, setToken } = useContext(UserContext);
 
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
   const [membershipStatus, setMembershipStatus] = useState('');
+  const [error, setError] = useState('');
 
-  const submit = () => {
+  const clearError = () => {
+    if (error) setError('');
+  };
+
+  const submit = async () => {
     switch (option.title) {
       case AUTH_PANEL_OPTIONS.LOGIN.title:
-        // will replace with API call
+        try {
+          const { user, token } = await login({ id, password });
+          setUser(user);
+          setToken(token);
+          clearError();
+          setIsOpen(false);
+        } catch (err) {
+          setError('Unable to log in with those credentials');
+        }
         break;
       case AUTH_PANEL_OPTIONS.RENEWAL.title:
         // will replace with API call
@@ -121,7 +137,10 @@ const AuthPanel = ({ classes }: WithStyles<typeof styles>) => {
           <TextField
             label="Email Address / WatIAM Username"
             value={id}
-            onChange={(e) => setId(e.target.value)}
+            onChange={(e) => {
+              clearError();
+              setId(e.target.value);
+            }}
             type="text"
             variant="outlined"
             className={classes.textField}
@@ -132,12 +151,22 @@ const AuthPanel = ({ classes }: WithStyles<typeof styles>) => {
             <TextField
               label="Password"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => {
+                clearError();
+                setPassword(e.target.value);
+              }}
               type="password"
               variant="outlined"
               className={classes.textField}
             />
           </div>
+        )}
+        {error && (
+          <Box marginTop={2}>
+            <Typography variant="body2" align="center" color="error">
+              {error}
+            </Typography>
+          </Box>
         )}
         <div className={classes.inputContainer}>
           <BWButton className={classes.button} onClick={submit}>

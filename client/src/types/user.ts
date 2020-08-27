@@ -7,11 +7,12 @@ export enum MEMBERSHIP_STATUS {
 }
 
 export type Credentials = {
-  email: string;
+  id: string;
   password: string;
 };
 
-export type UserData = Omit<Credentials, 'password'> & {
+export type UserData = {
+  email: string;
   firstName: string;
   lastName: string;
   watIAMUserId: string;
@@ -26,9 +27,6 @@ export type UserData = Omit<Credentials, 'password'> & {
 
 export type User = UserData & ModelMetadata;
 
-export type SignUpUserData = Omit<
-  UserData & Credentials,
-  'membershipStatus' | 'isAdmin'
-> & {
+export type SignUpUserData = Omit<UserData, 'membershipStatus' | 'isAdmin'> & {
   paid?: boolean;
 };

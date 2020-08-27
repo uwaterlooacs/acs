@@ -105,11 +105,10 @@ UserSchema.statics.validatePassword = async (
   return user;
 };
 
-UserSchema.statics.findByCredentials = async (
-  email: string,
-  password: string,
-) => {
-  const user = await UserModel.findOne({ email });
+UserSchema.statics.findByCredentials = async (id: string, password: string) => {
+  const userWithEmail = await UserModel.findOne({ email: id });
+  const userWithWatIAM = await UserModel.findOne({ watIAMUserId: id });
+  const user = userWithEmail ? userWithEmail : userWithWatIAM;
   if (!user) {
     throw new Error('Unable to login');
   }
@@ -141,7 +140,7 @@ export interface UserDoc extends mongoose.Document {
 }
 
 interface User extends mongoose.Model<UserDoc> {
-  findByCredentials: (email: string, password: string) => Promise<UserDoc>;
+  findByCredentials: (id: string, password: string) => Promise<UserDoc>;
   validatePassword: (user: UserDoc, password: string) => Promise<UserDoc>;
 }
 
