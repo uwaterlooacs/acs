@@ -1,3 +1,5 @@
+import type { User } from 'types/user';
+
 import { makeRequest } from './request';
 import { Method } from 'types/network';
 import { APIRoutes } from './endpoints';
@@ -8,6 +10,16 @@ export const renewMembership = async (token: string) => {
     `${APIRoutes.MEMBERSHIP}/unpaid`,
     "We couldn't renew your membership. Make sure you're logged in.",
     {},
+    token,
+  );
+};
+
+export const updateUser = async (token: string, updates: Partial<User>) => {
+  return await makeRequest<User, Partial<User>>(
+    Method.PATCH,
+    `${APIRoutes.USER}/me`,
+    "We couldn't update your info :(",
+    updates,
     token,
   );
 };
