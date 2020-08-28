@@ -58,6 +58,7 @@ const styles = (theme: Theme) =>
     },
     membershipStatusContainer: {
       marginTop: theme.spacing(4),
+      width: '90%',
     },
     helperButton: {
       textTransform: 'none',
