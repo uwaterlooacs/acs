@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { MEMBERSHIP_STATUS, SEMESTERS, FACULTIES } from '../types/user';
+import { ModelRefs } from './types';
 
 const UserSchema = new mongoose.Schema(
   {
@@ -72,10 +73,16 @@ const UserSchema = new mongoose.Schema(
   },
 );
 
-UserSchema.virtual('event', {
-  ref: 'Event',
+UserSchema.virtual('position', {
+  ref: ModelRefs.POSITION,
   localField: '_id',
-  foreignField: 'owner',
+  foreignField: 'occupant',
+});
+
+UserSchema.virtual('nomination', {
+  ref: ModelRefs.NOMINATION,
+  localField: '_id',
+  foreignField: 'candidate',
 });
 
 UserSchema.methods.toJSON = function () {
@@ -145,6 +152,9 @@ interface User extends mongoose.Model<UserDoc> {
   validatePassword: (user: UserDoc, password: string) => Promise<UserDoc>;
 }
 
-const UserModel: User = mongoose.model<UserDoc, User>('User', UserSchema);
+const UserModel: User = mongoose.model<UserDoc, User>(
+  ModelRefs.USER,
+  UserSchema,
+);
 
 export default UserModel;
