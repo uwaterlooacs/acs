@@ -1,5 +1,5 @@
-import { /*type*/ WithStyles, Theme } from '@material-ui/core';
-import { /*type*/ ImgIcon } from 'types/imgIcon';
+import type { WithStyles, Theme } from '@material-ui/core';
+import type { ImgIcon } from 'types/imgIcon';
 
 import React from 'react';
 import { Typography, createStyles, withStyles } from '@material-ui/core';
