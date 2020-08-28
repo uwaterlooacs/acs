@@ -16,7 +16,7 @@ router.patch(
   routeValidator('/stage'),
   validate,
   async (req: Request, res: Response) => {
-    const votingDoc = await VotingModel.getVotingDoc();
+    const votingDoc = await VotingModel.getDoc();
     votingDoc.stage = req.body.stage;
     votingDoc.save();
     res.status(204).send();

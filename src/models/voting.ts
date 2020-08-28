@@ -10,7 +10,7 @@ const VotingSchema = new mongoose.Schema({
   },
 });
 
-VotingSchema.statics.getVotingDoc = async () => {
+VotingSchema.statics.getDoc = async () => {
   let votingDoc = await VotingModel.findOne({});
   if (!votingDoc) {
     votingDoc = await VotingModel.create({ stage: VOTING_STAGE.Closed });
@@ -22,7 +22,7 @@ interface VotingDoc extends mongoose.Document {
   stage: VOTING_STAGE;
 }
 interface Voting extends mongoose.Model<VotingDoc> {
-  getVotingDoc: () => Promise<VotingDoc>;
+  getDoc: () => Promise<VotingDoc>;
 }
 
 const VotingModel = mongoose.model<VotingDoc, Voting>('Voting', VotingSchema);
