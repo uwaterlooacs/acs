@@ -106,9 +106,10 @@ UserSchema.statics.validatePassword = async (
 };
 
 UserSchema.statics.findByCredentials = async (id: string, password: string) => {
-  const userWithEmail = await UserModel.findOne({ email: id });
-  const userWithWatIAM = await UserModel.findOne({ watIAMUserId: id });
-  const user = userWithEmail ? userWithEmail : userWithWatIAM;
+  const user = await UserModel.findOne().or([
+    { email: id },
+    { watIAMUserId: id },
+  ]);
   if (!user) {
     throw new Error('Unable to login');
   }
