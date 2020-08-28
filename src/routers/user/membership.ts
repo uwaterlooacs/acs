@@ -13,7 +13,7 @@ const router = express.Router();
 // update user's membership status
 router.patch(
   '/unpaid',
-  auth,
+  auth(),
   async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
     try {
       if (!req.user) {
@@ -33,7 +33,7 @@ router.patch(
   '/',
   routeValidator('/membership'),
   validate,
-  auth,
+  auth(),
   async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
     try {
       if (!req.user || !req.user.isAdmin) {

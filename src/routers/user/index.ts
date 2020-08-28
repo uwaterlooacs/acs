@@ -75,7 +75,7 @@ router.post('/thirdPartyAuth', async (req: Request, res: Response) => {
 // logout
 router.post(
   '/logout',
-  auth,
+  auth(),
   async (req: AuthenticatedRequest, res: Response) => {
     try {
       if (req.user == null) {
@@ -96,7 +96,7 @@ router.post(
 // logout all
 router.post(
   '/logoutAll',
-  auth,
+  auth(),
   async (req: AuthenticatedRequest, res: Response) => {
     try {
       if (req.user == null) {
@@ -113,12 +113,12 @@ router.post(
 );
 
 // get me
-router.get('/me', auth, async (req: AuthenticatedRequest, res: Response) => {
+router.get('/me', auth(), async (req: AuthenticatedRequest, res: Response) => {
   res.send(req.user);
 });
 
 // get someone
-router.get('/', auth, async (req: Request, res: Response) => {
+router.get('/', auth(), async (req: Request, res: Response) => {
   try {
     const user = await UserModel.findOne({ email: req.body.email });
     if (!user) {
@@ -162,21 +162,25 @@ router.get('/:id/picture', async (req: Request, res: Response) => {
 });
 
 // update me
-router.patch('/me', auth, async (req: AuthenticatedRequest, res: Response) => {
-  try {
-    const source = req.body as UserDoc;
-    if (!req.user) throw new Error();
-    const user = Object.assign(req.user, source);
-    await user.save();
-    res.send(user);
-  } catch (err) {
-    console.log(err);
-    res.status(400).send();
-  }
-});
+router.patch(
+  '/me',
+  auth(),
+  async (req: AuthenticatedRequest, res: Response) => {
+    try {
+      const source = req.body as UserDoc;
+      if (!req.user) throw new Error();
+      const user = Object.assign(req.user, source);
+      await user.save();
+      res.send(user);
+    } catch (err) {
+      console.log(err);
+      res.status(400).send();
+    }
+  },
+);
 
 // update someone
-router.patch('/:id', auth, async (req: Request, res: Response) => {
+router.patch('/:id', auth(), async (req: Request, res: Response) => {
   const source = req.body as UserDoc;
   try {
     const user = await UserModel.findById(req.params.id);
@@ -195,19 +199,23 @@ router.patch('/:id', auth, async (req: Request, res: Response) => {
 });
 
 // delete me
-router.delete('/me', auth, async (req: AuthenticatedRequest, res: Response) => {
-  try {
-    if (!req.user) throw new Error();
-    await req.user.remove();
-    res.send(req.user);
-  } catch (err) {
-    console.log(err);
-    res.status(400).send();
-  }
-});
+router.delete(
+  '/me',
+  auth(),
+  async (req: AuthenticatedRequest, res: Response) => {
+    try {
+      if (!req.user) throw new Error();
+      await req.user.remove();
+      res.send(req.user);
+    } catch (err) {
+      console.log(err);
+      res.status(400).send();
+    }
+  },
+);
 
 // delete someone
-router.delete('/:id', auth, async (req: Request, res: Response) => {
+router.delete('/:id', auth(), async (req: Request, res: Response) => {
   try {
     const user = await UserModel.findById(req.params.id);
     if (user != null) {
