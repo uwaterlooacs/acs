@@ -1,4 +1,4 @@
-import { AuthPanelOption } from 'types/auth';
+import type { AuthPanelOption } from 'types/auth';
 
 import React, { useReducer } from 'react';
 import { AuthPanelContext, initialState } from './state';
