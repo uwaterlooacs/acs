@@ -1,8 +1,9 @@
+import type { WithStyles, Theme } from '@material-ui/core/styles';
+
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 import { useMediaQuery } from '@material-ui/core';
 import { withStyles, createStyles } from '@material-ui/core/styles';
-import { /*type*/ WithStyles, Theme } from '@material-ui/core/styles';
 import HorizontalLogo from './HorizontalLogo.jpg';
 import MobileMenu from './MobileMenu';
 import Menu from './Menu';

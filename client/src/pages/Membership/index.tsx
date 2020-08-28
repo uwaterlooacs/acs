@@ -1,4 +1,4 @@
-import { /*type*/ WithStyles, Theme } from '@material-ui/core/styles';
+import type { WithStyles, Theme } from '@material-ui/core/styles';
 
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';

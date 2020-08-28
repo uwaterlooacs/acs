@@ -1,6 +1,6 @@
-import { /*type*/ Dispatch, SetStateAction } from 'react';
-import { /*type*/ WithStyles, Theme } from '@material-ui/core/styles';
-import { /*type*/ Event } from 'pages/MailingList/events';
+import type { Dispatch, SetStateAction } from 'react';
+import type { WithStyles, Theme } from '@material-ui/core/styles';
+import type { Event } from 'pages/MailingList/events';
 
 import React, { useState } from 'react';
 import { withStyles, createStyles } from '@material-ui/core/styles';
