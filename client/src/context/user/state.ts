@@ -1,24 +1,18 @@
-import { createContext } from 'react';
-import { User, MEMBERSHIP_STATUS } from 'types/user';
+import type { User } from 'types/user';
 
-const userState: User = {
-  _id: '0',
-  createdAt: new Date(),
-  updatedAt: new Date(),
-  firstName: 'Jane',
-  lastName: 'Doe',
-  email: 'janed@uwaterloo.ca',
-  watIAMUserId: 'janed',
-  studentNumber: 0,
-  semester: '1A',
-  faculty: 'Arts',
-  isAdmin: false,
-  membershipStatus: MEMBERSHIP_STATUS.EXPIRED,
+import { createContext } from 'react';
+
+type UserContextType = {
+  user?: User;
+  token?: string;
+  setUser: (user: User) => void;
+  unsetUser: () => void;
+  setToken: (token: string) => void;
+  unsetToken: () => void;
 };
 
 export const initialState = {
-  user: userState,
-  token: localStorage.getItem('token') || '',
+  token: localStorage.getItem('token') || undefined,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   setUser: (user: User) => {},
   unsetUser: () => {},
@@ -27,4 +21,4 @@ export const initialState = {
   unsetToken: () => {},
 };
 
-export const UserContext = createContext(initialState);
+export const UserContext = createContext<UserContextType>(initialState);

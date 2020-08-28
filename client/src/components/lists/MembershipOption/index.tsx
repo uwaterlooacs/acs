@@ -23,7 +23,6 @@ const styles = (theme: Theme) =>
 
 function MembershipOptionList({ classes }: WithStyles<typeof styles>) {
   const { user } = useContext(UserContext);
-  const authenticated = user._id !== '0';
   const history = useHistory();
   const { setOption, setIsOpen } = useContext(AuthPanelContext);
 
@@ -36,7 +35,7 @@ function MembershipOptionList({ classes }: WithStyles<typeof styles>) {
     }
   };
 
-  const optionsList = authenticated
+  const optionsList = user
     ? options
         .filter((option) => option.cta !== 'LOGIN')
         .filter((option) => option.cta !== 'SIGN UP')

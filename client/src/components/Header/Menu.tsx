@@ -33,7 +33,6 @@ interface Props extends WithStyles<typeof styles> {
 
 function Menu({ classes, currentPathname, onLoginClicked }: Props) {
   const { user } = useContext(UserContext);
-  const authenticated = user._id !== '0';
 
   return (
     <div className={classes.container}>
@@ -54,7 +53,7 @@ function Menu({ classes, currentPathname, onLoginClicked }: Props) {
           </div>
         </Button>
       ))}
-      {!authenticated && (
+      {!user && (
         <BWButton size="small" onClick={onLoginClicked}>
           Login
         </BWButton>
