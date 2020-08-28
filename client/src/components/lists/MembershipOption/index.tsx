@@ -5,6 +5,7 @@ import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import { withStyles, createStyles } from '@material-ui/core/styles';
 import { AuthPanelContext } from 'context/authPanel/state';
+import { UserContext } from 'context/user/state';
 import Option from './option';
 import options from './options';
 
@@ -21,6 +22,7 @@ const styles = (theme: Theme) =>
   });
 
 function MembershipOptionList({ classes }: WithStyles<typeof styles>) {
+  const { user } = useContext(UserContext);
   const history = useHistory();
   const { setOption, setIsOpen } = useContext(AuthPanelContext);
 
@@ -33,13 +35,19 @@ function MembershipOptionList({ classes }: WithStyles<typeof styles>) {
     }
   };
 
+  const optionsList = user
+    ? options
+        .filter((option) => option.cta !== 'LOGIN')
+        .filter((option) => option.cta !== 'SIGN UP')
+    : options;
+
   return (
     <div className={classes.container}>
-      {options.map((option: MembershipOption, index: number) => (
+      {optionsList.map((option: MembershipOption, index: number) => (
         <Option
           key={option.title}
           option={option}
-          isLast={index === options.length - 1}
+          isLast={index === optionsList.length - 1}
           onClick={() => onOptionClick(option)}
         />
       ))}

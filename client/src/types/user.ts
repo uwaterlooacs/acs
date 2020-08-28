@@ -1,9 +1,9 @@
 import { ModelMetadata } from './model';
 
 export enum MEMBERSHIP_STATUS {
-  EXPIRED = 'Not currently a Member',
-  UNPAID = 'Member has not paid',
-  PAID = 'Full Member',
+  EXPIRED = "You're not currently a member",
+  UNPAID = "You're a member! But it looks like you haven't paid for this term",
+  PAID = "You're a full member!",
 }
 
 export type Credentials = {

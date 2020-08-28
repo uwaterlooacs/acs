@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
+import { UserContext } from 'context/user/state';
 import { Button } from '@material-ui/core';
 import { withStyles, createStyles } from '@material-ui/core/styles';
 import { /*type*/ WithStyles, Theme } from '@material-ui/core/styles';
@@ -31,6 +32,8 @@ interface Props extends WithStyles<typeof styles> {
 }
 
 function Menu({ classes, currentPathname, onLoginClicked }: Props) {
+  const { user } = useContext(UserContext);
+
   return (
     <div className={classes.container}>
       {MENU_LINKS.map((menuLink) => (
@@ -50,9 +53,11 @@ function Menu({ classes, currentPathname, onLoginClicked }: Props) {
           </div>
         </Button>
       ))}
-      <BWButton size="small" onClick={onLoginClicked}>
-        Login
-      </BWButton>
+      {!user && (
+        <BWButton size="small" onClick={onLoginClicked}>
+          Login
+        </BWButton>
+      )}
     </div>
   );
 }
