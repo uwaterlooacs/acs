@@ -10,6 +10,7 @@ import { UserContext } from 'context/user/state';
 import { AUTH_PANEL_OPTIONS } from 'utils/constants';
 import BWButton from 'components/buttons/BWButton';
 import { login } from 'utils/api/user';
+import { getMembershipStatus, renewMembership } from 'utils/api/membership';
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -57,6 +58,7 @@ const styles = (theme: Theme) =>
     },
     membershipStatusContainer: {
       marginTop: theme.spacing(4),
+      width: '90%',
     },
     helperButton: {
       textTransform: 'none',
@@ -66,8 +68,9 @@ const styles = (theme: Theme) =>
 
 const AuthPanel = ({ classes }: WithStyles<typeof styles>) => {
   const history = useHistory();
-  const { option, isOpen, setIsOpen } = useContext(AuthPanelContext);
-  const { setUser, setToken } = useContext(UserContext);
+  const { option, isOpen, setIsOpen, setOption } = useContext(AuthPanelContext);
+  const { setUser, setToken, token, user } = useContext(UserContext);
+  const authenticated = user._id !== '0';
 
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
@@ -78,6 +81,11 @@ const AuthPanel = ({ classes }: WithStyles<typeof styles>) => {
     if (error) setError('');
   };
 
+  const closePanel = () => {
+    clearError();
+    setIsOpen(false);
+  };
+
   const submit = async () => {
     switch (option.title) {
       case AUTH_PANEL_OPTIONS.LOGIN.title:
@@ -86,19 +94,34 @@ const AuthPanel = ({ classes }: WithStyles<typeof styles>) => {
           setUser(user);
           setToken(token);
           clearError();
-          setIsOpen(false);
+          closePanel();
         } catch (err) {
-          setError('Unable to log in with those credentials');
+          const error = err as Error;
+          setError(error.message);
         }
         break;
       case AUTH_PANEL_OPTIONS.RENEWAL.title:
-        // will replace with API call
-        setIsOpen(false);
-        history.push('/membership/verifyinfo');
+        try {
+          if (!authenticated) {
+            setOption(AUTH_PANEL_OPTIONS.LOGIN);
+            setError("We couldn't renew your membership. Try logging in above");
+          } else {
+            await renewMembership(token);
+            closePanel();
+            history.push('/membership/verifyinfo');
+          }
+        } catch (err) {
+          const error = err as Error;
+          setError(error.message);
+        }
         break;
       case AUTH_PANEL_OPTIONS.CHECK.title:
-        // will replace with API call
-        setMembershipStatus('Full Member');
+        try {
+          setMembershipStatus(await getMembershipStatus(id));
+        } catch (err) {
+          const error = err as Error;
+          setError(error.message);
+        }
         break;
     }
   };
@@ -107,12 +130,12 @@ const AuthPanel = ({ classes }: WithStyles<typeof styles>) => {
     <Drawer
       anchor="right"
       open={isOpen}
-      onClose={() => setIsOpen(false)}
+      onClose={closePanel}
       style={{ position: 'relative' }}
     >
       <div className={classes.container}>
         <div className={classes.closeIconContainer}>
-          <Button onClick={() => setIsOpen(false)}>
+          <Button onClick={closePanel}>
             <CloseIcon />
           </Button>
         </div>
@@ -175,9 +198,6 @@ const AuthPanel = ({ classes }: WithStyles<typeof styles>) => {
         </div>
         {membershipStatus && option.title === AUTH_PANEL_OPTIONS.CHECK.title && (
           <div className={classes.membershipStatusContainer}>
-            <Typography variant="body2" align="center" color="textPrimary">
-              You are:
-            </Typography>
             <Typography variant="h5" align="center" color="textPrimary">
               {membershipStatus}
             </Typography>

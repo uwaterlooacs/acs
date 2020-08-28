@@ -7,6 +7,7 @@ import { UserContext } from 'context/user/state';
 import UserInfoForm from 'components/forms/UserInfo';
 import BWButton from 'components/buttons/BWButton';
 import { isName, isStudentNumber, isUWEmail } from 'components/forms/utils';
+import { updateUser } from 'utils/api/membership';
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -24,7 +25,7 @@ type Props = WithStyles<typeof styles> & {
 };
 
 function VerifyInfo({ classes, onVerify }: Props) {
-  const { user, setUser } = useContext(UserContext);
+  const { user, token, setUser } = useContext(UserContext);
   const [firstName, setFirstName] = useState(user.firstName);
   const [lastName, setLastName] = useState(user.lastName);
   const [studentNumber, setStudentNumber] = useState(
@@ -36,7 +37,7 @@ function VerifyInfo({ classes, onVerify }: Props) {
 
   const [triedToSubmit, setTriedToSubmit] = useState(false);
 
-  const onSubmit = () => {
+  const onSubmit = async () => {
     setTriedToSubmit(true);
     if (
       isName(firstName) &&
@@ -46,15 +47,20 @@ function VerifyInfo({ classes, onVerify }: Props) {
       !!semester &&
       !!faculty
     ) {
-      setUser({
-        ...user,
-        firstName,
-        lastName,
-        studentNumber: parseInt(studentNumber),
-        email,
-        semester,
-        faculty,
-      });
+      try {
+        const updates = {
+          firstName,
+          lastName,
+          studentNumber: parseInt(studentNumber),
+          email,
+          semester,
+          faculty,
+        };
+        await updateUser(token, updates);
+        setUser({ ...user, ...updates });
+      } catch (err) {
+        console.log(err);
+      }
       onVerify();
     }
   };
