@@ -1,10 +1,11 @@
-import { /*type*/ WithStyles, Divider, Theme } from '@material-ui/core';
+import type { WithStyles, Theme } from '@material-ui/core';
 
 import React from 'react';
 import {
   Typography,
   createStyles,
   withStyles,
+  Divider,
   Box,
   useMediaQuery,
 } from '@material-ui/core';

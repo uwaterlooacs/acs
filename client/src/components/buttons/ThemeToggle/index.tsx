@@ -1,5 +1,6 @@
+import type { WithStyles, Theme } from '@material-ui/core/styles';
+
 import React, { useContext } from 'react';
-import { /*type*/ WithStyles, Theme } from '@material-ui/core/styles';
 import { withStyles, createStyles } from '@material-ui/core/styles';
 import { Button } from '@material-ui/core';
 import Brightness4Icon from '@material-ui/icons/Brightness4';
