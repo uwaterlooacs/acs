@@ -13,17 +13,17 @@ router.post(
   auth,
   async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
     try {
-      positions.forEach(async (p) => {
-        const existingPosition = await PositionModel.find({ title: p.title });
-        if (!existingPosition) {
-          const position = new PositionModel({
-            ...p,
+      if (await PositionModel.find({}))
+        throw new Error('Positions already exist');
+      await PositionModel.create(
+        positions.map((position) => {
+          return {
+            ...position,
             isOpen: true,
             occupant: req.user?._id,
-          });
-          await position.save();
-        }
-      });
+          };
+        }),
+      );
       res.send();
     } catch (err) {
       next(err);
