@@ -1,9 +1,10 @@
+import type { WithStyles, Theme } from '@material-ui/core/styles';
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 import { Button } from '@material-ui/core';
 import { withStyles, createStyles } from '@material-ui/core/styles';
-import { /*type*/ WithStyles, Theme } from '@material-ui/core/styles';
 import BWButton from 'components/buttons/BWButton';
 import { MENU_LINKS } from './constants';
 

@@ -7,7 +7,10 @@ type TokenVerification = {
   id: string;
 };
 
-const auth = async (
+type AuthOptions = {
+  isAdmin?: boolean;
+};
+const auth = ({ isAdmin }: AuthOptions = {}) => async (
   req: AuthenticatedRequest,
   res: Response,
   next: NextFunction,
@@ -23,13 +26,16 @@ const auth = async (
     const id = verification.id;
     const user = await UserModel.findOne({ _id: id, tokens: token });
     if (!user) {
-      throw new Error();
+      throw new Error('Please authenticate');
+    }
+    if (isAdmin && !user.isAdmin) {
+      throw new Error('Admin role is required');
     }
     req.token = token;
     req.user = user;
     next();
   } catch (e) {
-    res.status(401).send('Please authenticate');
+    res.status(401).send(e.message);
   }
 };
 

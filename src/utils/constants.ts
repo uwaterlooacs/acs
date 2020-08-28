@@ -3,6 +3,7 @@ export enum ROUTES {
   NOMINATION = '/nomination',
   MAILING_LIST = '/mailingList',
   DEV = '/dev',
+  VOTING = '/voting',
 }
 
 export enum MONGO_ERRORS {
