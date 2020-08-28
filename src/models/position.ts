@@ -33,12 +33,6 @@ const PositionSchema = new Schema({
   },
 });
 
-PositionSchema.virtual('nomination', {
-  ref: ModelRefs.NOMINATION,
-  localField: '_id',
-  foreignField: 'position',
-});
-
 const PositionModel = model<PositionDoc>(ModelRefs.POSITION, PositionSchema);
 
 export default PositionModel;

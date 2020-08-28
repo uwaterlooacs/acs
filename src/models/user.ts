@@ -77,9 +77,10 @@ UserSchema.virtual('position', {
   ref: ModelRefs.POSITION,
   localField: '_id',
   foreignField: 'occupant',
+  justOne: true,
 });
 
-UserSchema.virtual('nomination', {
+UserSchema.virtual('nominations', {
   ref: ModelRefs.NOMINATION,
   localField: '_id',
   foreignField: 'candidate',
