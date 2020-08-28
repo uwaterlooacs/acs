@@ -19,7 +19,9 @@ router.patch(
       if (!req.user) {
         throw createHttpError(401, 'Must authenticate');
       }
-      req.user.membershipStatus = MEMBERSHIP_STATUS.UNPAID;
+      if (req.user.membershipStatus !== MEMBERSHIP_STATUS.PAID) {
+        req.user.membershipStatus = MEMBERSHIP_STATUS.UNPAID;
+      }
       await req.user.save();
       res.send();
     } catch (err) {
