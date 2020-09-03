@@ -6,7 +6,7 @@
   "scripts": {
     "eslint": "eslint '**/*.{js,ts,tsx}'",
     "format": "prettier --write **/*.{js,ts,tsx}",
-    "dev:server": "ts-node-dev --inspect --respawn --transpileOnly -- app.ts",
+    "dev:server": "ts-node-dev --inspect --respawn -- app.ts",
     "build:server": "yarn && tsc",
     "build:client": "cd client && yarn && yarn build",
     "dev": "concurrently \"yarn dev:server\" \"cd client && yarn start\"",

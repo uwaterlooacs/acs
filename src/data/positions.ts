@@ -1,6 +1,6 @@
 import type { PositionDoc } from '../models/position';
 
-const positions: Partial<PositionDoc>[] = [
+const positions: Pick<PositionDoc, 'title' | 'description'>[] = [
   {
     title: 'President',
     description: 'Runs things',

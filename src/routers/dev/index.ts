@@ -10,10 +10,10 @@ const router = express.Router();
 // create positions if they don't exist
 router.post(
   '/positions',
-  auth,
+  auth(),
   async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
     try {
-      if (await PositionModel.find({}))
+      if ((await PositionModel.find({})).length === 0)
         throw new Error('Positions already exist');
       await PositionModel.create(
         positions.map((position) => {

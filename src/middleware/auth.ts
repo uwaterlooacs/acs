@@ -22,7 +22,10 @@ const auth = ({ isAdmin }: AuthOptions = {}) => async (
       throw new Error();
     }
     const token = authHeader.replace('Bearer ', '');
-    const verification = jwt.verify(token, APP_SECRET) as TokenVerification;
+    const verification = jwt.verify(
+      token,
+      APP_SECRET || '',
+    ) as TokenVerification;
     const id = verification.id;
     const user = await UserModel.findOne({ _id: id, tokens: token });
     if (!user) {

@@ -96,7 +96,10 @@ UserSchema.methods.toJSON = function () {
 };
 
 UserSchema.methods.generateAuthToken = async function () {
-  const token = jwt.sign({ id: this.id.toString() }, process.env.APP_SECRET);
+  const token = jwt.sign(
+    { id: this.id.toString() },
+    process.env.APP_SECRET || '',
+  );
   this.tokens = this.tokens.concat(token);
   await this.save();
   return token;
