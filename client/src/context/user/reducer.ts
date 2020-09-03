@@ -11,7 +11,7 @@ export default (state = initialState, action: Action) => {
     case ActionTypes.UNSET_USER:
       return {
         ...state,
-        user: initialState.user,
+        user: undefined,
       };
     case ActionTypes.SET_TOKEN:
       return {

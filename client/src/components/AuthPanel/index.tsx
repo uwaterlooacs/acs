@@ -70,7 +70,6 @@ const AuthPanel = ({ classes }: WithStyles<typeof styles>) => {
   const history = useHistory();
   const { option, isOpen, setIsOpen, setOption } = useContext(AuthPanelContext);
   const { setUser, setToken, token, user } = useContext(UserContext);
-  const authenticated = user._id !== '0';
 
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
@@ -102,7 +101,7 @@ const AuthPanel = ({ classes }: WithStyles<typeof styles>) => {
         break;
       case AUTH_PANEL_OPTIONS.RENEWAL.title:
         try {
-          if (!authenticated) {
+          if (!user || !token) {
             setOption(AUTH_PANEL_OPTIONS.LOGIN);
             setError("We couldn't renew your membership. Try logging in above");
           } else {

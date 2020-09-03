@@ -26,14 +26,14 @@ type Props = WithStyles<typeof styles> & {
 
 function VerifyInfo({ classes, onVerify }: Props) {
   const { user, token, setUser } = useContext(UserContext);
-  const [firstName, setFirstName] = useState(user.firstName);
-  const [lastName, setLastName] = useState(user.lastName);
+  const [firstName, setFirstName] = useState(user?.firstName || '');
+  const [lastName, setLastName] = useState(user?.lastName || '');
   const [studentNumber, setStudentNumber] = useState(
-    user.studentNumber.toString(),
+    user?.studentNumber.toString() || '',
   );
-  const [email, setEmail] = useState(user.email);
-  const [semester, setSemester] = useState(user.semester);
-  const [faculty, setFaculty] = useState(user.faculty);
+  const [email, setEmail] = useState(user?.email || '');
+  const [semester, setSemester] = useState(user?.semester || '');
+  const [faculty, setFaculty] = useState(user?.faculty || '');
 
   const [triedToSubmit, setTriedToSubmit] = useState(false);
 
@@ -45,7 +45,9 @@ function VerifyInfo({ classes, onVerify }: Props) {
       isStudentNumber(studentNumber) &&
       isUWEmail(email) &&
       !!semester &&
-      !!faculty
+      !!faculty &&
+      token &&
+      user
     ) {
       try {
         const updates = {
