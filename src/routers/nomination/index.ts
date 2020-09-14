@@ -16,11 +16,13 @@ router.post(
   auth(),
   async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
     try {
-      const existingNomination = await NominationModel.findOne({
-        position: req.body.position,
-        candidate: req.body.candidate,
-      });
-      if (existingNomination) throw new Error('Nomination already exists');
+      if (
+        await NominationModel.exists({
+          position: req.body.position,
+          candidate: req.body.candidate,
+        })
+      )
+        throw new Error('Nomination already exists');
       const nomination = new NominationModel({ ...req.body });
       await nomination.save();
       res.send();
