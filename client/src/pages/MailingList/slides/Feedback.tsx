@@ -102,7 +102,7 @@ function Feedback({
     <div className={classes.container}>
       <div className={classes.textContainer}>
         <Typography variant="h4" color="textPrimary" align="center">
-          Which events would you be you interested in?
+          Which events would you be you interested in this term?
         </Typography>
       </div>
       <div className={classes.eventsContainer}>

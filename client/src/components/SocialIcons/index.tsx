@@ -108,7 +108,7 @@ function SocialIcons({ classes, theme = 'black' }: Props) {
               alt="linktree"
             />
           </div>
-          @uwaterlooacs
+          /uwaterlooacs
         </Button>
       </div>
       <div className={classes.iconsContainer}>
