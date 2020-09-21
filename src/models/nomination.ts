@@ -7,7 +7,7 @@ import { ModelRefs } from './types';
 export interface NominationDoc extends Document {
   position: Types.ObjectId | PositionDoc;
   candidate: Types.ObjectId | UserDoc;
-  seconds: Types.ObjectId[];
+  seconds: Types.Array<Types.ObjectId>;
   video?: string;
   writeUp?: string;
 }

@@ -46,10 +46,7 @@ router.patch(
       if (!nomination) throw new Error('Could not find nomination');
 
       const myId = req.user?._id;
-      if (nomination.seconds.includes(myId))
-        throw new Error('You already seconded this nomination');
-
-      nomination.seconds.push(myId);
+      nomination.seconds.addToSet(myId);
       await nomination.save();
       res.send();
     } catch (err) {
