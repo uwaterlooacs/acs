@@ -7,7 +7,7 @@ import { ModelRefs } from './types';
 export interface NominationDoc extends Document {
   position: Types.ObjectId | PositionDoc;
   candidate: Types.ObjectId | UserDoc;
-  seconds: number;
+  seconds: Types.Array<Types.ObjectId>;
   video?: string;
   writeUp?: string;
 }
@@ -23,11 +23,12 @@ const NominationSchema = new Schema({
     required: true,
     ref: ModelRefs.USER,
   },
-  seconds: {
-    type: Number,
-    required: true,
-    default: 0,
-  },
+  seconds: [
+    {
+      type: Types.ObjectId,
+      required: true,
+    },
+  ],
   video: {
     type: String,
     trim: true,
