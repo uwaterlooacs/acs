@@ -2,7 +2,7 @@ import type { Response, NextFunction } from 'express';
 import type { AuthenticatedRequest } from '../../types/network';
 
 import express from 'express';
-import { PositionModel } from '@acs/shared';
+import PositionModel from '../../models/position';
 import auth from '../../middleware/auth';
 import positions from '../../data/positions';
 

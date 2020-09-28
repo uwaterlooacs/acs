@@ -1,9 +1,12 @@
-import express, { Request, Response, NextFunction } from 'express';
+import type { Request, Response, NextFunction } from 'express';
+import type { AuthenticatedRequest } from '../../types/network';
+
+import express from 'express';
+import createHttpError from 'http-errors';
+import { MEMBERSHIP_STATUS } from '@acs/shared';
+import UserModel from '../../models/user';
 import validate from '../../middleware/validate';
 import routeValidator from './routeValidator';
-import { UserModel, MEMBERSHIP_STATUS } from '@acs/shared';
-import { AuthenticatedRequest } from '../../types/network';
-import createHttpError from 'http-errors';
 import validator from 'validator';
 import auth from '../../middleware/auth';
 

@@ -1,15 +1,8 @@
-// Models
-export { default as NominationModel } from './models/Nomination';
-export * from './models/Nomination';
-
-export { default as PositionModel } from './models/Position';
-export * from './models/Position';
-
-export { default as UserModel } from './models/User';
-export * from './models/User';
-
-export { default as VotingModel } from './models/Voting';
-export * from './models/Voting';
+// Docs
+export type { default as NominationDoc } from './models/Nomination';
+export type { default as PositionDoc } from './models/Position';
+export type { default as UserDoc } from './models/User';
+export type { default as VotingDoc } from './models/Voting';
 
 // Utils
 export * from './utils/enum';

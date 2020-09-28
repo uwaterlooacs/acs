@@ -5,7 +5,7 @@ import type { Request, Response } from 'express';
 import auth from '../../middleware/auth';
 import validate from '../../middleware/validate';
 import routeValidator from './routeValidator';
-import { VotingModel } from '@acs/shared';
+import VotingModel from '../../models/voting';
 
 const router = express.Router();
 

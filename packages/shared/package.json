@@ -8,8 +8,6 @@
     "build": "tsc"
   },
   "dependencies": {
-    "bcryptjs": "^2.4.3",
-    "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.10.6"
   },
   "devDependencies": {

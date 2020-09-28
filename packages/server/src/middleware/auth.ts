@@ -2,7 +2,7 @@ import type { Response, NextFunction } from 'express';
 import type { AuthenticatedRequest } from '../types/network';
 
 import jwt from 'jsonwebtoken';
-import { UserModel } from '@acs/shared';
+import UserModel from '../models/user';
 
 type TokenVerification = {
   id: string;

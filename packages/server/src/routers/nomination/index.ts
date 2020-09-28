@@ -2,7 +2,7 @@ import type { Response, NextFunction } from 'express';
 import type { AuthenticatedRequest } from '../../types/network';
 
 import express from 'express';
-import { NominationModel } from '@acs/shared';
+import NominationModel from '../../models/nomination';
 import auth from '../../middleware/auth';
 import validate from '../../middleware/validate';
 import getValidations from './validations';

@@ -1,6 +1,7 @@
 import cron from 'node-cron';
 import { GoogleSpreadsheet } from 'google-spreadsheet';
-import { UserModel, MEMBERSHIP_STATUS } from '@acs/shared';
+import { MEMBERSHIP_STATUS } from '@acs/shared';
+import UserModel from '../models/user';
 import GoogleCreds from '../config/acs-web-5aaaf-768e669e2d39.json';
 
 const getTerm = () => {

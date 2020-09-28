@@ -1,8 +1,10 @@
 import type { Request, Response, NextFunction } from 'express';
+import type { UserDoc } from '@acs/shared';
 import type { AuthenticatedRequest } from '../../types/network';
 
 import express from 'express';
-import { UserModel, UserDoc, MEMBERSHIP_STATUS } from '@acs/shared';
+import { MEMBERSHIP_STATUS } from '@acs/shared';
+import UserModel from '../../models/user';
 import auth from '../../middleware/auth';
 import { MONGO_ERRORS } from '../../utils/constants';
 import routeValidator from './routeValidator';
