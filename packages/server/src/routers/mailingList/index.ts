@@ -1,4 +1,5 @@
 import type { Request, Response, NextFunction } from 'express';
+import type { ServiceAccountCredentials } from 'google-spreadsheet';
 
 import express from 'express';
 import { GoogleSpreadsheet } from 'google-spreadsheet';
@@ -6,7 +7,16 @@ import validate from '../../middleware/validate';
 import routeValidator from './routeValidator';
 import { DEFAULT_EVENT_RESPONSES } from './constant';
 import { MailingListRequestBody } from './types';
-import GoogleCreds from '../../config/acs-web-5aaaf-768e669e2d39.json';
+
+let GoogleCreds: ServiceAccountCredentials = {
+  client_email: '',
+  private_key: '',
+};
+
+if (process.env.NODE_ENV === 'test') {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  GoogleCreds = require('../config/acs-web-5aaaf-768e669e2d39.json');
+}
 
 const doc = new GoogleSpreadsheet(
   '16PEbh4LFsb1klDX-W6kp47_p9acEKVIWNBz-TTDXcDc',
