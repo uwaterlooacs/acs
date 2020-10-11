@@ -1,8 +1,19 @@
+import type { ServiceAccountCredentials } from 'google-spreadsheet';
+
 import cron from 'node-cron';
 import { GoogleSpreadsheet } from 'google-spreadsheet';
 import { MEMBERSHIP_STATUS } from '@acs/shared';
 import UserModel from '../models/user';
-import GoogleCreds from '../config/acs-web-5aaaf-768e669e2d39.json';
+
+let GoogleCreds: ServiceAccountCredentials = {
+  client_email: '',
+  private_key: '',
+};
+
+if (process.env.NODE_ENV === 'test') {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  GoogleCreds = require('../config/acs-web-5aaaf-768e669e2d39.json');
+}
 
 const getTerm = () => {
   const date = new Date();
