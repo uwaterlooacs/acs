@@ -5,8 +5,7 @@
   "typings": "dist/index.d.ts",
   "license": "MIT",
   "scripts": {
-    "build": "tsc",
-    "ci:build": "NODE_ENV=test node ../../node_modules/typescript/lib/tsc"
+    "build": "tsc"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",

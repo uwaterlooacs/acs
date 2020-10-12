@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "build": "tsc",
-    "ci:build": "NODE_ENV=test node ../../node_modules/typescript/lib/tsc",
+    "ci:build": "NODE_ENV=test tsc",
     "dev": "ts-node-dev --inspect --respawn --transpile-only src/index.ts"
   },
   "dependencies": {
