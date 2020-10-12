@@ -3,6 +3,9 @@
 # Exit when any command fails
 set -e
 
+# set working directory (needed for ci)
+cd ~/acs
+
 # Terminal colors ANSI escape codes
 RED='\033[0;31m'
 GREEN='\033[0;32m'
