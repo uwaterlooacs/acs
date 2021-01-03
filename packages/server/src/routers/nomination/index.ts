@@ -56,4 +56,22 @@ router.patch(
   },
 );
 
+router.patch(
+  '/decline',
+  getValidations(LocalRoutes.DECLINE_NOMINATION),
+  validate,
+  auth(),
+  async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
+    try {
+      await NominationModel.deleteOne({
+        position: req.query.position as string,
+        candidate: req.user?._id,
+      });
+      res.send();
+    } catch (err) {
+      next(err);
+    }
+  },
+);
+
 export default router;
