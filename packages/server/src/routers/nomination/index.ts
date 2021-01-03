@@ -65,7 +65,7 @@ router.patch(
     try {
       await NominationModel.deleteOne({
         position: req.query.position as string,
-        candidate: req.user?._id,
+        candidate: req.query.candidate as string,
       });
       res.send();
     } catch (err) {
