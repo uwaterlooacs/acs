@@ -12,6 +12,7 @@ const getValidations = (route: LocalRoutes) => {
         body('writeUp').optional().isString(),
       ];
     case LocalRoutes.SECOND_NOMINEE:
+    case LocalRoutes.VOTE_NOMINEE:
       return [query('position').isMongoId(), query('candidate').isMongoId()];
     default:
       return [];
