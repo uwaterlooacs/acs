@@ -60,7 +60,6 @@ router.patch(
   '/decline',
   getValidations(LocalRoutes.DECLINE_NOMINATION),
   validate,
-  auth(),
   async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
     try {
       await NominationModel.deleteOne({
