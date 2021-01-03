@@ -2,6 +2,7 @@ import type { VotingDoc } from '@acs/shared';
 
 import mongoose from 'mongoose';
 import { VOTING_STAGE, getStringEnumValues } from '@acs/shared';
+import { ModelRefs } from './types';
 
 const VotingSchema = new mongoose.Schema({
   stage: {
@@ -23,6 +24,9 @@ interface Voting extends mongoose.Model<VotingDoc> {
   getDoc: () => Promise<VotingDoc>;
 }
 
-const VotingModel = mongoose.model<VotingDoc, Voting>('Voting', VotingSchema);
+const VotingModel: Voting = mongoose.model<VotingDoc, Voting>(
+  ModelRefs.VOTING,
+  VotingSchema,
+);
 
 export default VotingModel;
