@@ -20,6 +20,12 @@ const NominationSchema = new Schema({
       required: true,
     },
   ],
+  votes: [
+    {
+      type: Types.ObjectId,
+      required: true,
+    },
+  ],
   video: {
     type: String,
     trim: true,

@@ -7,6 +7,7 @@ interface NominationDoc extends Document {
   position: Types.ObjectId | PositionDoc;
   candidate: Types.ObjectId | UserDoc;
   seconds: Types.Array<Types.ObjectId>;
+  votes: Types.Array<Types.ObjectId>;
   video?: string;
   writeUp?: string;
 }
