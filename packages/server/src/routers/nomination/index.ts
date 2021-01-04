@@ -5,7 +5,7 @@ import express from 'express';
 import NominationModel from '../../models/nomination';
 import auth from '../../middleware/auth';
 import validate from '../../middleware/validate';
-import getValidations from './validations';
+import getValidations from './routeValidator';
 import { LocalRoutes } from './types';
 
 const router = express.Router();
