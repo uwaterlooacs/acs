@@ -41,15 +41,29 @@ router.patch(
   auth(),
   async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
     try {
-      const nomination = await NominationModel.findOne({
-        position: req.query.position as string,
-        candidate: req.query.candidate as string,
-      });
+      const nomination = await NominationModel.findById(
+        req.query.nomination as string,
+      );
+
       if (!nomination) throw new Error('Could not find nomination');
 
-      const myId = req.user?._id;
-      nomination.seconds.addToSet(myId);
+      nomination.seconds.addToSet(req.user?._id);
       await nomination.save();
+
+      res.send();
+    } catch (err) {
+      next(err);
+    }
+  },
+);
+
+router.patch(
+  '/decline',
+  getValidations(LocalRoutes.DECLINE_NOMINATION),
+  validate,
+  async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
+    try {
+      await NominationModel.findByIdAndDelete(req.query.nomination as string);
       res.send();
     } catch (err) {
       next(err);
@@ -64,15 +78,15 @@ router.patch(
   auth(),
   async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
     try {
-      const nomination = await NominationModel.findOne({
-        position: req.query.position as string,
-        candidate: req.query.candidate as string,
-      });
+      const nomination = await NominationModel.findById(
+        req.query.nomination as string,
+      );
+
       if (!nomination) throw new Error('Could not find nomination');
 
-      const myId = req.user?._id;
-      nomination.votes.addToSet(myId);
+      nomination.votes.addToSet(req.user?._id);
       await nomination.save();
+
       res.send();
     } catch (err) {
       next(err);
