@@ -1,7 +1,7 @@
 import type { PositionDoc } from '@acs/shared';
 
 import { Types, Schema, model } from 'mongoose';
-import { ModelRefs } from './types';
+import { ModelRefs } from '../types';
 
 const PositionSchema = new Schema({
   title: {

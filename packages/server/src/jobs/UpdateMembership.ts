@@ -3,7 +3,7 @@ import type { ServiceAccountCredentials } from 'google-spreadsheet';
 import cron from 'node-cron';
 import { GoogleSpreadsheet } from 'google-spreadsheet';
 import { MEMBERSHIP_STATUS } from '@acs/shared';
-import UserModel from '../models/user';
+import UserModel from '../models/User';
 
 let GoogleCreds: ServiceAccountCredentials = {
   client_email: '',

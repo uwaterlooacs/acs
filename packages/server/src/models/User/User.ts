@@ -4,7 +4,7 @@ import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { SEMESTERS, FACULTIES } from '@acs/shared';
-import { ModelRefs } from './types';
+import { ModelRefs } from '../types';
 
 const UserSchema = new mongoose.Schema(
   {

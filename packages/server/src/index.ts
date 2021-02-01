@@ -1,3 +1,6 @@
+import './jobs/UpdateMembership';
+import 'dotenv/config';
+
 import type { Request, Response } from 'express';
 
 import express from 'express';
@@ -5,8 +8,6 @@ import cors from 'cors';
 import path from 'path';
 import connect from './config/db';
 import routers from './routers';
-import './jobs/membership';
-import 'dotenv/config';
 
 const main = async (): Promise<void> => {
   const app = express();
@@ -25,7 +26,8 @@ const main = async (): Promise<void> => {
   app.use('/api', routers);
 
   console.log('Connecting to Mongo DB');
-  await connect(() => console.log('Connected!'));
+  await connect();
+  console.log('Connected!');
 
   // set client directory
   const CLIENT_DIR = path.join(__dirname, '..', '..', 'client', 'build');

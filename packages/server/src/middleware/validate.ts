@@ -1,4 +1,5 @@
-import { Request, Response, NextFunction } from 'express';
+import type { Request, Response, NextFunction } from 'express';
+
 import { validationResult } from 'express-validator';
 
 // Middleware to automatically send 442 response with errors on failed validation

@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const connect = async (callback: () => void): Promise<void> => {
+const connect = async (): Promise<void> => {
   const mongoUrl = process.env.MONGO_URL || `mongodb://127.0.0.1:27017/acs`;
 
   mongoose.set('useFindAndModify', false);
@@ -10,8 +10,6 @@ const connect = async (callback: () => void): Promise<void> => {
     useNewUrlParser: true,
     useCreateIndex: true,
   });
-
-  callback();
 };
 
 export default connect;

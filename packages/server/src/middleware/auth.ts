@@ -1,8 +1,8 @@
 import type { Response, NextFunction } from 'express';
-import type { AuthenticatedRequest } from '../types/network';
+import type { AuthenticatedRequest } from '../types/AuthenticatedRequest';
 
 import jwt from 'jsonwebtoken';
-import UserModel from '../models/user';
+import UserModel from '../models/User';
 
 type TokenVerification = {
   id: string;

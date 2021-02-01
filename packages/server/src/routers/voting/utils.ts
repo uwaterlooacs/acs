@@ -1,6 +1,6 @@
 import { NominationDoc } from '@acs/shared';
-import NominationModel from '../../models/nomination';
-import PositionModel from '../../models/position';
+import NominationModel from '../../models/Nomination/Nomination';
+import PositionModel from '../../models/Position';
 
 /**
  * Takes an array of nominations and returns a record with position id as keys

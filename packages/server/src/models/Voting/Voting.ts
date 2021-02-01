@@ -2,7 +2,7 @@ import type { VotingDoc } from '@acs/shared';
 
 import mongoose from 'mongoose';
 import { VOTING_STAGE, getStringEnumValues } from '@acs/shared';
-import { ModelRefs } from './types';
+import { ModelRefs } from '../types';
 
 const VotingSchema = new mongoose.Schema({
   stage: {

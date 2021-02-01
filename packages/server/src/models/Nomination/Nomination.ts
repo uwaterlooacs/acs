@@ -1,7 +1,7 @@
 import type { NominationDoc } from '@acs/shared';
 
 import { Types, Schema, model } from 'mongoose';
-import { ModelRefs } from './types';
+import { ModelRefs } from '../types';
 
 const NominationSchema = new Schema({
   position: {
