@@ -1,7 +1,7 @@
 import express from 'express';
 import { VOTING_STAGE } from '@acs/shared';
 
-import type { Request, Response } from 'express';
+import type { Request, Response, NextFunction } from 'express';
 
 import auth from '../../middleware/auth';
 import validate from '../../middleware/validate';
@@ -10,6 +10,19 @@ import VotingModel from '../../models/voting';
 import { finalizeResults } from './utils';
 
 const router = express.Router();
+
+// get current voting stage
+router.get(
+  '/stage',
+  auth(),
+  async (_req: Request, res: Response, next: NextFunction) => {
+    try {
+      res.status(200).send(await VotingModel.getDoc());
+    } catch (err) {
+      next(err);
+    }
+  },
+);
 
 // update voting stage (requires admin privileges)
 router.patch(

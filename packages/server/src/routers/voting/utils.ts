@@ -7,7 +7,7 @@ import PositionModel from '../../models/position';
  * and the nominations for that position as the value
  * @param nominations NominationDoc[]
  */
-const getNominationsByPosition = (nominations: NominationDoc[]) => {
+export const getNominationsByPosition = (nominations: NominationDoc[]) => {
   const nominationsByPosition = nominations.reduce<
     Record<string, NominationDoc[]>
   >((partialNomsByPos, nomination) => {
