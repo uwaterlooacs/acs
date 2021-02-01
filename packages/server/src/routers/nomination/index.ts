@@ -7,6 +7,7 @@ import auth from '../../middleware/auth';
 import validate from '../../middleware/validate';
 import getValidations from './routeValidator';
 import { LocalRoutes } from './types';
+import { getNominationsByPosition } from '../voting/utils';
 
 const router = express.Router();
 
@@ -73,6 +74,18 @@ router.patch(
       nomination.votes.addToSet(myId);
       await nomination.save();
       res.send();
+    } catch (err) {
+      next(err);
+    }
+  },
+);
+
+router.get(
+  '/',
+  auth(),
+  async (_req: AuthenticatedRequest, res: Response, next: NextFunction) => {
+    try {
+      res.send(getNominationsByPosition(await NominationModel.find()));
     } catch (err) {
       next(err);
     }
