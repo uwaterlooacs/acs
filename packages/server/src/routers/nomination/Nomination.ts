@@ -6,27 +6,32 @@ import NominationModel from '../../models/Nomination/Nomination';
 import auth from '../../middleware/auth';
 import validate from '../../middleware/validate';
 import getValidations from './routeValidator';
-import { LocalRoutes } from './types';
+import { LOCAL_ROUTES } from './types';
 import { getNominationsByPosition } from '../Voting/utils';
 
 const router = express.Router();
 
 router.post(
   '/',
-  getValidations(LocalRoutes.CREATE_NOMINATION),
+  getValidations(LOCAL_ROUTES.CREATE_NOMINATION),
   validate,
   auth(),
   async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
     try {
       if (
         await NominationModel.exists({
-          position: req.body.position,
-          candidate: req.body.candidate,
+          $and: [
+            { position: req.body.position },
+            { candidate: req.body.candidate },
+          ],
         })
-      )
+      ) {
         throw new Error('Nomination already exists');
+      }
+
       const nomination = new NominationModel({ ...req.body });
       await nomination.save();
+
       res.send();
     } catch (err) {
       next(err);
@@ -36,7 +41,7 @@ router.post(
 
 router.patch(
   '/second',
-  getValidations(LocalRoutes.SECOND_NOMINEE),
+  getValidations(LOCAL_ROUTES.SECOND_NOMINEE),
   validate,
   auth(),
   async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
@@ -59,7 +64,7 @@ router.patch(
 
 router.patch(
   '/decline',
-  getValidations(LocalRoutes.DECLINE_NOMINATION),
+  getValidations(LOCAL_ROUTES.DECLINE_NOMINATION),
   validate,
   async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
     try {
@@ -73,7 +78,7 @@ router.patch(
 
 router.patch(
   '/vote',
-  getValidations(LocalRoutes.VOTE_NOMINEE),
+  getValidations(LOCAL_ROUTES.VOTE_NOMINEE),
   validate,
   auth(),
   async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {

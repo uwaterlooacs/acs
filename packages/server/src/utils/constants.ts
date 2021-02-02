@@ -2,6 +2,7 @@ export enum ROUTES {
   USER = '/user',
   NOMINATION = '/nomination',
   MAILING_LIST = '/mailingList',
+  MEMBERSHIP = '/membership',
   VOTING = '/voting',
 }
 

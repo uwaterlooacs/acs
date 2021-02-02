@@ -3,11 +3,11 @@ import type { AuthenticatedRequest } from '../../types/AuthenticatedRequest';
 
 import express from 'express';
 import createHttpError from 'http-errors';
+import validator from 'validator';
 import { MEMBERSHIP_STATUS } from '@acs/shared';
 import UserModel from '../../models/User';
 import validate from '../../middleware/validate';
 import routeValidator from './routeValidator';
-import validator from 'validator';
 import auth from '../../middleware/auth';
 
 const router = express.Router();
@@ -46,12 +46,15 @@ router.patch(
           'Must be an admin to update membership status',
         );
       }
+
       const user = await UserModel.findById(req.query.id);
       if (!user) {
         throw createHttpError(404, 'Cannot find user with that id');
       }
+
       user.membershipStatus = req.body.membershipStatus;
       await user.save();
+
       res.send();
     } catch (err) {
       next(err);

@@ -5,3 +5,7 @@ export type MailingListRequestBody = {
   interestedEvents: (keyof typeof DEFAULT_EVENT_RESPONSES)[];
   otherFeedback: string;
 };
+
+export enum LOCAL_ROUTES {
+  UPDATE_SHEET,
+}

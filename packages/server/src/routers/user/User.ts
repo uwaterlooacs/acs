@@ -9,11 +9,8 @@ import auth from '../../middleware/auth';
 import { MONGO_ERRORS } from '../../utils/constants';
 import routeValidator from './routeValidator';
 import validate from '../../middleware/validate';
-import MembershipRouter from './membership';
 
 const router = express.Router();
-
-router.use('/membership', MembershipRouter);
 
 // sign up
 router.post(
@@ -127,21 +124,6 @@ router.get('/', auth(), async (req: Request, res: Response) => {
       throw new Error('User not found');
     }
     res.send(user);
-  } catch (err) {
-    console.log(err);
-    res.status(404).send();
-  }
-});
-
-// REMOVE THIS ROUTE
-// get all users
-router.get('/all', async (_req: Request, res: Response) => {
-  try {
-    const users = await UserModel.find({});
-    if (!users) {
-      throw new Error('User not found');
-    }
-    res.send(users);
   } catch (err) {
     console.log(err);
     res.status(404).send();

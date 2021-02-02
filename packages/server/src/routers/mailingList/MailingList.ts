@@ -6,7 +6,7 @@ import { GoogleSpreadsheet } from 'google-spreadsheet';
 import validate from '../../middleware/validate';
 import routeValidator from './routeValidator';
 import { DEFAULT_EVENT_RESPONSES } from './constant';
-import { MailingListRequestBody } from './types';
+import { LOCAL_ROUTES, MailingListRequestBody } from './types';
 
 let GoogleCreds: ServiceAccountCredentials = {
   client_email: '',
@@ -24,10 +24,9 @@ const doc = new GoogleSpreadsheet(
 
 const router = express.Router();
 
-// add to mailing list with responses of interest in events and other feedback
 router.post(
   '/',
-  routeValidator('/'),
+  routeValidator(LOCAL_ROUTES.UPDATE_SHEET),
   validate,
   async (req: Request, res: Response, next: NextFunction) => {
     try {

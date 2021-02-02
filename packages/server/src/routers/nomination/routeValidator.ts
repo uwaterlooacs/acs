@@ -1,9 +1,9 @@
 import { body, query } from 'express-validator';
-import { LocalRoutes } from './types';
+import { LOCAL_ROUTES } from './types';
 
-const getValidations = (route: LocalRoutes) => {
+const getValidations = (route: LOCAL_ROUTES) => {
   switch (route) {
-    case LocalRoutes.CREATE_NOMINATION:
+    case LOCAL_ROUTES.CREATE_NOMINATION:
       return [
         body('position').isMongoId(),
         body('candidate').isMongoId(),
@@ -11,9 +11,9 @@ const getValidations = (route: LocalRoutes) => {
         body('video').optional().isString(),
         body('writeUp').optional().isString(),
       ];
-    case LocalRoutes.SECOND_NOMINEE:
-    case LocalRoutes.DECLINE_NOMINATION:
-    case LocalRoutes.VOTE_NOMINEE:
+    case LOCAL_ROUTES.SECOND_NOMINEE:
+    case LOCAL_ROUTES.DECLINE_NOMINATION:
+    case LOCAL_ROUTES.VOTE_NOMINEE:
       return [query('nomination').isMongoId()];
     default:
       return [];

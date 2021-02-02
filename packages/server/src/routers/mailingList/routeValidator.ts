@@ -1,8 +1,9 @@
 import { check } from 'express-validator';
+import { LOCAL_ROUTES } from './types';
 
-const routeValidator = (route: string) => {
+const routeValidator = (route: LOCAL_ROUTES) => {
   switch (route) {
-    case '/':
+    case LOCAL_ROUTES.UPDATE_SHEET:
       return [
         check('email')
           .optional({ checkFalsy: true })
@@ -13,9 +14,7 @@ const routeValidator = (route: string) => {
         check('otherFeedback').isString(),
       ];
     default:
-      throw new Error(
-        `Route validator for relative path "${route}" on mailingList router does not exist.`,
-      );
+      return [];
   }
 };
 
