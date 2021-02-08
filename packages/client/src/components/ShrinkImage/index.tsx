@@ -15,8 +15,8 @@ const styles = (theme: Theme) =>
     shrinkimage: {
       display: 'block',
       height: '100%',
-      maxWidth: '75vw',
-      maxHeight: '75vh',
+      maxWidth: '70vw',
+      maxHeight: '70vh',
       margin: `${theme.spacing(4)}px auto`,
       transition: 'transform 300ms ease-in-out',
       [theme.breakpoints.down('sm')]: {
