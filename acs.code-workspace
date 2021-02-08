@@ -5,12 +5,12 @@
       "path": "."
     },
     {
-      "name": "server",
-      "path": "./packages/server"
-    },
-    {
       "name": "client",
       "path": "./packages/client"
+    },
+    {
+      "name": "server",
+      "path": "./packages/server"
     },
     {
       "name": "shared",
