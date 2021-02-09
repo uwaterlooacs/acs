@@ -7,6 +7,8 @@ import Header from 'components/Header';
 import AuthPanel from 'components/AuthPanel';
 import { AUTH_PANEL_OPTIONS } from 'utils/constants';
 
+const BOTTOM_SPACING = 40;
+
 const styles = (theme: Theme) =>
   createStyles({
     page: {
@@ -15,7 +17,8 @@ const styles = (theme: Theme) =>
       flexDirection: 'column',
       backgroundColor: theme.palette.background.default,
       maxWidth: '100vw',
-      minHeight: '100vh',
+      minHeight: `100vh - ${BOTTOM_SPACING}px`,
+      paddingBottom: BOTTOM_SPACING,
     },
   });
 

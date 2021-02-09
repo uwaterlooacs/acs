@@ -43,11 +43,10 @@ function MembershipOptionList({ classes }: WithStyles<typeof styles>) {
 
   return (
     <div className={classes.container}>
-      {optionsList.map((option: MembershipOption, index: number) => (
+      {optionsList.map((option: MembershipOption) => (
         <Option
           key={option.title}
           option={option}
-          isLast={index === optionsList.length - 1}
           onClick={() => onOptionClick(option)}
         />
       ))}

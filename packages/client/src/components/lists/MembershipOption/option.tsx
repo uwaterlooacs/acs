@@ -11,17 +11,16 @@ import BWButton from 'components/buttons/BWButton';
 const styles = (theme: Theme) =>
   createStyles({
     container: {
+      background: 'none',
+      border: 'none',
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
       padding: theme.spacing(4),
       cursor: 'pointer',
       [theme.breakpoints.up('md')]: {
-        width: '10%',
+        width: '20%',
       },
-    },
-    separator: {
-      borderRight: '0.1vw solid black',
     },
     title: {
       fontWeight: 'bolder',
@@ -34,11 +33,10 @@ const styles = (theme: Theme) =>
 interface Props extends WithStyles<typeof styles> {
   theme: Theme;
   option: MembershipOption;
-  isLast?: boolean;
   onClick: () => void;
 }
 
-function Option({ classes, theme, option, isLast, onClick }: Props) {
+function Option({ classes, theme, option, onClick }: Props) {
   const [showOptions, setShowOptions] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
 
@@ -48,12 +46,10 @@ function Option({ classes, theme, option, isLast, onClick }: Props) {
 
   return (
     <Slide direction="up" in={showOptions} timeout={250}>
-      <div
+      <button
         onMouseEnter={() => setIsHovering(true)}
         onMouseLeave={() => setIsHovering(false)}
-        className={classnames(classes.container, {
-          [classes.separator]: !isLast,
-        })}
+        className={classes.container}
         onClick={onClick}
       >
         <Typography
@@ -71,7 +67,7 @@ function Option({ classes, theme, option, isLast, onClick }: Props) {
         <BWButton classes={isHovering ? { root: 'hover' } : {}}>
           {option.cta}
         </BWButton>
-      </div>
+      </button>
     </Slide>
   );
 }
