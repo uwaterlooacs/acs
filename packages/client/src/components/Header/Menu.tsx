@@ -3,11 +3,12 @@ import type { WithStyles, Theme } from '@material-ui/core/styles';
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
-import { UserContext } from 'context/user/state';
 import { Button } from '@material-ui/core';
 import { withStyles, createStyles } from '@material-ui/core/styles';
+import { UserContext } from 'context/user/state';
+import { VotingContext } from 'context/voting/state';
 import BWButton from 'components/buttons/BWButton';
-import { MENU_LINKS } from './constants';
+import { getMenuLinks } from './utils';
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -34,10 +35,13 @@ interface Props extends WithStyles<typeof styles> {
 
 function Menu({ classes, currentPathname, onLoginClicked }: Props) {
   const { user } = useContext(UserContext);
+  const { stage } = useContext(VotingContext);
+
+  const menuLinks = getMenuLinks(stage, user?.isAdmin);
 
   return (
     <div className={classes.container}>
-      {MENU_LINKS.map((menuLink) => (
+      {menuLinks.map((menuLink) => (
         <Button
           key={menuLink.title}
           className={classes.menuLink}

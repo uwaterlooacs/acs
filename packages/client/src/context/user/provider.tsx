@@ -1,14 +1,11 @@
-import React, { useReducer } from 'react';
+import React, { useEffect, useReducer } from 'react';
 import { User } from 'types/user';
 import { UserContext, initialState } from './state';
 import Reducer from './reducer';
 import ActionTypes from './actions';
+import { getUser } from 'utils/api/user';
 
-interface Props {
-  children: React.ReactNode | React.ReactNode[];
-}
-
-const Provider = ({ children }: Props) => {
+const Provider: React.FC = ({ children }) => {
   const [state, dispatch] = useReducer(Reducer, initialState);
 
   const setUser = (user: User) => {
@@ -20,12 +17,29 @@ const Provider = ({ children }: Props) => {
   };
 
   const setToken = (token: string) => {
+    localStorage.setItem('token', token);
     dispatch({ type: ActionTypes.SET_TOKEN, payload: token });
   };
 
   const unsetToken = () => {
     dispatch({ type: ActionTypes.UNSET_TOKEN });
   };
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      if (state.token) {
+        try {
+          const user = await getUser(state.token);
+          if (user._id !== state?.user?._id) {
+            setUser(user);
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      }
+    };
+    fetchUser();
+  }, [state]);
 
   return (
     <UserContext.Provider

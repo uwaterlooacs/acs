@@ -2,7 +2,7 @@ import type { User } from 'types/user';
 
 import { createContext } from 'react';
 
-type UserContextType = {
+export type State = {
   user?: User;
   token?: string;
   setUser: (user: User) => void;
@@ -11,14 +11,16 @@ type UserContextType = {
   unsetToken: () => void;
 };
 
-export const initialState = {
+export const initialState: State = {
   token: localStorage.getItem('token') || undefined,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  setUser: (user: User) => {},
-  unsetUser: () => {},
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  setToken: (token: string) => {},
-  unsetToken: () => {},
+  setUser: (user: User) => {
+    void user;
+  },
+  unsetUser: () => null,
+  setToken: (token: string) => {
+    void token;
+  },
+  unsetToken: () => null,
 };
 
-export const UserContext = createContext<UserContextType>(initialState);
+export const UserContext = createContext<State>(initialState);

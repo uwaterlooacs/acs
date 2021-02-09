@@ -1,6 +1,6 @@
 import type { WithStyles, Theme } from '@material-ui/core/styles';
 
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 import {
@@ -15,7 +15,9 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
 import Divider from '@material-ui/core/Divider';
-import { MENU_LINKS } from './constants';
+import { VotingContext } from 'context/voting/state';
+import { UserContext } from 'context/user/state';
+import { getMenuLinks } from './utils';
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -39,7 +41,12 @@ interface Props extends WithStyles<typeof styles> {
 }
 
 function MobileMenu({ classes, currentPathname, onLoginClicked }: Props) {
+  const { user } = useContext(UserContext);
+  const { stage } = useContext(VotingContext);
+
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
+  const menuLinks = getMenuLinks(stage, user?.isAdmin);
 
   return (
     <div className={classes.container}>
@@ -58,7 +65,7 @@ function MobileMenu({ classes, currentPathname, onLoginClicked }: Props) {
           onKeyDown={() => setIsDrawerOpen(false)}
         >
           <List>
-            {MENU_LINKS.map((menuLink) => (
+            {menuLinks.map((menuLink) => (
               <ListItem
                 key={menuLink.title}
                 className={classes.menuLink}

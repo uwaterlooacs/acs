@@ -14,10 +14,9 @@ const router = express.Router();
 // get current voting stage
 router.get(
   '/stage',
-  auth(),
   async (_req: Request, res: Response, next: NextFunction) => {
     try {
-      res.status(200).send(await VotingModel.getDoc());
+      res.status(200).send((await VotingModel.getDoc()).stage);
     } catch (err) {
       next(err);
     }

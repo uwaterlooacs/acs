@@ -1,9 +1,10 @@
 export enum ROUTES {
-  LANDING = '/', // to be replaced by "/home" when we launch
+  LANDING = '/',
   HOME = '/home',
   MEMBERSHIP = '/membership',
   EVENTS = '/events',
   VOTING = '/voting',
+  ADMIN = '/admin',
 }
 
 export const AUTH_PANEL_OPTIONS = {

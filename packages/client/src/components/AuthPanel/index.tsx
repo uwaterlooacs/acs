@@ -19,8 +19,9 @@ const styles = (theme: Theme) =>
       alignItems: 'center',
       flexDirection: 'column',
       width: '30vw',
+      paddingBottom: 40,
       backgroundColor: theme.palette.background.default,
-      [theme.breakpoints.down('sm')]: {
+      [theme.breakpoints.down('md')]: {
         width: '60vw',
       },
       [theme.breakpoints.down('sm')]: {
