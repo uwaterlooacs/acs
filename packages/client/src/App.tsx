@@ -10,7 +10,7 @@ import Events from 'pages/Events';
 import Voting from 'pages/Voting';
 import Membership from 'pages/Membership';
 import Admin from 'pages/Admin';
-import Construction from 'pages/Construction';
+// import Construction from 'pages/Construction';
 import { ROUTES } from 'utils/constants';
 
 const App: React.FC = () => {
@@ -22,12 +22,12 @@ const App: React.FC = () => {
             <AuthPanelContextProvider>
               <BrowserRouter>
                 <Switch>
-                  <Route exact path={ROUTES.LANDING} component={Construction} />
+                  <Route exact path={ROUTES.LANDING} component={Home} />
                   <Route exact path={ROUTES.HOME} component={Home} />
                   <Route path={ROUTES.EVENTS} component={Events} />
                   <Route path={ROUTES.VOTING} component={Voting} />
                   <Route path={ROUTES.MEMBERSHIP} component={Membership} />
-                  <Route path={ROUTES.ADMIN} component={Admin} />
+                  <Route exact path={ROUTES.ADMIN} component={Admin} />
                 </Switch>
               </BrowserRouter>
             </AuthPanelContextProvider>

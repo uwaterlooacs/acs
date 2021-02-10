@@ -4,9 +4,7 @@ import React, { useEffect, useReducer } from 'react';
 import { VotingContext, initialState } from './state';
 import Reducer from './reducer';
 import ActionTypes from './actions';
-import { makeRequest } from 'utils/api/request';
-import { Method } from 'types/network';
-import { APIRoutes } from 'utils/api/endpoints';
+import { getVotingStage } from 'utils/api/voting';
 
 const Provider: React.FC = ({ children }) => {
   const [state, dispatch] = useReducer(Reducer, initialState);
@@ -17,11 +15,7 @@ const Provider: React.FC = ({ children }) => {
 
   useEffect(() => {
     const fetchVotingStage = async () => {
-      const stage = await makeRequest<VOTING_STAGE>(
-        Method.GET,
-        `${APIRoutes.VOTING}/stage`,
-        'Could not get voting stage',
-      );
+      const stage = await getVotingStage();
       if (stage !== state.stage) {
         setStage(stage);
       }
