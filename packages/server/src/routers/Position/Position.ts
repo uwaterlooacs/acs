@@ -4,10 +4,10 @@ import type { Request, Response, NextFunction } from 'express';
 
 import auth from '../../middleware/auth';
 import validate from '../../middleware/validate';
+import UserModel from '../../models/User';
+import PositionModel from '../../models/Position';
 import routeValidator from './routeValidator';
 import { LOCAL_ROUTES } from './types';
-import UserModel from 'models/User';
-import PositionModel from 'models/Position';
 
 const router = express.Router();
 
