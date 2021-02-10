@@ -12,20 +12,13 @@ import { UserContext } from 'context/user/state';
 import { VotingContext } from 'context/voting/state';
 import { updateVotingStage } from 'utils/api/voting';
 
-const useStyles = makeStyles(({ spacing }) => ({
-  container: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexDirection: 'column',
-    marginTop: spacing(2),
-  },
+const useStyles = makeStyles({
   select: {
     width: 200,
   },
-}));
+});
 
-const Voting: React.FC = () => {
+const Stage: React.FC = () => {
   const classes = useStyles();
 
   const { token } = useContext(UserContext);
@@ -56,8 +49,8 @@ const Voting: React.FC = () => {
   };
 
   return (
-    <div className={classes.container}>
-      <Typography variant="h5">Set current voting stage</Typography>
+    <>
+      <Typography variant="h4">Stage</Typography>
       <br />
       <Select
         className={classes.select}
@@ -75,8 +68,8 @@ const Voting: React.FC = () => {
       <Button onClick={handleSave}>Save</Button>
       <br />
       {loading && <CircularProgress />}
-    </div>
+    </>
   );
 };
 
-export default Voting;
+export default Stage;
