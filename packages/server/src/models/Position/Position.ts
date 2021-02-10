@@ -21,7 +21,6 @@ const PositionSchema = new Schema({
   },
   occupant: {
     type: Types.ObjectId,
-    required: true,
     ref: ModelRefs.USER,
   },
 });

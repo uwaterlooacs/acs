@@ -6,7 +6,7 @@ interface PositionDoc extends Document {
   title: string;
   description: string;
   isOpen: boolean;
-  occupant: Types.ObjectId | UserDoc;
+  occupant?: Types.ObjectId | UserDoc;
 }
 
 export default PositionDoc;

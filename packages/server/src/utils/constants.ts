@@ -4,6 +4,7 @@ export enum ROUTES {
   MAILING_LIST = '/mailingList',
   MEMBERSHIP = '/membership',
   VOTING = '/voting',
+  POSITION = '/position',
 }
 
 export enum MONGO_ERRORS {

@@ -29,19 +29,26 @@ router.patch(
   auth({ isAdmin: true }),
   routeValidator('/stage'),
   validate,
-  async (req: Request, res: Response) => {
-    const votingDoc = await VotingModel.getDoc();
-    const newStage: VOTING_STAGE = req.body.stage;
-    const prevStage: VOTING_STAGE = votingDoc.stage;
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const votingDoc = await VotingModel.getDoc();
+      const newStage: VOTING_STAGE = req.body.stage;
+      const prevStage: VOTING_STAGE = votingDoc.stage;
 
-    if (prevStage === VOTING_STAGE.Vote && newStage === VOTING_STAGE.Results) {
-      await finalizeResults();
+      if (
+        prevStage === VOTING_STAGE.Vote &&
+        newStage === VOTING_STAGE.Results
+      ) {
+        await finalizeResults();
+      }
+
+      votingDoc.stage = newStage;
+      votingDoc.save();
+
+      res.status(204).send();
+    } catch (error) {
+      next(error);
     }
-
-    votingDoc.stage = newStage;
-    votingDoc.save();
-
-    res.status(204).send();
   },
 );
 
