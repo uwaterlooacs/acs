@@ -21,7 +21,7 @@ const Provider: React.FC = ({ children }) => {
       }
     };
     fetchVotingStage();
-  }, [state]);
+  }, [state.stage]);
 
   return (
     <VotingContext.Provider

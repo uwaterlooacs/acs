@@ -1,4 +1,4 @@
-import { body } from 'express-validator';
+import { body, query } from 'express-validator';
 import { LOCAL_ROUTES } from './types';
 
 const positionBodyValidations = [
@@ -15,7 +15,7 @@ const getValidations = (route: LOCAL_ROUTES) => {
     case LOCAL_ROUTES.UPDATE_POSITION:
       return [body('id').isMongoId(), ...positionBodyValidations];
     case LOCAL_ROUTES.DELETE_POSITION:
-      return [body('id').isMongoId()];
+      return [query('id').isMongoId()];
     default:
       return [];
   }

@@ -21,7 +21,7 @@ router.get('/', async (_req: Request, res: Response, next: NextFunction) => {
 });
 
 router.post(
-  '/create',
+  '/',
   auth({ isAdmin: true }),
   routeValidator(LOCAL_ROUTES.CREATE_POSITION),
   validate,
@@ -30,7 +30,9 @@ router.post(
       const title = String(req.body.title);
       const description = String(req.body.description);
       const isOpen = Boolean(req.body.isOpen);
-      const occupantId = String(req.body.occupant);
+      const occupantId = req.body.occupant
+        ? String(req.body.occupant)
+        : undefined;
 
       const occupant = await UserModel.findById(occupantId);
 
@@ -49,7 +51,7 @@ router.post(
 );
 
 router.patch(
-  '/update',
+  '/',
   auth({ isAdmin: true }),
   routeValidator(LOCAL_ROUTES.UPDATE_POSITION),
   validate,
@@ -63,7 +65,9 @@ router.patch(
       const title = String(req.body.title);
       const description = String(req.body.description);
       const isOpen = Boolean(req.body.isOpen);
-      const occupantId = String(req.body.occupant);
+      const occupantId = req.body.occupant
+        ? String(req.body.occupant)
+        : undefined;
 
       const occupant = await UserModel.findById(occupantId);
 
@@ -85,13 +89,13 @@ router.patch(
 );
 
 router.delete(
-  '/delete',
+  '/',
   auth({ isAdmin: true }),
   routeValidator(LOCAL_ROUTES.DELETE_POSITION),
   validate,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      await PositionModel.findByIdAndDelete(String(req.body.id));
+      await PositionModel.findByIdAndDelete(String(req.query.id));
       res.send();
     } catch (error) {
       next(error);

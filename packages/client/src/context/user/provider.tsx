@@ -3,7 +3,7 @@ import { User } from 'types/user';
 import { UserContext, initialState } from './state';
 import Reducer from './reducer';
 import ActionTypes from './actions';
-import { getUser } from 'utils/api/user';
+import { getMe } from 'utils/api/user';
 
 const Provider: React.FC = ({ children }) => {
   const [state, dispatch] = useReducer(Reducer, initialState);
@@ -29,11 +29,12 @@ const Provider: React.FC = ({ children }) => {
     const fetchUser = async () => {
       if (state.token) {
         try {
-          const user = await getUser(state.token);
+          const user = await getMe(state.token);
           if (user._id !== state?.user?._id) {
             setUser(user);
           }
         } catch (error) {
+          // eslint-disable-next-line no-console
           console.error(error);
         }
       }

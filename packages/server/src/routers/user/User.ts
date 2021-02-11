@@ -116,10 +116,26 @@ router.get('/me', auth(), async (req: AuthenticatedRequest, res: Response) => {
   res.send(req.user);
 });
 
-// get someone
+// get someone by their id
 router.get('/', auth(), async (req: Request, res: Response) => {
   try {
-    const user = await UserModel.findOne({ email: req.body.email });
+    const user = await UserModel.findById(req.query.id as string);
+    if (!user) {
+      throw new Error('User not found');
+    }
+    res.send(user);
+  } catch (err) {
+    console.log(err);
+    res.status(404).send();
+  }
+});
+
+// get someone by their watiam username
+router.get('/watiam', auth(), async (req: Request, res: Response) => {
+  try {
+    const user = await UserModel.findOne({
+      watIAMUserId: req.query.id as string,
+    });
     if (!user) {
       throw new Error('User not found');
     }

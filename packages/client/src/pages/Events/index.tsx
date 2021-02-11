@@ -2,6 +2,7 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Page from 'components/Page';
 import { Typography } from '@material-ui/core';
+import Spacer from 'components/Spacer';
 
 const useStyles = makeStyles(({ spacing }) => ({
   container: {
@@ -25,7 +26,7 @@ const EventsPage: React.FC = () => {
         <Typography variant="h4" align="center">
           Looks like not much is happening right now...
         </Typography>
-        <br />
+        <Spacer height={8} />
         <Typography variant="h5" align="center">
           Check in later to see our upcoming events.
         </Typography>

@@ -10,6 +10,7 @@ import {
 import { VOTING_STAGE } from '@acs/shared';
 import { UserContext } from 'context/user/state';
 import { VotingContext } from 'context/voting/state';
+import Spacer from 'components/Spacer';
 import { updateVotingStage } from 'utils/api/voting';
 
 const useStyles = makeStyles({
@@ -51,7 +52,7 @@ const Stage: React.FC = () => {
   return (
     <>
       <Typography variant="h4">Stage</Typography>
-      <br />
+      <Spacer height={8} />
       <Select
         className={classes.select}
         value={localStage}
@@ -64,9 +65,9 @@ const Stage: React.FC = () => {
         <MenuItem value={VOTING_STAGE.Vote}>{VOTING_STAGE.Vote}</MenuItem>
         <MenuItem value={VOTING_STAGE.Results}>{VOTING_STAGE.Results}</MenuItem>
       </Select>
-      <br />
+      <Spacer height={8} />
       <Button onClick={handleSave}>Save</Button>
-      <br />
+      <Spacer height={8} />
       {loading && <CircularProgress />}
     </>
   );

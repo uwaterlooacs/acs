@@ -42,7 +42,27 @@ export const logout = async (token: string) => {
   );
 };
 
-export const getUser = async (token: string) => {
+export const getUser = async (id: string, token?: string) => {
+  return await makeRequest<User>(
+    Method.GET,
+    `${APIRoutes.USER}?id=${id}`,
+    M.FETCH_USER,
+    undefined,
+    token,
+  );
+};
+
+export const getUserByWatIAM = async (id: string, token?: string) => {
+  return await makeRequest<User>(
+    Method.GET,
+    `${APIRoutes.USER}/watiam?id=${id}`,
+    M.FETCH_USER,
+    undefined,
+    token,
+  );
+};
+
+export const getMe = async (token?: string) => {
   return await makeRequest<User>(
     Method.GET,
     APIRoutes.USER + '/me',
