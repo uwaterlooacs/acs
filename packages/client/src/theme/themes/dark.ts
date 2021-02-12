@@ -11,10 +11,10 @@ const theme = createMuiTheme({
       secondary: '#ced6e0',
     },
     primary: {
-      main: 'rgb(40, 40, 40)',
+      main: '#3498db',
     },
     secondary: {
-      main: 'rgb(50, 50, 50)',
+      main: '#34495e',
     },
     success: {
       main: '#7bed9f',

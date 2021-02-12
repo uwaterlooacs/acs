@@ -36,12 +36,12 @@ export type Props = {
   faculty: string;
   videoUrl?: string;
   writeUp?: string;
-  stage: VOTING_STAGE.Nomination | VOTING_STAGE.Vote;
+  stage: VOTING_STAGE;
   isDisabled: boolean;
-  onPrimaryButtonClicked(): Promise<void>;
+  handleClick(): Promise<void>;
 };
 
-const NomineeCard: React.FC<Props> = ({
+const NominationCard: React.FC<Props> = ({
   firstName,
   lastName,
   semester,
@@ -50,13 +50,13 @@ const NomineeCard: React.FC<Props> = ({
   writeUp,
   stage,
   isDisabled,
-  onPrimaryButtonClicked,
+  handleClick,
 }) => {
   const classes = useStyles();
   const primaryButtonActionText =
     stage === VOTING_STAGE.Nomination ? 'Second Nomination' : 'Vote';
   const primaryButtonDisabledText =
-    stage === VOTING_STAGE.Vote ? 'Nomination Seconded' : 'Vote Cast';
+    stage === VOTING_STAGE.Nomination ? 'Nomination Seconded' : 'Vote Cast';
 
   return (
     <Card className={classes.card}>
@@ -87,7 +87,7 @@ const NomineeCard: React.FC<Props> = ({
           <Button
             size="large"
             color="primary"
-            onClick={onPrimaryButtonClicked}
+            onClick={handleClick}
             disabled={isDisabled}
           >
             {isDisabled ? primaryButtonDisabledText : primaryButtonActionText}
@@ -98,4 +98,4 @@ const NomineeCard: React.FC<Props> = ({
   );
 };
 
-export default NomineeCard;
+export default NominationCard;

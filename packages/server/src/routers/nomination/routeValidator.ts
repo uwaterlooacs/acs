@@ -14,7 +14,9 @@ const getValidations = (route: LOCAL_ROUTES) => {
     case LOCAL_ROUTES.SECOND_NOMINEE:
     case LOCAL_ROUTES.DECLINE_NOMINATION:
     case LOCAL_ROUTES.VOTE_NOMINEE:
-      return [query('nomination').isMongoId()];
+      return [query('id').isMongoId()];
+    case LOCAL_ROUTES.GET_NOMINATIONS:
+      return [query('id').isMongoId()];
     default:
       return [];
   }

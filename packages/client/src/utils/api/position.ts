@@ -15,8 +15,8 @@ export const getPositions = async (): Promise<PositionDoc[]> => {
 export const createPosition = async (
   position: Partial<PositionDoc>,
   token?: string,
-): Promise<void> => {
-  await makeRequest(
+): Promise<PositionDoc> => {
+  return await makeRequest(
     Method.POST,
     APIRoutes.POSITION,
     'Could not create position',

@@ -2,6 +2,8 @@ declare global {
   namespace NodeJS {
     interface ProcessEnv {
       APP_SECRET: string;
+      AWS_CLIENT_ID: string;
+      AWS_CLIENT_SECRET: string;
       NODE_ENV: 'development' | 'test' | 'production';
     }
   }

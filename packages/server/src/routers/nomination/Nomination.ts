@@ -1,21 +1,21 @@
 import type { Response, NextFunction } from 'express';
-import type { AuthenticatedRequest } from '../../types/AuthenticatedRequest';
+import type { AuthenticatedRequest, UploadRequest } from '../../types/Request';
 
 import express from 'express';
 import NominationModel from '../../models/Nomination/Nomination';
 import auth from '../../middleware/auth';
 import validate from '../../middleware/validate';
+import { uploadFile } from '../../utils/aws';
 import getValidations from './routeValidator';
 import { LOCAL_ROUTES } from './types';
-import { getNominationsByPosition } from '../Voting/utils';
 
 const router = express.Router();
 
 router.post(
   '/',
+  auth(),
   getValidations(LOCAL_ROUTES.CREATE_NOMINATION),
   validate,
-  auth(),
   async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
     try {
       if (
@@ -41,14 +41,12 @@ router.post(
 
 router.patch(
   '/second',
+  auth(),
   getValidations(LOCAL_ROUTES.SECOND_NOMINEE),
   validate,
-  auth(),
   async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
     try {
-      const nomination = await NominationModel.findById(
-        req.query.nomination as string,
-      );
+      const nomination = await NominationModel.findById(req.query.id as string);
 
       if (!nomination) throw new Error('Could not find nomination');
 
@@ -64,11 +62,12 @@ router.patch(
 
 router.patch(
   '/decline',
+  auth(),
   getValidations(LOCAL_ROUTES.DECLINE_NOMINATION),
   validate,
   async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
     try {
-      await NominationModel.findByIdAndDelete(req.query.nomination as string);
+      await NominationModel.findByIdAndDelete(req.query.id as string);
       res.send();
     } catch (err) {
       next(err);
@@ -78,14 +77,12 @@ router.patch(
 
 router.patch(
   '/vote',
+  auth(),
   getValidations(LOCAL_ROUTES.VOTE_NOMINEE),
   validate,
-  auth(),
   async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
     try {
-      const nomination = await NominationModel.findById(
-        req.query.nomination as string,
-      );
+      const nomination = await NominationModel.findById(req.query.id as string);
 
       if (!nomination) throw new Error('Could not find nomination');
 
@@ -102,11 +99,42 @@ router.patch(
 router.get(
   '/',
   auth(),
-  async (_req: AuthenticatedRequest, res: Response, next: NextFunction) => {
+  getValidations(LOCAL_ROUTES.GET_NOMINATIONS),
+  validate,
+  async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
     try {
-      res.send(getNominationsByPosition(await NominationModel.find()));
+      const nominations = await NominationModel.find({
+        position: req.query.id as string,
+      });
+      res.send(nominations);
     } catch (err) {
       next(err);
+    }
+  },
+);
+
+router.post(
+  '/upload',
+  auth(),
+  async (req: UploadRequest, res: Response, next: NextFunction) => {
+    try {
+      if (!req.files) {
+        throw new Error('Could not get files on request');
+      }
+      if (!req.user) {
+        throw new Error('Could not get user on request');
+      }
+
+      const nomineeName = `${req.user.firstName}-${req.user.lastName}`;
+      const fileExtension = req.files.file.name.match(
+        /\.([0-9a-z]+)(?:[?#]|$)/i,
+      );
+
+      uploadFile(`${nomineeName}${fileExtension}`, req.files.file.data);
+
+      res.send();
+    } catch (error) {
+      next(error);
     }
   },
 );

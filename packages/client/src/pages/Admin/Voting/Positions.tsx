@@ -19,22 +19,20 @@ const Positions: React.FC = () => {
   useEffect(() => {
     const fetchPositions = async () => {
       try {
-        const fetchedPositions = await getPositions();
-        if (positions.length !== fetchedPositions.length) {
-          setPositions(fetchedPositions);
-        }
+        setPositions(await getPositions());
       } catch (error) {
         // eslint-disable-next-line no-console
         console.log(error);
       }
     };
     fetchPositions();
-  });
+  }, []);
 
   const save = async (position: Partial<PositionDoc>) => {
     setSaving(true);
     try {
-      await createPosition(position, token);
+      const createdPosition = await createPosition(position, token);
+      setPositions([...positions, createdPosition]);
       setCreating(false);
     } catch (error) {
       // eslint-disable-next-line no-console

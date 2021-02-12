@@ -1,6 +1,6 @@
 import type { Request, Response, NextFunction } from 'express';
 import type { UserDoc } from '@acs/shared';
-import type { AuthenticatedRequest } from '../../types/AuthenticatedRequest';
+import type { AuthenticatedRequest } from '../../types/Request';
 
 import express from 'express';
 import { MEMBERSHIP_STATUS } from '@acs/shared';

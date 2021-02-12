@@ -4,4 +4,5 @@ export enum APIRoutes {
   MAILING_LIST = '/api/mailingList',
   VOTING = '/api/voting',
   POSITION = '/api/position',
+  NOMINATION = '/api/nomination',
 }
