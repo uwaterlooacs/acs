@@ -88,13 +88,19 @@ const PositionForm: React.FC<Props> = ({ position, saving, save }) => {
   };
 
   const handleSave = async () => {
-    await save({
-      id: position?._id,
-      title,
-      description,
-      isOpen: status === 'Open',
-      occupant: occupant?._id,
-    });
+    if (status === 'Filled' && !occupant) {
+      alert(
+        'If the position is filled, there needs to be an occupant specified',
+      );
+    } else {
+      await save({
+        id: position?._id,
+        title,
+        description,
+        isOpen: status === 'Open',
+        occupant: occupant?._id,
+      });
+    }
   };
 
   return (

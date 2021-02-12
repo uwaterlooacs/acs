@@ -71,7 +71,7 @@ const Positions: React.FC = () => {
           <Spacer height={8} />
           <PositionRow position={position} remove={remove} update={udpate} />
           <Spacer height={8} />
-          <Divider />
+          <Divider style={{ backgroundColor: 'black' }} />
         </div>
       ))}
     </>

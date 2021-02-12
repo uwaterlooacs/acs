@@ -4,6 +4,7 @@ import { VotingContext } from 'context/voting/state';
 import Page from 'components/Page';
 import Nomination from './Nomination';
 import Voting from './Voting';
+import Results from './Results';
 
 const VotingPage: React.FC = () => {
   const { stage } = useContext(VotingContext);
@@ -13,6 +14,8 @@ const VotingPage: React.FC = () => {
         <Nomination />
       ) : stage === VOTING_STAGE.Vote ? (
         <Voting />
+      ) : stage === VOTING_STAGE.Results ? (
+        <Results />
       ) : null}
     </Page>
   );

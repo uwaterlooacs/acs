@@ -19,6 +19,19 @@ const useStyles = makeStyles({
   },
 });
 
+const getNextStage = (stage: VOTING_STAGE) => {
+  switch (stage) {
+    case VOTING_STAGE.Closed:
+      return VOTING_STAGE.Nomination;
+    case VOTING_STAGE.Nomination:
+      return VOTING_STAGE.Vote;
+    case VOTING_STAGE.Vote:
+      return VOTING_STAGE.Results;
+    case VOTING_STAGE.Results:
+      return VOTING_STAGE.Closed;
+  }
+};
+
 const Stage: React.FC = () => {
   const classes = useStyles();
 
@@ -27,6 +40,8 @@ const Stage: React.FC = () => {
 
   const [localStage, setLocalStage] = useState(stage);
   const [loading, setLoading] = useState(false);
+
+  const nextStage = getNextStage(stage);
 
   const handleSelectChange = (
     e: React.ChangeEvent<{
@@ -58,15 +73,30 @@ const Stage: React.FC = () => {
         value={localStage}
         onChange={handleSelectChange}
       >
-        <MenuItem value={VOTING_STAGE.Closed}>{VOTING_STAGE.Closed}</MenuItem>
-        <MenuItem value={VOTING_STAGE.Nomination}>
-          {VOTING_STAGE.Nomination}
-        </MenuItem>
-        <MenuItem value={VOTING_STAGE.Vote}>{VOTING_STAGE.Vote}</MenuItem>
-        <MenuItem value={VOTING_STAGE.Results}>{VOTING_STAGE.Results}</MenuItem>
+        {(nextStage === VOTING_STAGE.Closed ||
+          stage === VOTING_STAGE.Closed) && (
+          <MenuItem value={VOTING_STAGE.Closed}>{VOTING_STAGE.Closed}</MenuItem>
+        )}
+        {(nextStage === VOTING_STAGE.Nomination ||
+          stage === VOTING_STAGE.Nomination) && (
+          <MenuItem value={VOTING_STAGE.Nomination}>
+            {VOTING_STAGE.Nomination}
+          </MenuItem>
+        )}
+        {(nextStage === VOTING_STAGE.Vote || stage === VOTING_STAGE.Vote) && (
+          <MenuItem value={VOTING_STAGE.Vote}>{VOTING_STAGE.Vote}</MenuItem>
+        )}
+        {(nextStage === VOTING_STAGE.Results ||
+          stage === VOTING_STAGE.Results) && (
+          <MenuItem value={VOTING_STAGE.Results}>
+            {VOTING_STAGE.Results}
+          </MenuItem>
+        )}
       </Select>
       <Spacer height={8} />
-      <Button onClick={handleSave}>Save</Button>
+      <Button disabled={localStage === stage} onClick={handleSave}>
+        Save
+      </Button>
       <Spacer height={8} />
       {loading && <CircularProgress />}
     </>
