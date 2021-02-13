@@ -11,18 +11,13 @@ export enum ROUTES {
 export const AUTH_PANEL_OPTIONS = {
   LOGIN: {
     title: 'Member Login',
-    description: '',
-    submit: 'Submit',
-  },
-  RENEWAL: {
-    title: 'Membership Renewal',
-    description:
-      'Enter the login information that you used to create an account the last term that you were a member',
+    description: 'Login using your email or WatIAM username',
     submit: 'Submit',
   },
   CHECK: {
     title: 'Membership Check',
-    description: '',
+    description:
+      "Use your WatIAM username to determine whether or not you're a member",
     submit: 'Check My Status',
   },
 };

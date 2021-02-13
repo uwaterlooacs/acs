@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
+import { UserContext } from 'context/user/state';
 import Complete from 'components/Complete';
 import { FieldValues } from 'components/forms/UserInfo';
 import SignUpForm from 'components/forms/SignUp';
@@ -7,7 +8,9 @@ import { signup } from 'utils/api/user';
 import { getDuplicateKeyErrors } from './utils';
 import { RequestError } from 'utils/api/request';
 
-const SignUp = () => {
+const SignUp: React.FC = () => {
+  const { setUser, setToken } = useContext(UserContext);
+
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [studentNumber, setStudentNumber] = useState('');
@@ -26,7 +29,7 @@ const SignUp = () => {
   const onSignUp = async () => {
     const watIAMUserId = email.split('@')[0];
     try {
-      await signup({
+      const { user, token } = await signup({
         firstName,
         lastName,
         studentNumber: +studentNumber,
@@ -36,6 +39,8 @@ const SignUp = () => {
         faculty,
         password,
       });
+      setUser(user);
+      setToken(token);
       setIsSignupComplete(true);
     } catch (err) {
       const error = err as RequestError<{

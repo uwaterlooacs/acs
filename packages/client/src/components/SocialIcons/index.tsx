@@ -31,7 +31,6 @@ const styles = (theme: Theme) =>
       [theme.breakpoints.down('sm')]: {
         marginBottom: theme.spacing(1),
       },
-      color: 'white',
     },
     scContainer: {
       cursor: 'pointer',
@@ -65,7 +64,7 @@ interface Props extends WithStyles<typeof styles> {
   theme?: 'white' | 'black';
 }
 
-function SocialIcons({ classes, theme = 'black' }: Props) {
+function SocialIcons({ classes, theme }: Props) {
   const snapchatSrc =
     theme === 'white'
       ? 'assets/snapchat-white.png'

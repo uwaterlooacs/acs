@@ -11,7 +11,6 @@ export default [
     title: 'I have been',
     description: 'If you have signed up for membership in a previous term',
     cta: 'RENEW MEMBERSHIP',
-    authPanelOption: AUTH_PANEL_OPTIONS.RENEWAL,
   },
   {
     title: 'Not sure',

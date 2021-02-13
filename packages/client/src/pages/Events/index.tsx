@@ -3,8 +3,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import Page from 'components/Page';
 import { Typography } from '@material-ui/core';
 import Spacer from 'components/Spacer';
+import SocialIcons from 'components/SocialIcons';
 
-const useStyles = makeStyles(({ spacing }) => ({
+const useStyles = makeStyles(({ spacing, breakpoints }) => ({
   container: {
     display: 'flex',
     justifyContent: 'center',
@@ -13,8 +14,11 @@ const useStyles = makeStyles(({ spacing }) => ({
     padding: `0 ${spacing(2)}px`,
     height: '100%',
   },
-  text: {
-    textAlign: 'center',
+  socialContainer: {
+    width: '50%',
+    [breakpoints.down('md')]: {
+      width: '100%',
+    },
   },
 }));
 
@@ -24,12 +28,12 @@ const EventsPage: React.FC = () => {
     <Page>
       <div className={classes.container}>
         <Typography variant="h4" align="center">
-          Looks like not much is happening right now...
+          Follow us on social media to keep up with all of our events!
         </Typography>
         <Spacer height={8} />
-        <Typography variant="h5" align="center">
-          Check in later to see our upcoming events.
-        </Typography>
+        <div className={classes.socialContainer}>
+          <SocialIcons />
+        </div>
       </div>
     </Page>
   );

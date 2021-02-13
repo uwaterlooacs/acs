@@ -1,16 +1,13 @@
 import type { WithStyles, Theme } from '@material-ui/core/styles';
 
-import React, { memo, useState, useContext } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { memo, useContext } from 'react';
 import { withStyles, createStyles } from '@material-ui/core/styles';
-import { Typography, Button, TextField, Drawer, Box } from '@material-ui/core';
+import { Button, Drawer, Typography } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import { AuthPanelContext } from 'context/authPanel/state';
-import { UserContext } from 'context/user/state';
 import { AUTH_PANEL_OPTIONS } from 'utils/constants';
-import BWButton from 'components/buttons/BWButton';
-import { login } from 'utils/api/user';
-import { getMembershipStatus, renewMembership } from 'utils/api/membership';
+import CheckStatusPanel from './CheckStatus';
+import LoginPanel from './Login';
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -19,6 +16,7 @@ const styles = (theme: Theme) =>
       alignItems: 'center',
       flexDirection: 'column',
       width: '30vw',
+      height: '100vh',
       paddingBottom: 40,
       backgroundColor: theme.palette.background.default,
       [theme.breakpoints.down('md')]: {
@@ -45,85 +43,13 @@ const styles = (theme: Theme) =>
     descriptionContainer: {
       margin: `${theme.spacing(4)}px ${theme.spacing(3)}px 0`,
     },
-    inputContainer: {
-      marginTop: theme.spacing(4),
-      width: '90%',
-    },
-    textField: {
-      height: '5%',
-      width: '100%',
-    },
-    button: {
-      height: '100%',
-      width: '100%',
-    },
-    membershipStatusContainer: {
-      marginTop: theme.spacing(4),
-      width: '90%',
-    },
-    helperButton: {
-      textTransform: 'none',
-      marginTop: theme.spacing(2),
-    },
   });
 
 const AuthPanel = ({ classes }: WithStyles<typeof styles>) => {
-  const history = useHistory();
-  const { option, isOpen, setIsOpen, setOption } = useContext(AuthPanelContext);
-  const { setUser, setToken, token, user } = useContext(UserContext);
-
-  const [id, setId] = useState('');
-  const [password, setPassword] = useState('');
-  const [membershipStatus, setMembershipStatus] = useState('');
-  const [error, setError] = useState('');
-
-  const clearError = () => {
-    if (error) setError('');
-  };
+  const { option, isOpen, setIsOpen } = useContext(AuthPanelContext);
 
   const closePanel = () => {
-    clearError();
     setIsOpen(false);
-  };
-
-  const submit = async () => {
-    switch (option.title) {
-      case AUTH_PANEL_OPTIONS.LOGIN.title:
-        try {
-          const { user, token } = await login({ id, password });
-          setUser(user);
-          setToken(token);
-          clearError();
-          closePanel();
-        } catch (err) {
-          const error = err as Error;
-          setError(error.message);
-        }
-        break;
-      case AUTH_PANEL_OPTIONS.RENEWAL.title:
-        try {
-          if (!user || !token) {
-            setOption(AUTH_PANEL_OPTIONS.LOGIN);
-            setError("We couldn't renew your membership. Try logging in above");
-          } else {
-            await renewMembership(token);
-            closePanel();
-            history.push('/membership/verifyinfo');
-          }
-        } catch (err) {
-          const error = err as Error;
-          setError(error.message);
-        }
-        break;
-      case AUTH_PANEL_OPTIONS.CHECK.title:
-        try {
-          setMembershipStatus(await getMembershipStatus(id));
-        } catch (err) {
-          const error = err as Error;
-          setError(error.message);
-        }
-        break;
-    }
   };
 
   return (
@@ -149,81 +75,16 @@ const AuthPanel = ({ classes }: WithStyles<typeof styles>) => {
             {option.title}
           </Typography>
         </div>
-        {option.description && (
-          <div className={classes.descriptionContainer}>
-            <Typography variant="body2" color="textPrimary" align="center">
-              {option.description}
-            </Typography>
-          </div>
-        )}
-        <div className={classes.inputContainer}>
-          <TextField
-            label="Email Address / WatIAM Username"
-            value={id}
-            onChange={(e) => {
-              clearError();
-              setId(e.target.value);
-            }}
-            type="text"
-            variant="outlined"
-            className={classes.textField}
-          />
+        <div className={classes.descriptionContainer}>
+          <Typography variant="body2" color="textPrimary" align="center">
+            {option.description}
+          </Typography>
         </div>
-        {option.title !== AUTH_PANEL_OPTIONS.CHECK.title && (
-          <div className={classes.inputContainer}>
-            <TextField
-              label="Password"
-              value={password}
-              onChange={(e) => {
-                clearError();
-                setPassword(e.target.value);
-              }}
-              type="password"
-              variant="outlined"
-              className={classes.textField}
-            />
-          </div>
-        )}
-        {error && (
-          <Box marginTop={2}>
-            <Typography variant="body2" align="center" color="error">
-              {error}
-            </Typography>
-          </Box>
-        )}
-        <div className={classes.inputContainer}>
-          <BWButton className={classes.button} onClick={submit}>
-            {option.submit}
-          </BWButton>
-        </div>
-        {membershipStatus && option.title === AUTH_PANEL_OPTIONS.CHECK.title && (
-          <div className={classes.membershipStatusContainer}>
-            <Typography variant="h5" align="center" color="textPrimary">
-              {membershipStatus}
-            </Typography>
-          </div>
-        )}
-        {option.title !== AUTH_PANEL_OPTIONS.CHECK.title && (
-          <>
-            <Button className={classes.helperButton}>
-              <Typography variant="body2" align="center" color="textSecondary">
-                Forgot Password?
-              </Typography>
-            </Button>
-            <Button className={classes.helperButton}>
-              <Typography variant="body2" align="center" color="textSecondary">
-                Never been a member before?
-              </Typography>
-            </Button>
-          </>
-        )}
-        {option.title === AUTH_PANEL_OPTIONS.LOGIN.title && (
-          <Button className={classes.helperButton}>
-            <Typography variant="body2" align="center" color="textSecondary">
-              Member in a previous term and want to renew?
-            </Typography>
-          </Button>
-        )}
+        {option.title === AUTH_PANEL_OPTIONS.CHECK.title ? (
+          <CheckStatusPanel option={option} />
+        ) : option.title === AUTH_PANEL_OPTIONS.LOGIN.title ? (
+          <LoginPanel option={option} />
+        ) : null}
       </div>
     </Drawer>
   );
