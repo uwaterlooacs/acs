@@ -22,6 +22,7 @@ const Provider: React.FC = ({ children }) => {
   };
 
   const unsetToken = () => {
+    localStorage.removeItem('token');
     dispatch({ type: ActionTypes.UNSET_TOKEN });
   };
 

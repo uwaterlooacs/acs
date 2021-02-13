@@ -8,9 +8,9 @@ const storage = multer.diskStorage({
     cb(null, 'uploads');
   },
   filename: function (req: AuthenticatedRequest, file, cb) {
-    const name = `${req.user?.firstName}-${req.user?.lastName}-${
-      req.query.id
-    }${path.extname(file.originalname)}`;
+    const name = `${req.user?._id}-${req.query.id}${path.extname(
+      file.originalname,
+    )}`;
     cb(null, name);
   },
 });

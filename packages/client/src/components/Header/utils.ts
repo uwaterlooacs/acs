@@ -1,10 +1,11 @@
 import { MenuLink } from './types';
 import { ROUTES } from 'utils/constants';
 import { VOTING_STAGE } from '@acs/shared';
+import { User } from 'types/user';
 
 export const getMenuLinks = (
   votingStage: VOTING_STAGE,
-  isAdmin?: boolean,
+  user?: User,
 ): MenuLink[] => {
   return [
     {
@@ -23,9 +24,13 @@ export const getMenuLinks = (
       title: 'Membership',
       link: ROUTES.MEMBERSHIP,
     },
-    isAdmin && {
+    user?.isAdmin && {
       title: 'Admin',
       link: ROUTES.ADMIN,
+    },
+    user && {
+      title: 'Logout',
+      link: ROUTES.LOGOUT,
     },
   ].filter(Boolean) as MenuLink[];
 };

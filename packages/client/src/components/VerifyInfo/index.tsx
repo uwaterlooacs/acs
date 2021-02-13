@@ -25,7 +25,7 @@ type Props = WithStyles<typeof styles> & {
 };
 
 function VerifyInfo({ classes, onVerify }: Props) {
-  const { user, token, setUser } = useContext(UserContext);
+  const { user, token, setUser, setToken } = useContext(UserContext);
   const [firstName, setFirstName] = useState(user?.firstName || '');
   const [lastName, setLastName] = useState(user?.lastName || '');
   const [studentNumber, setStudentNumber] = useState(
@@ -60,6 +60,7 @@ function VerifyInfo({ classes, onVerify }: Props) {
         };
         await updateUser(token, updates);
         setUser({ ...user, ...updates });
+        setToken(token);
       } catch (err) {
         console.log(err);
       }

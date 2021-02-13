@@ -3,9 +3,9 @@ import type { PositionDoc } from '@acs/shared';
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Divider, Typography } from '@material-ui/core';
-import { getPositions } from 'utils/api/position';
 import Spacer from 'components/Spacer';
 import OpenPosition from 'components/OpenPosition';
+import { getPositions } from 'utils/api/position';
 
 const useStyles = makeStyles(({ spacing }) => ({
   container: {

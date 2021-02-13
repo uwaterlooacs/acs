@@ -5,7 +5,7 @@ import { Types, Document } from 'mongoose';
 
 interface NominationDoc extends Document {
   position: Types.ObjectId | PositionDoc;
-  candidate: Types.ObjectId | UserDoc;
+  candidate: Types.ObjectId | string | UserDoc;
   seconds: Types.Array<Types.ObjectId>;
   votes: Types.Array<Types.ObjectId>;
   video?: string;

@@ -9,7 +9,8 @@ import NominationModel from '../../models/Nomination/Nomination';
 import auth from '../../middleware/auth';
 import upload from '../../middleware/upload';
 import validate from '../../middleware/validate';
-import { uploadFile } from '../../utils/aws';
+import { getFile, uploadFile } from '../../utils/aws';
+import { deleteNomination } from '../utils';
 import getValidations from './routeValidator';
 import { LOCAL_ROUTES } from './types';
 
@@ -33,10 +34,13 @@ router.post(
         throw new Error('Nomination already exists');
       }
 
-      const nomination = new NominationModel({ ...req.body });
-      await nomination.save();
+      const nomination = await NominationModel.create({
+        ...req.body,
+        seconds: [req.user?._id],
+        votes: [req.user?._id],
+      });
 
-      res.send();
+      res.send(nomination);
     } catch (err) {
       next(err);
     }
@@ -123,30 +127,70 @@ router.post(
   upload.single('file'),
   async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
     try {
-      const base = `${req.user?.firstName}-${req.user?.lastName}-${req.query.id}`;
+      const base = `${req.user?._id}-${req.query.id}`;
       const inputFile = `./uploads/${base}${path.extname(
         req.file.originalname,
       )}`;
       const outputFile = `./uploads/${base}.mp4`;
 
-      ffmpeg(inputFile)
-        .output(outputFile)
-        .on('end', function () {
-          uploadFile(
-            {
-              name: `${base}.mp4`,
-              mimetype: 'video/mp4',
-              buffer: fs.readFileSync(outputFile),
-            },
-            (error, data) => {
-              if (error) throw error;
-              res.send(data);
-            },
-          );
+      getFile(`${base}.mp4`, (error, data) => {
+        if (error) {
+          if (error.code === 'NoSuchKey') {
+            ffmpeg(inputFile)
+              .output(outputFile)
+              .on('end', function () {
+                uploadFile(
+                  {
+                    name: `${base}.mp4`,
+                    mimetype: 'video/mp4',
+                    buffer: fs.readFileSync(outputFile),
+                  },
+                  (error, data) => {
+                    if (error) throw error;
+                    res.send(data);
+                  },
+                );
+                fs.unlinkSync(inputFile);
+                fs.unlinkSync(outputFile);
+              })
+              .run();
+          } else {
+            throw error;
+          }
+        } else {
+          res.send(data);
           fs.unlinkSync(inputFile);
-          fs.unlinkSync(outputFile);
-        })
-        .run();
+        }
+      });
+    } catch (error) {
+      next(error);
+    }
+  },
+);
+
+router.delete(
+  '/',
+  auth(),
+  getValidations(LOCAL_ROUTES.DELETE_NOMINATION),
+  validate,
+  async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
+    try {
+      const nomination = await NominationModel.findById(req.query.id);
+      if (!nomination) {
+        throw new Error('Could not find nomination with that id');
+      }
+
+      if (
+        !(req.user?._id.toString() === nomination.candidate.toString()) &&
+        !req.user?.isAdmin
+      ) {
+        throw new Error(
+          "Can't delete this nomination. You're not the owner or the admin",
+        );
+      }
+
+      await deleteNomination(nomination);
+      res.send();
     } catch (error) {
       next(error);
     }

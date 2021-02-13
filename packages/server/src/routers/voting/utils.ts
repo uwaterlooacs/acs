@@ -1,6 +1,9 @@
-import { NominationDoc } from '@acs/shared';
+import type { ObjectId } from 'mongodb';
+import type { NominationDoc } from '@acs/shared';
+
 import NominationModel from '../../models/Nomination/Nomination';
 import PositionModel from '../../models/Position';
+import { deleteNomination } from '../utils';
 
 /**
  * Takes an array of nominations and returns a record with position id as keys
@@ -27,16 +30,17 @@ export const getNominationsByPosition = (nominations: NominationDoc[]) => {
  * with the most votes
  * @param nominations NominationDoc[]
  */
-const getWinner = (nominations: NominationDoc[]) => {
-  if (nominations.length === 0) {
-    throw new Error('nominations array cannot be empty');
-  }
-  const winner = nominations.reduce((currentWinner, nomination) => {
-    if (nomination.votes.length > winner.votes.length) {
-      return nomination;
+const getWinner = (
+  nominations: NominationDoc[],
+): ObjectId | string | undefined => {
+  let maxVotes = 0;
+  let winner;
+  nominations.forEach((nomination) => {
+    if (nomination.votes.length > maxVotes) {
+      maxVotes = nomination.votes.length;
+      winner = nomination.candidate;
     }
-    return currentWinner;
-  }, nominations[0]);
+  });
   return winner;
 };
 
@@ -53,8 +57,14 @@ export const finalizeResults = async () => {
       const winner = getWinner(nominationsByPosition[positionId]);
       await PositionModel.findByIdAndUpdate(positionId, {
         isOpen: false,
-        occupant: winner._id,
+        occupant: winner,
       });
+    }),
+  );
+
+  await Promise.all(
+    nominations.map(async (nomination) => {
+      await deleteNomination(nomination);
     }),
   );
 };

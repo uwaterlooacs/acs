@@ -46,7 +46,7 @@ function MobileMenu({ classes, currentPathname, onLoginClicked }: Props) {
 
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
-  const menuLinks = getMenuLinks(stage, user?.isAdmin);
+  const menuLinks = getMenuLinks(stage, user);
 
   return (
     <div className={classes.container}>

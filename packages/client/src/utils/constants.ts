@@ -5,6 +5,7 @@ export enum ROUTES {
   EVENTS = '/events',
   VOTING = '/voting',
   ADMIN = '/admin',
+  LOGOUT = '/logout',
 }
 
 export const AUTH_PANEL_OPTIONS = {

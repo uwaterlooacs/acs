@@ -8,7 +8,9 @@ import {
   CardMedia,
   makeStyles,
   Box,
+  IconButton,
 } from '@material-ui/core';
+import Delete from '@material-ui/icons/Delete';
 import { VOTING_STAGE } from '@acs/shared';
 
 const useStyles = makeStyles({
@@ -34,11 +36,12 @@ export type Props = {
   lastName: string;
   semester: string;
   faculty: string;
-  videoUrl?: string;
+  video?: string;
   writeUp?: string;
   stage: VOTING_STAGE;
   isDisabled: boolean;
-  handleClick(): Promise<void>;
+  handleClick: () => Promise<void>;
+  handleDelete?: () => Promise<void>;
 };
 
 const NominationCard: React.FC<Props> = ({
@@ -46,11 +49,12 @@ const NominationCard: React.FC<Props> = ({
   lastName,
   semester,
   faculty,
-  videoUrl,
+  video,
   writeUp,
   stage,
   isDisabled,
   handleClick,
+  handleDelete,
 }) => {
   const classes = useStyles();
   const primaryButtonActionText =
@@ -61,12 +65,12 @@ const NominationCard: React.FC<Props> = ({
   return (
     <Card className={classes.card}>
       <Box display="flex" flexDirection="column" height="100%">
-        {videoUrl && (
+        {video && (
           <CardMedia
             className={classes.video}
             component="video"
             title={`${firstName} ${lastName} video submission`}
-            src={videoUrl}
+            src={video}
             controls
           />
         )}
@@ -92,6 +96,11 @@ const NominationCard: React.FC<Props> = ({
           >
             {isDisabled ? primaryButtonDisabledText : primaryButtonActionText}
           </Button>
+          {handleDelete && (
+            <IconButton onClick={handleDelete}>
+              <Delete />
+            </IconButton>
+          )}
         </CardActions>
       </Box>
     </Card>

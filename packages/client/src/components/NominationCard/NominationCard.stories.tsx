@@ -20,7 +20,7 @@ const baseProps: Props = {
   lastName: 'Allum',
   semester: '4B',
   faculty: 'Mathematics',
-  videoUrl:
+  video:
     'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
   writeUp:
     'This is a lil write up for my nomination oui! Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam et dolor quam. Vestibulum auctor vehicula ante ut dictum. Nulla neque nunc, blandit vel massa a, rhoncus porta mauris.',
@@ -36,7 +36,7 @@ const portraitVideoUrl =
 export const Base: React.FC = () => <Card {...baseProps} />;
 
 export const Portrait: React.FC = () => (
-  <Card {...baseProps} videoUrl={portraitVideoUrl} />
+  <Card {...baseProps} video={portraitVideoUrl} />
 );
 
 export const LongWriteUp: React.FC = () => (
@@ -44,7 +44,7 @@ export const LongWriteUp: React.FC = () => (
 );
 
 export const LongWriteUpPortrait: React.FC = () => (
-  <Card {...baseProps} writeUp={longWriteUp} videoUrl={portraitVideoUrl} />
+  <Card {...baseProps} writeUp={longWriteUp} video={portraitVideoUrl} />
 );
 
 export const NoWriteUp: React.FC = () => (
@@ -52,11 +52,11 @@ export const NoWriteUp: React.FC = () => (
 );
 
 export const NoVideo: React.FC = () => (
-  <Card {...baseProps} videoUrl={undefined} />
+  <Card {...baseProps} video={undefined} />
 );
 
 export const NoWriteUpAndNoVideo: React.FC = () => (
-  <Card {...baseProps} writeUp={undefined} videoUrl={undefined} />
+  <Card {...baseProps} writeUp={undefined} video={undefined} />
 );
 
 export const NominationCast: React.FC = () => (

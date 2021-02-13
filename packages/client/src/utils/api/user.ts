@@ -32,7 +32,7 @@ export const thirdPartyAuth = async (data: UserData) => {
   );
 };
 
-export const logout = async (token: string) => {
+export const logout = async (token?: string) => {
   return await makeRequest(
     Method.POST,
     APIRoutes.USER + '/logout',

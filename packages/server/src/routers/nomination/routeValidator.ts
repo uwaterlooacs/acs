@@ -7,15 +7,14 @@ const getValidations = (route: LOCAL_ROUTES) => {
       return [
         body('position').isMongoId(),
         body('candidate').isMongoId(),
-        body('seconds').optional().isNumeric(),
-        body('video').optional().isString(),
+        body('video').isString(),
         body('writeUp').optional().isString(),
       ];
     case LOCAL_ROUTES.SECOND_NOMINEE:
     case LOCAL_ROUTES.DECLINE_NOMINATION:
     case LOCAL_ROUTES.VOTE_NOMINEE:
-      return [query('id').isMongoId()];
     case LOCAL_ROUTES.GET_NOMINATIONS:
+    case LOCAL_ROUTES.DELETE_NOMINATION:
       return [query('id').isMongoId()];
     default:
       return [];

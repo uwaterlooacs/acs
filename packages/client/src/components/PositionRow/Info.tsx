@@ -53,11 +53,19 @@ const PositionInfo: React.FC<Props> = ({ position }) => {
       <Typography variant="h5">{title}</Typography>
       <Spacer height={4} />
       <Typography variant="body1">{description}</Typography>
-      <Spacer height={4} />
-      <Typography variant="body1">{`Position is open: ${isOpen}`}</Typography>
-      <Spacer height={4} />
+      {isOpen && (
+        <>
+          <Spacer height={4} />
+          <Typography variant="body1" color="primary">
+            Position is open
+          </Typography>
+        </>
+      )}
       {occupant && (
-        <Typography>{`Occupant: ${occupant?.firstName} ${occupant?.lastName}`}</Typography>
+        <>
+          <Spacer height={4} />
+          <Typography>{`Occupant: ${occupant?.firstName} ${occupant?.lastName}`}</Typography>
+        </>
       )}
     </div>
   );

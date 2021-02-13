@@ -37,7 +37,7 @@ function Menu({ classes, currentPathname, onLoginClicked }: Props) {
   const { user } = useContext(UserContext);
   const { stage } = useContext(VotingContext);
 
-  const menuLinks = getMenuLinks(stage, user?.isAdmin);
+  const menuLinks = getMenuLinks(stage, user);
 
   return (
     <div className={classes.container}>

@@ -10,6 +10,7 @@ import Events from 'pages/Events';
 import Voting from 'pages/Voting';
 import Membership from 'pages/Membership';
 import Admin from 'pages/Admin';
+import Logout from 'pages/Logout';
 // import Construction from 'pages/Construction';
 import { ROUTES } from 'utils/constants';
 
@@ -22,12 +23,14 @@ const App: React.FC = () => {
             <AuthPanelContextProvider>
               <BrowserRouter>
                 <Switch>
+                  {/* Replace landing component with construction when site needs changes */}
                   <Route exact path={ROUTES.LANDING} component={Home} />
-                  <Route exact path={ROUTES.HOME} component={Home} />
+                  <Route path={ROUTES.HOME} component={Home} />
                   <Route path={ROUTES.EVENTS} component={Events} />
                   <Route path={ROUTES.VOTING} component={Voting} />
                   <Route path={ROUTES.MEMBERSHIP} component={Membership} />
-                  <Route exact path={ROUTES.ADMIN} component={Admin} />
+                  <Route path={ROUTES.ADMIN} component={Admin} />
+                  <Route path={ROUTES.LOGOUT} component={Logout} />
                 </Switch>
               </BrowserRouter>
             </AuthPanelContextProvider>
