@@ -1,3 +1,4 @@
+import type { File } from '../types/file';
 import AWS from 'aws-sdk';
 
 const s3 = new AWS.S3({
@@ -5,17 +6,17 @@ const s3 = new AWS.S3({
   secretAccessKey: process.env.AWS_CLIENT_SECRET,
 });
 
-export const uploadFile = (fileName: string, fileContent: Buffer) => {
+export const uploadFile = (
+  file: File,
+  callback: (error: Error, data: AWS.S3.ManagedUpload.SendData) => void,
+) => {
   const params = {
     Bucket: 'nominationvideos',
-    Key: fileName,
-    Body: fileContent,
+    Key: file.name,
+    Body: file.buffer,
+    ContentType: file.mimetype,
+    ACL: 'public-read',
   };
 
-  s3.upload(params, function (err: Error, data: AWS.S3.ManagedUpload.SendData) {
-    if (err) {
-      throw err;
-    }
-    console.log(`File uploaded successfully. ${data.Location}`);
-  });
+  s3.upload(params, callback);
 };

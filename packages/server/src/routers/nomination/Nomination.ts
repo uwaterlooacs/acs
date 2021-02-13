@@ -1,9 +1,13 @@
 import type { Response, NextFunction } from 'express';
-import type { AuthenticatedRequest, UploadRequest } from '../../types/Request';
+import type { AuthenticatedRequest } from '../../types/request';
 
 import express from 'express';
+import ffmpeg from 'fluent-ffmpeg';
+import fs from 'fs';
+import path from 'path';
 import NominationModel from '../../models/Nomination/Nomination';
 import auth from '../../middleware/auth';
+import upload from '../../middleware/upload';
 import validate from '../../middleware/validate';
 import { uploadFile } from '../../utils/aws';
 import getValidations from './routeValidator';
@@ -116,23 +120,33 @@ router.get(
 router.post(
   '/upload',
   auth(),
-  async (req: UploadRequest, res: Response, next: NextFunction) => {
+  upload.single('file'),
+  async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
     try {
-      if (!req.files) {
-        throw new Error('Could not get files on request');
-      }
-      if (!req.user) {
-        throw new Error('Could not get user on request');
-      }
+      const base = `${req.user?.firstName}-${req.user?.lastName}-${req.query.id}`;
+      const inputFile = `./uploads/${base}${path.extname(
+        req.file.originalname,
+      )}`;
+      const outputFile = `./uploads/${base}.mp4`;
 
-      const nomineeName = `${req.user.firstName}-${req.user.lastName}`;
-      const fileExtension = req.files.file.name.match(
-        /\.([0-9a-z]+)(?:[?#]|$)/i,
-      );
-
-      uploadFile(`${nomineeName}${fileExtension}`, req.files.file.data);
-
-      res.send();
+      ffmpeg(inputFile)
+        .output(outputFile)
+        .on('end', function () {
+          uploadFile(
+            {
+              name: `${base}.mp4`,
+              mimetype: 'video/mp4',
+              buffer: fs.readFileSync(outputFile),
+            },
+            (error, data) => {
+              if (error) throw error;
+              res.send(data);
+            },
+          );
+          fs.unlinkSync(inputFile);
+          fs.unlinkSync(outputFile);
+        })
+        .run();
     } catch (error) {
       next(error);
     }
