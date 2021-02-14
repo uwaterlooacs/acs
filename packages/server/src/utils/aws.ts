@@ -10,7 +10,7 @@ const BUCKET_NAME = 'nominationvideos';
 
 export const uploadFile = (
   file: File,
-  callback: (error: AWS.AWSError, data: AWS.S3.ManagedUpload.SendData) => void,
+  callback: (error: Error, data: AWS.S3.ManagedUpload.SendData) => void,
 ) => {
   const params = {
     Bucket: BUCKET_NAME,

@@ -6,9 +6,9 @@ import express from 'express';
 import { MEMBERSHIP_STATUS } from '@acs/shared';
 import UserModel from '../../models/User';
 import auth from '../../middleware/auth';
+import validate from '../../middleware/validate';
 import { MONGO_ERRORS } from '../../utils/constants';
 import routeValidator from './routeValidator';
-import validate from '../../middleware/validate';
 
 const router = express.Router();
 
