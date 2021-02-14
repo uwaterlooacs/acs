@@ -1,4 +1,4 @@
-import type { AuthenticatedRequest } from 'types/request';
+import type { AuthenticatedRequest } from '../types/request';
 
 import multer from 'multer';
 import path from 'path';
