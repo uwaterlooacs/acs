@@ -8,6 +8,7 @@ import { AuthPanelContext } from 'context/authPanel/state';
 import { AUTH_PANEL_OPTIONS } from 'utils/constants';
 import CheckStatusPanel from './CheckStatus';
 import LoginPanel from './Login';
+import Logo from './ACSColorLogo.png';
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -65,11 +66,7 @@ const AuthPanel = ({ classes }: WithStyles<typeof styles>) => {
             <CloseIcon />
           </Button>
         </div>
-        <img
-          src="assets/ACSLogoColour.png"
-          className={classes.logo}
-          alt="logo"
-        />
+        <img src={Logo} className={classes.logo} alt="logo" />
         <div className={classes.titleContainer}>
           <Typography variant="h4" color="textPrimary" align="center">
             {option.title}
