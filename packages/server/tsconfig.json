@@ -4,6 +4,7 @@
     "rootDir": "src",
     "outDir": "dist",
     "baseUrl": "src",
-    "declaration": true
+    "lib": ["ES2020"],
+    "target": "ES5"
   }
 }
