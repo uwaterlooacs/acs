@@ -74,8 +74,7 @@ const LoginPanel: React.FC<Props> = ({ option }) => {
       clearError();
       closePanel();
     } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error(error);
+      setError('Unable to log in with those credentials');
     }
   };
 

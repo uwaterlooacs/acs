@@ -128,32 +128,46 @@ router.post(
   async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
     try {
       const base = `${req.user?._id}-${req.query.id}`;
-      const inputFile = `./uploads/${base}${path.extname(
-        req.file.originalname,
-      )}`;
+      const extension = path.extname(req.file.originalname);
+      const inputFile = `./uploads/${base}${extension}`;
       const outputFile = `./uploads/${base}.mp4`;
 
       getFile(`${base}.mp4`, (error, data) => {
         if (error) {
           if (error.code === 'NoSuchKey') {
-            ffmpeg(inputFile)
-              .output(outputFile)
-              .on('end', function () {
-                uploadFile(
-                  {
-                    name: `${base}.mp4`,
-                    mimetype: 'video/mp4',
-                    buffer: fs.readFileSync(outputFile),
-                  },
-                  (error, data) => {
-                    if (error) throw error;
-                    res.send(data);
-                  },
-                );
-                fs.unlinkSync(inputFile);
-                fs.unlinkSync(outputFile);
-              })
-              .run();
+            if (extension !== '.mp4') {
+              ffmpeg(inputFile)
+                .output(outputFile)
+                .on('end', function () {
+                  uploadFile(
+                    {
+                      name: `${base}.mp4`,
+                      mimetype: 'video/mp4',
+                      buffer: fs.readFileSync(outputFile),
+                    },
+                    (error, data) => {
+                      if (error) throw error;
+                      res.send(data);
+                    },
+                  );
+                  fs.unlinkSync(inputFile);
+                  fs.unlinkSync(outputFile);
+                })
+                .run();
+            } else {
+              uploadFile(
+                {
+                  name: `${base}.mp4`,
+                  mimetype: 'video/mp4',
+                  buffer: fs.readFileSync(outputFile),
+                },
+                (error, data) => {
+                  if (error) throw error;
+                  res.send(data);
+                },
+              );
+              fs.unlinkSync(outputFile);
+            }
           } else {
             throw error;
           }

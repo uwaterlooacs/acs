@@ -15,7 +15,7 @@ import { VOTING_STAGE } from '@acs/shared';
 
 const useStyles = makeStyles({
   card: {
-    height: 550,
+    height: 500,
   },
   cardContent: {
     display: 'flex',

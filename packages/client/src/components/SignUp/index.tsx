@@ -30,10 +30,10 @@ const SignUp: React.FC = () => {
     const watIAMUserId = email.split('@')[0];
     try {
       const { user, token } = await signup({
-        firstName,
-        lastName,
-        studentNumber: +studentNumber,
-        email,
+        firstName: firstName.trim(),
+        lastName: lastName.trim(),
+        studentNumber: +studentNumber.trim(),
+        email: email.trim(),
         watIAMUserId,
         semester,
         faculty,

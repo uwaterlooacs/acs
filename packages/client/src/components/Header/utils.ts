@@ -16,10 +16,11 @@ export const getMenuLinks = (
       title: 'Events',
       link: ROUTES.EVENTS,
     },
-    votingStage !== VOTING_STAGE.Closed && {
-      title: 'Voting',
-      link: ROUTES.VOTING,
-    },
+    votingStage !== VOTING_STAGE.Closed &&
+      user && {
+        title: 'Voting',
+        link: ROUTES.VOTING,
+      },
     {
       title: 'Membership',
       link: ROUTES.MEMBERSHIP,

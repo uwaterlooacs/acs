@@ -40,7 +40,7 @@ const useStyles = makeStyles(({ spacing, palette }) => ({
     cursor: 'pointer',
   },
   video: {
-    maxHeight: 550,
+    maxHeight: 500,
   },
   loadingContainer: {
     display: 'flex',
