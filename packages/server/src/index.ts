@@ -12,7 +12,8 @@ import routers from './routers';
 const main = async (): Promise<void> => {
   const app = express();
 
-  app.use(express.json());
+  app.use(express.json({ limit: '60mb' }));
+  app.use(express.urlencoded({ limit: '60mb' }));
 
   // allow cross origin reqs from client in development
   if (process.env.NODE_ENV !== 'production') {
