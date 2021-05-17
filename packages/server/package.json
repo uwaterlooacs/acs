@@ -19,7 +19,7 @@
     "google-spreadsheet": "^3.0.13",
     "http-errors": "^1.8.0",
     "jsonwebtoken": "^8.5.1",
-    "mongodb": "^3.6.2",
+    "mongodb": "^3.6.6",
     "mongoose": "^5.10.6",
     "multer": "^1.4.2",
     "node-cron": "^2.0.3"
